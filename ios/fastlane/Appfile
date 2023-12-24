@@ -1,0 +1,8 @@
+app_identifier("com.cottonbaby.mybaby") # The bundle identifier of your app
+apple_id("herotouch@hotmail.com") # Your Apple Developer Portal username
+
+itc_team_id("126803821") # App Store Connect Team ID
+team_id("YG5LVXH97U") # Developer Portal Team ID
+
+# For more information about the Appfile, see:
+#     https://docs.fastlane.tools/advanced/#appfile

@@ -39,7 +39,13 @@ class GreyScaleShade {
 class AppTheme {
   static ColorShade primaryShade = ColorShade(
     dark: const Color(0xff17497C),
-    main: const Color(0xff185B92),
+    main: const Color(0xff52A5CC),
+    light: const Color(0xffE8F3FB),
+  );
+
+  static ColorShade secondaryShade = ColorShade(
+    dark: const Color(0xff17497C),
+    main: const Color(0xff076B1D),
     light: const Color(0xffE8F3FB),
   );
 
@@ -106,6 +112,7 @@ class AppTheme {
   static const double spacing64 = 64.0;
   static const double spacing56 = 56.0;
   static const double spacing48 = 48.0;
+  static const double spacing44 = 44.0;
   static const double spacing40 = 40.0;
   static const double spacing36 = 36.0;
   static const double spacing32 = 32.0;

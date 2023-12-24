@@ -169,19 +169,19 @@ class DevelopSection extends StatelessWidget {
                   Row(
                     children: [
                       DevelopItem(
-                        icon: CustomIcon.muscle,
+                        icon: CustomIcon.edit,
                         checkedAt: muscle?.createdAt,
                       ),
                       DevelopItem(
-                        icon: CustomIcon.brain,
+                        icon: CustomIcon.edit,
                         checkedAt: brain?.createdAt,
                       ),
                       DevelopItem(
-                        icon: CustomIcon.people,
+                        icon: CustomIcon.edit,
                         checkedAt: people?.createdAt,
                       ),
                       DevelopItem(
-                        icon: CustomIcon.emotion,
+                        icon: CustomIcon.edit,
                         checkedAt: emotion?.createdAt,
                       )
                     ],

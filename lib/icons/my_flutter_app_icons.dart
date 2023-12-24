@@ -21,12 +21,8 @@ class CustomIcon {
   static const _kFontFam = 'MyFlutterApp';
   static const String? _kFontPkg = null;
 
-  static const IconData emotion =
-      IconData(0xe890, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData people =
-      IconData(0xe891, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData brain =
-      IconData(0xe892, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData muscle =
-      IconData(0xe893, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData photo =
+      IconData(0xe894, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData edit =
+      IconData(0xe895, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

@@ -80,13 +80,13 @@ class _BaseTextInputState extends State<BaseTextInput> {
         if (widget.label != null)
           Text(
             widget.label!,
-            style: ThemeTextStyle.paragraph2(
+            style: ThemeTextStyle.boldParagraph3(
               context,
               color: AppTheme.grayShade.shade03,
             ),
           ),
         const SizedBox(
-          height: 2,
+          height: AppTheme.spacing8,
         ),
         TextFormField(
           inputFormatters: widget.inputFormatters,

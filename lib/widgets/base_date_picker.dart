@@ -21,13 +21,14 @@ class _BaseDatePickerState extends State<BaseDatePicker> {
   final TextEditingController _controller = TextEditingController();
   @override
   void initState() {
-    _controller.text = DateFormat('yyyy-MM-dd').format(widget.value);
+    _controller.text = DateFormat('dd MMM yyyy').format(widget.value);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () async {
         DateTime? pickedDate = await showDatePicker(
             context: context,
@@ -36,7 +37,7 @@ class _BaseDatePickerState extends State<BaseDatePicker> {
             lastDate: DateTime.now());
 
         if (pickedDate != null) {
-          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+          String formattedDate = DateFormat('dd MMM yyyy').format(pickedDate);
           widget.onChange(pickedDate);
           setState(() {
             _controller.text =
@@ -44,10 +45,12 @@ class _BaseDatePickerState extends State<BaseDatePicker> {
           });
         }
       },
-      child: BaseTextInput(
-        label: widget.label,
-        controller: _controller,
-        enabled: false,
+      child: AbsorbPointer(
+        absorbing: true,
+        child: BaseTextInput(
+          label: widget.label,
+          controller: _controller,
+        ),
       ),
     );
   }

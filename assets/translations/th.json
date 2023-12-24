@@ -11,7 +11,7 @@
     "edit": "แก้ไข",
     "edit_data": "แก้ไขข้อมูล",
     "delete": "ลบ",
-    "save": "บันทึก",
+    "save": "Save",
     "send": "ส่ง",
     "submit": "ยืนยัน",
     "success": "สำเร็จ",
@@ -58,7 +58,7 @@
     "no_internet": "ไม่สามารถเชื่อมต่ออินเทอร์เน็ตได้\nกรุณาลองใหม่อีกครั้ง",
     "connection_timeout": "เครือข่ายไม่เสถียร\nกรุณาตรวจสอบการเชื่อมต่อ",
     "try_again": "กรุณาลองอีกครั้ง",
-    "form_required": "จำเป็นต้องกรอก {}",
+    "form_required": "required",
     "must_lower_than": "ต้องมีค่าน้อยกว่า {}",
     "form_invalid": "{} ไม่ถูกต้อง",
     "password_invalid": "รหัสผ่านต้องมีตัวอักษรและตัวเลข",
@@ -69,5 +69,10 @@
     "number_only": "กรอกเป็นตัวเลขเท่านั้น",
     "not_more_than": "กรอกค่าได้ไม่เกิน {}"
   },
-  "home_screen": {}
+  "home_screen": {},
+  "edit_child_dialog": {
+    "title": "Edit Information",
+    "display_name": "Display Name",
+    "date_of_birth": "Date of Birth"
+  }
 }

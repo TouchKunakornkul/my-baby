@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:my_baby/configs/database.dart';
@@ -5,6 +8,8 @@ import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/my_flutter_app_icons.dart';
 import 'package:my_baby/providers/child_provider.dart';
 import 'package:my_baby/providers/develop_provider.dart';
+import 'package:my_baby/utils/date_utils.dart';
+import 'package:my_baby/widgets/child_image.dart';
 import 'package:my_baby/widgets/develop_section.dart';
 import 'package:my_baby/widgets/edit_child_dialog.dart';
 import 'package:my_baby/widgets/growth_line_chart.dart';
@@ -13,6 +18,7 @@ import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 const double IMAGE_HEIGHT = 770;
+const double LOGO_HEIGHT = 23;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,15 +40,15 @@ class _HomeScreenState extends State<HomeScreen> {
     final growths = context.watch<GrowthProvider>().growths;
     final child = context.watch<ChildProvider>().child;
     return Scaffold(
-      // appBar: AppBar(
-      //   // TRY THIS: Try changing the color here to a specific color (to
-      //   // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-      //   // change color while the other colors stay the same.
-      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      //   // Here we take the value from the MyHomePage object that was created by
-      //   // the App.build method, and use it to set our appbar title.
-      //   title: const Text("test"),
-      // ),
+      appBar: AppBar(
+        // TRY THIS: Try changing the color here to a specific color (to
+        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
+        // change color while the other colors stay the same.
+        backgroundColor: AppTheme.grayShade.shade08,
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        toolbarHeight: 0,
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -51,40 +57,79 @@ class _HomeScreenState extends State<HomeScreen> {
               children: <Widget>[
                 Stack(
                   children: [
-                    FadeInImage.memoryNetwork(
-                      placeholder: kTransparentImage,
-                      image: 'https://picsum.photos/450/770',
+                    ChildImage(
+                      imageUrl: child?.imageUrl,
                       height: IMAGE_HEIGHT,
-                      fit: BoxFit.cover,
                     ),
-                    Container(
-                      padding: const EdgeInsets.all(AppTheme.spacing16),
+                    SizedBox(
                       height: IMAGE_HEIGHT,
                       child: Column(children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  child?.name ?? '-',
-                                  style: ThemeTextStyle.headline1(context),
-                                ),
-                                Text(child?.birthDate.toString() ?? '-')
+                        Container(
+                          padding: const EdgeInsets.only(
+                              left: AppTheme.spacing16,
+                              right: AppTheme.spacing16,
+                              top: AppTheme.spacing44 - LOGO_HEIGHT,
+                              bottom: AppTheme.spacing44),
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.white,
+                                Color.fromRGBO(217, 217, 217, 0.0),
                               ],
+                              stops: [0.0, 1.0],
                             ),
-                            InkWell(
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return const EditChildDialog();
-                                    });
-                              },
-                              child: const Icon(CustomIcon.brain),
-                            ),
-                          ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Image.asset(
+                                "assets/images/logo.png",
+                                height: LOGO_HEIGHT,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        child?.name ?? '-',
+                                        style:
+                                            ThemeTextStyle.headline1(context),
+                                      ),
+                                      if (child?.birthDate != null)
+                                        Wrap(
+                                          children: [
+                                            Text(DateFormat('dd MMM yyyy')
+                                                .format(child!.birthDate)),
+                                            const SizedBox(
+                                              width: AppTheme.spacing4,
+                                            ),
+                                            Text(
+                                                "(${getAgeString(child.birthDate)})"),
+                                          ],
+                                        )
+                                    ],
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return const EditChildDialog();
+                                          });
+                                    },
+                                    child: const Icon(CustomIcon.edit),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                         const Expanded(child: SizedBox.shrink()),
                         const Row(),

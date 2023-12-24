@@ -46,28 +46,29 @@ class BaseDialog extends StatelessWidget {
           //   ),
           // ),
           Container(
-            width: 325,
+            width: 330,
             color: AppTheme.grayShade.shade08,
-            padding: const EdgeInsets.all(32),
+            padding: const EdgeInsets.all(AppTheme.spacing24),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         title,
                         textAlign: TextAlign.start,
                         style: ThemeTextStyle.boldParagraph1(context,
-                            color: AppTheme.primaryShade.main),
+                            color: AppTheme.secondaryShade.main),
                       ),
                       const SizedBox(
                         height: AppTheme.spacing6,
                       ),
                       content,
                       const SizedBox(
-                        height: AppTheme.spacing24,
+                        height: AppTheme.spacing8,
                       ),
                       Row(
                         mainAxisAlignment: onOk != null
@@ -75,7 +76,7 @@ class BaseDialog extends StatelessWidget {
                             : MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            width: 122,
+                            width: onOk != null ? 141 : 282,
                             child: BaseButton(
                               cancelText ?? 'common.close'.tr(),
                               type: onOk != null
@@ -91,7 +92,7 @@ class BaseDialog extends StatelessWidget {
                           ),
                           if (onOk != null)
                             SizedBox(
-                              width: 122,
+                              width: 141,
                               child: BaseButton(
                                 okText ?? 'common.submit'.tr(),
                                 onPressed: () {

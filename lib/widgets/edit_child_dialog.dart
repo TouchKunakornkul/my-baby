@@ -9,6 +9,7 @@ import 'package:my_baby/providers/child_provider.dart';
 import 'package:my_baby/widgets/base_date_picker.dart';
 import 'package:my_baby/widgets/base_dialog.dart';
 import 'package:my_baby/widgets/base_text_input.dart';
+import 'package:my_baby/widgets/child_image.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -28,8 +29,7 @@ class _EditChildDialogState extends State<EditChildDialog> {
 
   @override
   void initState() {
-    _imageUrl = context.read<ChildProvider>().child?.imageUrl ??
-        'https://picsum.photos/450/770';
+    _imageUrl = context.read<ChildProvider>().child?.imageUrl ?? "";
     _birthDate =
         context.read<ChildProvider>().child?.birthDate ?? DateTime.now();
     _nameController.text = context.read<ChildProvider>().child?.name ?? "";
@@ -47,18 +47,18 @@ class _EditChildDialogState extends State<EditChildDialog> {
   @override
   Widget build(BuildContext context) {
     return BaseDialog(
-      title: ''.tr(),
+      title: 'edit_child_dialog.title'.tr(),
       content: Column(children: [
+        const SizedBox(
+          height: AppTheme.spacing32,
+        ),
         ClipOval(
           child: Stack(children: [
-            if (_imageUrl != "")
-              Image.network(
-                // placeholder: kTransparentImage,
-                _imageUrl,
-                height: 120,
-                width: 120,
-                fit: BoxFit.cover,
-              ),
+            ChildImage(
+              imageUrl: _imageUrl,
+              height: 120,
+              width: 120,
+            ),
             GestureDetector(
               onTap: () async {
                 if (_picker.supportsImageSource(ImageSource.gallery)) {
@@ -76,7 +76,6 @@ class _EditChildDialogState extends State<EditChildDialog> {
                     // final imagePathname = newFile.path;
                     print(image.path);
                     // print(directory.path);
-
                     setState(() {
                       _imageUrl = image.path;
                     });
@@ -89,7 +88,7 @@ class _EditChildDialogState extends State<EditChildDialog> {
                 width: 120,
                 child: Center(
                   child: Icon(
-                    CustomIcon.muscle,
+                    CustomIcon.photo,
                     color: AppTheme.grayShade.shade08,
                   ),
                 ),
@@ -97,10 +96,21 @@ class _EditChildDialogState extends State<EditChildDialog> {
             )
           ]),
         ),
+        const SizedBox(
+          height: AppTheme.spacing24,
+        ),
         BaseTextInput(
+          label: "edit_child_dialog.display_name".tr(),
           controller: _nameController,
+          validator: (value) {
+            if (value == null || value == "") {
+              return "error.form_required".tr();
+            }
+            return null;
+          },
         ),
         BaseDatePicker(
+          label: "edit_child_dialog.date_of_birth".tr(),
           value: _birthDate,
           onChange: (date) {
             setState(() {
@@ -109,7 +119,8 @@ class _EditChildDialogState extends State<EditChildDialog> {
           },
         )
       ]),
-      onOk: _updateChild,
+      cancelText: "common.save".tr(),
+      onClose: _updateChild,
     );
   }
 }

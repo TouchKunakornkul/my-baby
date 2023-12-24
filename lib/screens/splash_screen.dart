@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen>
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/splash-bg.png'),
+            image: AssetImage('assets/images/splash-bg2.png'),
             fit: BoxFit.cover,
           ),
         ),
