@@ -21,8 +21,10 @@ class CustomIcon {
   static const _kFontFam = 'MyFlutterApp';
   static const String? _kFontPkg = null;
 
-  static const IconData photo =
+  static const IconData camera =
       IconData(0xe894, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData edit =
       IconData(0xe895, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData growth =
+      IconData(0xe897, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

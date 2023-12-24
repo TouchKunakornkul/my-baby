@@ -40,7 +40,7 @@ class AppTheme {
   static ColorShade primaryShade = ColorShade(
     dark: const Color(0xff17497C),
     main: const Color(0xff52A5CC),
-    light: const Color(0xffE8F3FB),
+    light: const Color(0xff6AB8DC),
   );
 
   static ColorShade secondaryShade = ColorShade(

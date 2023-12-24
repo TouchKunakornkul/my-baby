@@ -14,6 +14,7 @@ import 'package:my_baby/widgets/develop_section.dart';
 import 'package:my_baby/widgets/edit_child_dialog.dart';
 import 'package:my_baby/widgets/growth_line_chart.dart';
 import 'package:my_baby/providers/growth_provider.dart';
+import 'package:my_baby/widgets/summary_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -59,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     ChildImage(
                       imageUrl: child?.imageUrl,
+                      width: MediaQuery.of(context).size.width,
                       height: IMAGE_HEIGHT,
                     ),
                     SizedBox(
@@ -93,38 +95,46 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        child?.name ?? '-',
-                                        style:
-                                            ThemeTextStyle.headline1(context),
-                                      ),
-                                      if (child?.birthDate != null)
-                                        Wrap(
-                                          children: [
-                                            Text(DateFormat('dd MMM yyyy')
-                                                .format(child!.birthDate)),
-                                            const SizedBox(
-                                              width: AppTheme.spacing4,
-                                            ),
-                                            Text(
-                                                "(${getAgeString(child.birthDate)})"),
-                                          ],
-                                        )
-                                    ],
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          child?.name ?? '-',
+                                          overflow: TextOverflow.ellipsis,
+                                          style:
+                                              ThemeTextStyle.headline1(context),
+                                        ),
+                                        if (child?.birthDate != null)
+                                          Wrap(
+                                            children: [
+                                              Text(DateFormat('dd MMM yyyy')
+                                                  .format(child!.birthDate)),
+                                              const SizedBox(
+                                                width: AppTheme.spacing4,
+                                              ),
+                                              Text(
+                                                  "(${getAgeString(child.birthDate)})"),
+                                            ],
+                                          )
+                                      ],
+                                    ),
                                   ),
-                                  InkWell(
-                                    onTap: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return const EditChildDialog();
-                                          });
-                                    },
-                                    child: const Icon(CustomIcon.edit),
+                                  Container(
+                                    padding: const EdgeInsets.only(
+                                        left: AppTheme.spacing12),
+                                    child: InkWell(
+                                      onTap: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return const EditChildDialog();
+                                            });
+                                      },
+                                      child: Ink(
+                                          child: const Icon(CustomIcon.edit)),
+                                    ),
                                   ),
                                 ],
                               ),
@@ -132,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         const Expanded(child: SizedBox.shrink()),
-                        const Row(),
+                        const SummaryBar(),
                       ]),
                     )
                   ],
@@ -157,8 +167,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 //     ],
                 //   ),
                 // ),
-                const DevelopSection(),
-                const SizedBox(height: 300, child: GrowthLineChart()),
+                // const DevelopSection(),
+                // const SizedBox(height: 300, child: GrowthLineChart()),
               ],
             ),
           ),

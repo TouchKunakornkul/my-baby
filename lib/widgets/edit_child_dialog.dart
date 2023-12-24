@@ -65,19 +65,13 @@ class _EditChildDialogState extends State<EditChildDialog> {
                   final XFile? image =
                       await _picker.pickImage(source: ImageSource.gallery);
                   final directory = await getApplicationDocumentsDirectory();
-                  // final newFile =
-                  //     File("${directory.path}/${image?.name ?? ''}");
+                  final newPath = "${directory.path}/${image?.name ?? ''}";
+                  final newFile = File(newPath);
                   if (image != null) {
                     final byte = await image.readAsBytes();
-                    // newFile.writeAsBytes(byte);
-                    // // getting a directory path for saving
-                    // final Directory directory =
-                    //     await getApplicationDocumentsDirectory();
-                    // final imagePathname = newFile.path;
-                    print(image.path);
-                    // print(directory.path);
+                    newFile.writeAsBytes(byte);
                     setState(() {
-                      _imageUrl = image.path;
+                      _imageUrl = newPath;
                     });
                   }
                 }
@@ -88,7 +82,7 @@ class _EditChildDialogState extends State<EditChildDialog> {
                 width: 120,
                 child: Center(
                   child: Icon(
-                    CustomIcon.photo,
+                    CustomIcon.camera,
                     color: AppTheme.grayShade.shade08,
                   ),
                 ),
