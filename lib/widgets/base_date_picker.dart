@@ -21,7 +21,7 @@ class _BaseDatePickerState extends State<BaseDatePicker> {
   final TextEditingController _controller = TextEditingController();
   @override
   void initState() {
-    _controller.text = DateFormat('dd MMM yyyy').format(widget.value);
+    _controller.text = DateFormat('d MMM yyyy').format(widget.value);
     super.initState();
   }
 

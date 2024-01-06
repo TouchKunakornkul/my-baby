@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_baby/screens/home_screen.dart';
+import 'package:my_baby/providers/growth_provider.dart';
+import 'package:my_baby/screens/home/home_screen.dart';
 import 'package:my_baby/screens/splash_screen.dart';
 import 'package:my_baby/widgets/custom_material_page_route.dart';
+import 'package:provider/provider.dart';
 
 const String splashRoute = '/';
 const String loginRoute = '/login';
@@ -38,7 +40,14 @@ Widget getPage(String? name, Object? arguments) {
     case splashRoute:
       return const SplashScreen();
     case homeRoute:
-      return const HomeScreen();
+      return MultiProvider(
+        providers: [
+          ChangeNotifierProvider<GrowthProvider>(
+            create: (_) => GrowthProvider(),
+          ),
+        ],
+        child: const HomeScreen(),
+      );
     default:
       return Center(child: Text('No route defined for $name'));
   }

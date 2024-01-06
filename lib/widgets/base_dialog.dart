@@ -46,7 +46,7 @@ class BaseDialog extends StatelessWidget {
           //   ),
           // ),
           Container(
-            width: 330,
+            width: 332,
             color: AppTheme.grayShade.shade08,
             padding: const EdgeInsets.all(AppTheme.spacing24),
             child: Row(
@@ -76,7 +76,7 @@ class BaseDialog extends StatelessWidget {
                             : MainAxisAlignment.center,
                         children: [
                           SizedBox(
-                            width: onOk != null ? 141 : 282,
+                            width: onOk != null ? 142 : 284,
                             child: BaseButton(
                               cancelText ?? 'common.close'.tr(),
                               type: onOk != null
@@ -92,7 +92,7 @@ class BaseDialog extends StatelessWidget {
                           ),
                           if (onOk != null)
                             SizedBox(
-                              width: 141,
+                              width: 142,
                               child: BaseButton(
                                 okText ?? 'common.submit'.tr(),
                                 onPressed: () {

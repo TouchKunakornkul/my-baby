@@ -40,13 +40,25 @@ class AppTheme {
   static ColorShade primaryShade = ColorShade(
     dark: const Color(0xff17497C),
     main: const Color(0xff52A5CC),
-    light: const Color(0xff6AB8DC),
+    light: const Color(0xffCFE7F8),
   );
 
   static ColorShade secondaryShade = ColorShade(
-    dark: const Color(0xff17497C),
+    dark: const Color(0xff144E4E),
     main: const Color(0xff076B1D),
-    light: const Color(0xffE8F3FB),
+    light: const Color(0xff48BD2B),
+  );
+
+  static ColorShade yellowShade = ColorShade(
+    dark: const Color(0xff9DA106),
+    main: const Color.fromARGB(255, 170, 140, 33),
+    light: const Color(0xffEDF08F),
+  );
+
+  static ColorShade redShade = ColorShade(
+    dark: const Color(0xff9DA106),
+    main: const Color(0xff52A5CC),
+    light: const Color(0xffFFF1F1),
   );
 
   static ColorShade errorShade = ColorShade(
@@ -83,8 +95,8 @@ class AppTheme {
     shade01: const Color(0xff000000),
     shade02: const Color(0xff565A5F),
     shade03: const Color(0xff73787D),
-    shade04: const Color(0xffB1B2B5),
-    shade05: const Color(0xffDFE1E7),
+    shade04: const Color(0xffA69F9F),
+    shade05: const Color(0xffD9D9D9),
     shade06: const Color(0xffF3F5FA),
     shade07: const Color(0xffFAFAFA),
     shade08: const Color(0xffffffff),
@@ -131,6 +143,8 @@ class AppTheme {
   static const double borderRadius4 = 4.0;
   static const double borderRadius8 = 8.0;
   static const double borderRadius12 = 12.0;
+  static const double borderRadius20 = 20.0;
+  static const double borderRadius50 = 50.0;
 
   // Font offset
   // Offset for increase font size from figma.
@@ -413,7 +427,17 @@ class ThemeTextStyle {
     BuildContext context, {
     Color? color,
   }) =>
-      medium(
+      regular(
+        context,
+        fontSize: AppTheme.fontSize10,
+        color: color,
+      );
+
+  static TextStyle boldParagraph4(
+    BuildContext context, {
+    Color? color,
+  }) =>
+      bold(
         context,
         fontSize: AppTheme.fontSize10,
         color: color,

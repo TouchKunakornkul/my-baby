@@ -1,22 +1,15 @@
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/my_flutter_app_icons.dart';
 import 'package:my_baby/providers/child_provider.dart';
-import 'package:my_baby/providers/develop_provider.dart';
+import 'package:my_baby/screens/home/widgets/home_content.dart';
 import 'package:my_baby/utils/date_utils.dart';
 import 'package:my_baby/widgets/child_image.dart';
-import 'package:my_baby/widgets/develop_section.dart';
 import 'package:my_baby/widgets/edit_child_dialog.dart';
-import 'package:my_baby/widgets/growth_line_chart.dart';
 import 'package:my_baby/providers/growth_provider.dart';
-import 'package:my_baby/widgets/summary_bar.dart';
+import 'package:my_baby/screens/home/widgets/summary_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 const double IMAGE_HEIGHT = 770;
 const double LOGO_HEIGHT = 23;
@@ -31,14 +24,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    context.read<ChildProvider>().getChild();
-    context.read<DevelopProvider>().listDevelops();
+    final child = context.read<ChildProvider>().child;
+    if (child != null) {
+      context.read<GrowthProvider>().setChild(child.id);
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final growths = context.watch<GrowthProvider>().growths;
     final child = context.watch<ChildProvider>().child;
     return Scaffold(
       appBar: AppBar(
@@ -109,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         if (child?.birthDate != null)
                                           Wrap(
                                             children: [
-                                              Text(DateFormat('dd MMM yyyy')
+                                              Text(DateFormat('d MMM yyyy')
                                                   .format(child!.birthDate)),
                                               const SizedBox(
                                                 width: AppTheme.spacing4,
@@ -147,28 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     )
                   ],
                 ),
-                // LineChart(
-                //   LineChartData(
-                //     minX: 1,
-                //     minY: 1,
-                //     lineBarsData: [
-                //       LineChartBarData(
-                //           spots: growths
-                //               .asMap()
-                //               .entries
-                //               .map<FlSpot>((entry) =>
-                //                   FlSpot(entry.key.toDouble(), entry.value.height))
-                //               .toList(),
-                //           isCurved: false,
-                //           dotData: const FlDotData(
-                //             show: false,
-                //           ),
-                //           color: Colors.red)
-                //     ],
-                //   ),
-                // ),
-                // const DevelopSection(),
-                // const SizedBox(height: 300, child: GrowthLineChart()),
+                const HomeContent()
               ],
             ),
           ),

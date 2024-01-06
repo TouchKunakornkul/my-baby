@@ -6,6 +6,11 @@ enum ButtonType {
   secondary,
 }
 
+enum ButtonBorder {
+  square,
+  circular,
+}
+
 enum ButtonSize {
   large,
   medium,
@@ -26,7 +31,7 @@ class BaseButton extends StatelessWidget {
   final ButtonType type;
   final ButtonSize size;
   final bool disabled;
-  final double borderRadius;
+  final double? borderRadius;
   final double horizontalPadding;
   final double? height;
   final double? width;
@@ -35,6 +40,7 @@ class BaseButton extends StatelessWidget {
   final IconData? prefixIcon;
   final String? imageAsset;
   final FontWeight? fontWeight;
+  final ButtonBorder buttonBorder;
   final bool hasIconSpace;
 
   const BaseButton(
@@ -50,8 +56,9 @@ class BaseButton extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.imageAsset,
-    this.borderRadius = AppTheme.borderRadius4,
+    this.borderRadius,
     this.horizontalPadding = AppTheme.spacing16,
+    this.buttonBorder = ButtonBorder.square,
     this.color,
     this.fontWeight,
     this.hasIconSpace = true,
@@ -75,6 +82,9 @@ class BaseButton extends StatelessWidget {
     if (disabled) {
       return AppTheme.grayShade.shade05;
     } else {
+      if (type == ButtonType.primary) {
+        return _colorShade.light;
+      }
       return _colorShade.main;
     }
   }
@@ -99,7 +109,7 @@ class BaseButton extends StatelessWidget {
       return Colors.transparent;
     }
     if (disabled) return AppTheme.grayShade.shade05;
-    return _colorShade.main;
+    return _colorShade.light;
   }
 
   Color get _textColor {
@@ -108,7 +118,7 @@ class BaseButton extends StatelessWidget {
       return _colorShade.main;
     }
     if (disabled) return AppTheme.grayShade.shade04;
-    return AppTheme.grayShade.shade08;
+    return _colorShade.main;
   }
 
   TextStyle _textStyle(BuildContext context) {
@@ -127,6 +137,13 @@ class BaseButton extends StatelessWidget {
     return style;
   }
 
+  double get _borderRadius {
+    if (borderRadius != null) return borderRadius!;
+    return buttonBorder == ButtonBorder.square
+        ? AppTheme.borderRadius4
+        : AppTheme.borderRadius50;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -143,7 +160,7 @@ class BaseButton extends StatelessWidget {
             elevation: MaterialStateProperty.all<double>(0),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(borderRadius),
+                borderRadius: BorderRadius.circular(_borderRadius),
                 side: BorderSide(
                   color: _borderColor,
                   width: type == ButtonType.secondary ? 1 : 0,

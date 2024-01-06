@@ -7,8 +7,8 @@
     "ok": "ตกลง",
     "yes": "ใช่",
     "no": "ไม่ใช่",
-    "add": "เพิ่ม",
-    "edit": "แก้ไข",
+    "add": "+ Add",
+    "edit": "Edit",
     "edit_data": "แก้ไขข้อมูล",
     "delete": "ลบ",
     "save": "Save",
@@ -70,6 +70,17 @@
     "not_more_than": "กรอกค่าได้ไม่เกิน {}"
   },
   "home_screen": {},
+  "growth": {
+    "add_title": "Add Growth",
+    "edit_title": "Edit Growth",
+    "created_at": "Date",
+    "title": "Growth",
+    "subtitle": "+{}% Daily",
+    "kg": "kg",
+    "cm": "cm",
+    "weight": "Weight",
+    "height": "Height"
+  },
   "edit_child_dialog": {
     "title": "Edit Information",
     "display_name": "Display Name",

@@ -357,8 +357,8 @@ class $GrowthsTable extends Growths with TableInfo<$GrowthsTable, Growth> {
   static const VerificationMeta _heightMeta = const VerificationMeta('height');
   @override
   late final GeneratedColumn<double> height = GeneratedColumn<double>(
-      'height', aliasedName, false,
-      type: DriftSqlType.double, requiredDuringInsert: true);
+      'height', aliasedName, true,
+      type: DriftSqlType.double, requiredDuringInsert: false);
   static const VerificationMeta _createdAtMeta =
       const VerificationMeta('createdAt');
   @override
@@ -366,6 +366,7 @@ class $GrowthsTable extends Growths with TableInfo<$GrowthsTable, Growth> {
       'created_at', aliasedName, false,
       type: DriftSqlType.dateTime,
       requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
       defaultValue: currentDateAndTime);
   @override
   List<GeneratedColumn> get $columns =>
@@ -398,8 +399,6 @@ class $GrowthsTable extends Growths with TableInfo<$GrowthsTable, Growth> {
     if (data.containsKey('height')) {
       context.handle(_heightMeta,
           height.isAcceptableOrUnknown(data['height']!, _heightMeta));
-    } else if (isInserting) {
-      context.missing(_heightMeta);
     }
     if (data.containsKey('created_at')) {
       context.handle(_createdAtMeta,
@@ -421,7 +420,7 @@ class $GrowthsTable extends Growths with TableInfo<$GrowthsTable, Growth> {
       weight: attachedDatabase.typeMapping
           .read(DriftSqlType.double, data['${effectivePrefix}weight'])!,
       height: attachedDatabase.typeMapping
-          .read(DriftSqlType.double, data['${effectivePrefix}height'])!,
+          .read(DriftSqlType.double, data['${effectivePrefix}height']),
       createdAt: attachedDatabase.typeMapping
           .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
     );
@@ -437,13 +436,13 @@ class Growth extends DataClass implements Insertable<Growth> {
   final int id;
   final int childId;
   final double weight;
-  final double height;
+  final double? height;
   final DateTime createdAt;
   const Growth(
       {required this.id,
       required this.childId,
       required this.weight,
-      required this.height,
+      this.height,
       required this.createdAt});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -451,7 +450,9 @@ class Growth extends DataClass implements Insertable<Growth> {
     map['id'] = Variable<int>(id);
     map['child_id'] = Variable<int>(childId);
     map['weight'] = Variable<double>(weight);
-    map['height'] = Variable<double>(height);
+    if (!nullToAbsent || height != null) {
+      map['height'] = Variable<double>(height);
+    }
     map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
@@ -461,7 +462,8 @@ class Growth extends DataClass implements Insertable<Growth> {
       id: Value(id),
       childId: Value(childId),
       weight: Value(weight),
-      height: Value(height),
+      height:
+          height == null && nullToAbsent ? const Value.absent() : Value(height),
       createdAt: Value(createdAt),
     );
   }
@@ -473,7 +475,7 @@ class Growth extends DataClass implements Insertable<Growth> {
       id: serializer.fromJson<int>(json['id']),
       childId: serializer.fromJson<int>(json['childId']),
       weight: serializer.fromJson<double>(json['weight']),
-      height: serializer.fromJson<double>(json['height']),
+      height: serializer.fromJson<double?>(json['height']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
@@ -484,7 +486,7 @@ class Growth extends DataClass implements Insertable<Growth> {
       'id': serializer.toJson<int>(id),
       'childId': serializer.toJson<int>(childId),
       'weight': serializer.toJson<double>(weight),
-      'height': serializer.toJson<double>(height),
+      'height': serializer.toJson<double?>(height),
       'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
@@ -493,13 +495,13 @@ class Growth extends DataClass implements Insertable<Growth> {
           {int? id,
           int? childId,
           double? weight,
-          double? height,
+          Value<double?> height = const Value.absent(),
           DateTime? createdAt}) =>
       Growth(
         id: id ?? this.id,
         childId: childId ?? this.childId,
         weight: weight ?? this.weight,
-        height: height ?? this.height,
+        height: height.present ? height.value : this.height,
         createdAt: createdAt ?? this.createdAt,
       );
   @override
@@ -531,7 +533,7 @@ class GrowthsCompanion extends UpdateCompanion<Growth> {
   final Value<int> id;
   final Value<int> childId;
   final Value<double> weight;
-  final Value<double> height;
+  final Value<double?> height;
   final Value<DateTime> createdAt;
   const GrowthsCompanion({
     this.id = const Value.absent(),
@@ -544,11 +546,10 @@ class GrowthsCompanion extends UpdateCompanion<Growth> {
     this.id = const Value.absent(),
     required int childId,
     required double weight,
-    required double height,
+    this.height = const Value.absent(),
     this.createdAt = const Value.absent(),
   })  : childId = Value(childId),
-        weight = Value(weight),
-        height = Value(height);
+        weight = Value(weight);
   static Insertable<Growth> custom({
     Expression<int>? id,
     Expression<int>? childId,
@@ -569,7 +570,7 @@ class GrowthsCompanion extends UpdateCompanion<Growth> {
       {Value<int>? id,
       Value<int>? childId,
       Value<double>? weight,
-      Value<double>? height,
+      Value<double?>? height,
       Value<DateTime>? createdAt}) {
     return GrowthsCompanion(
       id: id ?? this.id,

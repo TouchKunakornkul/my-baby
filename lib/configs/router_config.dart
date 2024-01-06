@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:my_baby/screens/home_screen.dart';
+import 'package:my_baby/screens/home/home_screen.dart';
 import 'package:my_baby/screens/splash_screen.dart';
 
 // GoRouter configuration
