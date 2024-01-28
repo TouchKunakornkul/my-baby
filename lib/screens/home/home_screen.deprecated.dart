@@ -4,6 +4,7 @@ import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/child_provider.dart';
 import 'package:my_baby/providers/menu_provider.dart';
+import 'package:my_baby/screens/home/widgets/growth/add_growth_dialog.dart';
 import 'package:my_baby/screens/home/widgets/home_content.dart';
 import 'package:my_baby/utils/date_utils.dart';
 import 'package:my_baby/widgets/child_image.dart';
@@ -32,25 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  Future<void> _onClickMenu(Menu menu) async {
-    context.read<MenuProvider>().selectMenu(menu);
-    await showModalBottomSheet(
-      context: context,
-      useSafeArea: true,
-      isScrollControlled: true,
-      shape: const ContinuousRectangleBorder(),
-      builder: (BuildContext context) {
-        return const SafeArea(
-          child: FractionallySizedBox(
-            heightFactor: 1,
-            child: HomeContent(),
-          ),
-        );
-      },
-    );
-    context.read<MenuProvider>().selectMenuFromPageView(null);
-  }
-
   @override
   Widget build(BuildContext context) {
     final child = context.watch<ChildProvider>().child;
@@ -65,12 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
         toolbarHeight: 0,
       ),
       body: SafeArea(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Expanded(
-                child: Stack(
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Stack(
                   children: [
                     ChildImage(
                       imageUrl: child?.imageUrl,
@@ -78,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: IMAGE_HEIGHT,
                     ),
                     SizedBox(
+                      height: IMAGE_HEIGHT,
                       child: Column(children: [
                         Container(
                           padding: const EdgeInsets.only(
@@ -117,7 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child?.name ?? '-',
                                           overflow: TextOverflow.ellipsis,
                                           style:
-                                              ThemeTextStyle.headline1(context),
+                                              ThemeTextStyle.headline1(context)
+                                                  .copyWith(fontSize: 40),
                                         ),
                                         if (child?.birthDate != null)
                                           Wrap(
@@ -154,29 +138,62 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
+                        const Expanded(child: SizedBox.shrink()),
+                        // const ListMenuBar(),
                       ]),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: AppTheme.spacing4),
-                        child: ListMenuBar(
-                          onChangeMenu: _onClickMenu,
-                          selectedMenu:
-                              context.watch<MenuProvider>().selectedMenu,
-                        ),
-                      ),
                     )
                   ],
                 ),
-              ),
-              // const HomeContent()
-            ],
+                const HomeContent()
+              ],
+            ),
           ),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButton: context.watch<MenuProvider>().selectedMenu != null
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  width: 57,
+                  height: 57,
+                  child: FittedBox(
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        //...
+                      },
+                      backgroundColor: AppTheme.colorShade.label,
+                      shape: const CircleBorder(),
+                      child: const Icon(CustomIcons.noteAdd),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  width: 68,
+                  height: 68,
+                  child: FittedBox(
+                    child: FloatingActionButton(
+                      backgroundColor: AppTheme.colorShade.primary,
+                      onPressed: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => const AddGrowthDialog());
+                      },
+                      shape: const CircleBorder(),
+                      heroTag: null,
+                      child: const Icon(
+                        CustomIcons.add,
+                        size: 36,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : null,
     );
   }
 }

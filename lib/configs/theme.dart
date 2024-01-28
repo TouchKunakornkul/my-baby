@@ -14,6 +14,33 @@ class ColorShade {
   });
 }
 
+class Shade {
+  final Color primary;
+  final Color secondary;
+  final Color tertiary;
+  final Color text;
+  final Color placeholder;
+  final Color background;
+  final Color background2;
+  final Color error;
+  final Color success;
+  final Color border;
+  final Color label;
+  Shade({
+    required this.primary,
+    required this.secondary,
+    required this.tertiary,
+    required this.text,
+    required this.placeholder,
+    required this.background,
+    required this.background2,
+    required this.error,
+    required this.success,
+    required this.border,
+    required this.label,
+  });
+}
+
 class GreyScaleShade {
   final Color shade01;
   final Color shade02;
@@ -37,6 +64,20 @@ class GreyScaleShade {
 }
 
 class AppTheme {
+  static Shade colorShade = Shade(
+    primary: const Color(0xff4E6AF6),
+    secondary: const Color(0xffDFA2A2),
+    tertiary: const Color(0xffFFE3E3),
+    text: const Color(0xff372A2A),
+    placeholder: const Color(0xffABA4A4),
+    background: const Color(0xffEDEDED),
+    background2: const Color(0xffF8F8F8),
+    error: const Color(0xffFF4B4B),
+    success: const Color(0xff69E39A),
+    border: const Color(0xffC8C8C8),
+    label: const Color(0xff4C4C4C),
+  );
+
   static ColorShade primaryShade = ColorShade(
     dark: const Color(0xff17497C),
     main: const Color(0xff52A5CC),
@@ -102,7 +143,8 @@ class AppTheme {
     shade08: const Color(0xffffffff),
   );
 
-  static MaterialColor primarySwatch = generateMaterialColor(primaryShade.main);
+  static MaterialColor primarySwatch =
+      generateMaterialColor(colorShade.primary);
 
   static ThemeData themeData = ThemeData(
     dialogBackgroundColor: Colors.white,

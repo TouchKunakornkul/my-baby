@@ -54,6 +54,7 @@ class _AddGrowthDialogState extends State<AddGrowthDialog> {
         ),
         BaseTextInput(
           label: "growth.weight".tr(),
+          type: InputType.number,
           controller: _weightController,
           hintText: "growth.kg".tr(),
           validator: (value) {
@@ -65,6 +66,7 @@ class _AddGrowthDialogState extends State<AddGrowthDialog> {
         ),
         BaseTextInput(
           label: "growth.height".tr(),
+          type: InputType.number,
           hintText: "growth.cm".tr(),
           controller: _heightController,
           validator: (value) {

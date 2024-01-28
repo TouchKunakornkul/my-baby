@@ -4,17 +4,18 @@ import 'package:my_baby/models/develop_model.dart';
 import 'package:my_baby/models/growth_model.dart';
 import 'dart:io';
 import 'package:drift/native.dart';
+import 'package:my_baby/models/note_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
 part 'database.g.dart';
 
-@DriftDatabase(tables: [Childs, Growths, Develops])
+@DriftDatabase(tables: [Childs, Growths, Develops, Notes])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
   Future<List<Growth>> listGrowth() {
     return select(growths).get();
   }
@@ -32,6 +33,9 @@ class AppDatabase extends _$AppDatabase {
           await m.alterTable(TableMigration(growths, columnTransformer: {
             growths.height: growths.height.cast<double>(),
           }));
+        }
+        if (from < 3) {
+          await m.createAll();
         }
       },
     );

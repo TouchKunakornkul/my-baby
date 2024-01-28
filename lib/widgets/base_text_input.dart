@@ -82,7 +82,7 @@ class _BaseTextInputState extends State<BaseTextInput> {
             widget.label!,
             style: ThemeTextStyle.boldParagraph3(
               context,
-              color: AppTheme.grayShade.shade03,
+              color: AppTheme.colorShade.text,
             ),
           ),
         const SizedBox(
@@ -99,17 +99,17 @@ class _BaseTextInputState extends State<BaseTextInput> {
           controller: widget.controller,
           focusNode: widget.focusNode,
           keyboardType: widget.type == InputType.number
-              ? TextInputType.number
+              ? const TextInputType.numberWithOptions(decimal: true)
               : (widget.type == InputType.multiline
                   ? TextInputType.multiline
                   : null),
           textInputAction: widget.textInputAction,
           onChanged: widget.onChanged,
           obscureText: widget.type == InputType.password ? _obscureText : false,
-          style: ThemeTextStyle.paragraph2(context,
+          style: ThemeTextStyle.paragraph1(context,
               color: widget.enabled != null && widget.enabled == false
-                  ? AppTheme.grayShade.shade03
-                  : AppTheme.grayShade.shade01),
+                  ? AppTheme.colorShade.placeholder
+                  : AppTheme.colorShade.text),
           decoration: InputDecoration(
             isDense: true,
             helperText: widget.disabledHelperText ? null : ' ',

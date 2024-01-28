@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_baby/configs/theme.dart';
-import 'package:my_baby/icons/my_flutter_app_icons.dart';
+import 'package:my_baby/icons/custom_icons_icons.dart';
 
 class SelectItem {
   final String label;
@@ -52,7 +52,7 @@ class BaseSelect extends StatelessWidget {
                   }
                 },
                 child: Icon(
-                  CustomIcon.left,
+                  CustomIcons.left,
                   color: AppTheme.grayShade.shade05,
                 )),
             Text(
@@ -69,7 +69,7 @@ class BaseSelect extends StatelessWidget {
                   }
                 },
                 child:
-                    Icon(CustomIcon.right, color: AppTheme.grayShade.shade05)),
+                    Icon(CustomIcons.right, color: AppTheme.grayShade.shade05)),
           ],
         ),
       ]),

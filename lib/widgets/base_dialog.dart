@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_baby/configs/theme.dart';
+import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/widgets/base_button.dart';
 
 class BaseDialog extends StatelessWidget {
@@ -26,25 +27,6 @@ class BaseDialog extends StatelessWidget {
       insetPadding: EdgeInsets.zero,
       child: Stack(
         children: [
-          // Positioned(
-          //   top: 0,
-          //   right: 0,
-          //   child: InkWell(
-          //     onTap: () {
-          //       if (onClose != null) {
-          //         onClose!();
-          //       }
-          //       Navigator.of(context).pop();
-          //     },
-          //     child: Ink(
-          //         padding: const EdgeInsets.all(AppTheme.spacing16),
-          //         child: Icon(
-          //           CustomIcons.close,
-          //           size: 18,
-          //           color: AppTheme.grayShade.shade04,
-          //         )),
-          //   ),
-          // ),
           Container(
             width: 332,
             color: AppTheme.grayShade.shade08,
@@ -61,7 +43,7 @@ class BaseDialog extends StatelessWidget {
                         title,
                         textAlign: TextAlign.start,
                         style: ThemeTextStyle.boldParagraph1(context,
-                            color: AppTheme.secondaryShade.main),
+                            color: AppTheme.colorShade.text),
                       ),
                       const SizedBox(
                         height: AppTheme.spacing6,
@@ -107,6 +89,25 @@ class BaseDialog extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: InkWell(
+              onTap: () {
+                if (onClose != null) {
+                  onClose!();
+                }
+                Navigator.of(context).pop();
+              },
+              child: Ink(
+                  padding: const EdgeInsets.all(AppTheme.spacing16),
+                  child: Icon(
+                    CustomIcons.close,
+                    size: 18,
+                    color: AppTheme.colorShade.text,
+                  )),
             ),
           ),
         ],

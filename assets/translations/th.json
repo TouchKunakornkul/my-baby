@@ -7,7 +7,7 @@
     "ok": "ตกลง",
     "yes": "ใช่",
     "no": "ไม่ใช่",
-    "add": "+ Add",
+    "add": "Add",
     "edit": "Edit",
     "edit_data": "แก้ไขข้อมูล",
     "delete": "ลบ",
@@ -80,6 +80,18 @@
     "cm": "cm",
     "weight": "Weight",
     "height": "Height"
+  },
+  "feeding": {
+    "title": "Feeding"
+  },
+  "milk_stock": {
+    "title": "Milk Stock"
+  },
+  "note": {
+    "title": "Note",
+    "add_title": "Add Note",
+    "note_placeholder": "Note",
+    "note": "Note"
   },
   "edit_child_dialog": {
     "title": "Edit Information",

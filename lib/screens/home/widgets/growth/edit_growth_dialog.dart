@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/utils/double_utils.dart';
+import 'package:my_baby/widgets/base_bottom_sheet.dart';
 import 'package:my_baby/widgets/base_dialog.dart';
-import 'package:my_baby/widgets/base_select.dart';
+import 'package:my_baby/widgets/base_select_input.dart';
 import 'package:my_baby/widgets/base_text_input.dart';
 import 'package:provider/provider.dart';
 
@@ -72,10 +73,11 @@ class _EditGrowthDialogState extends State<EditGrowthDialog> {
         const SizedBox(
           height: AppTheme.spacing20,
         ),
-        BaseSelect(
+        BaseSelectInput(
+          hint: "growth.created_at".tr(),
           items: growthList,
-          value: _selectedItem,
-          onChange: _onChangeDate,
+          initialValue: _selectedItem,
+          onChanged: _onChangeDate,
           label: "growth.created_at".tr(),
         ),
         const SizedBox(
@@ -84,6 +86,7 @@ class _EditGrowthDialogState extends State<EditGrowthDialog> {
         BaseTextInput(
           label: "growth.weight".tr(),
           controller: _weightController,
+          type: InputType.number,
           hintText: "growth.kg".tr(),
           validator: (value) {
             if (value == null || value == "") {
@@ -96,6 +99,7 @@ class _EditGrowthDialogState extends State<EditGrowthDialog> {
           label: "growth.height".tr(),
           hintText: "growth.cm".tr(),
           controller: _heightController,
+          type: InputType.number,
           validator: (value) {
             return null;
           },

@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/service/locator.dart';
 
+const GROWTH_NOTE_TYPE = 'growth';
+
 class GrowthProvider extends ChangeNotifier {
   final AppDatabase _appDatabase = locator<AppDatabase>();
   List<Growth> growths = [];
   late int childId;
+  List<Note> notes = [];
 
   double? get weight {
     return growths.lastOrNull?.weight;
@@ -28,6 +31,8 @@ class GrowthProvider extends ChangeNotifier {
   Future<void> setChild(int id) async {
     childId = id;
     await listGrowth();
+    await listGrowthNote();
+    print(notes);
   }
 
   Future<List<Growth>> listGrowth() async {
@@ -58,5 +63,25 @@ class GrowthProvider extends ChangeNotifier {
         .update(_appDatabase.growths)
         .replace(growth.copyWith(weight: weight, height: Value(height)));
     await listGrowth();
+  }
+
+  Future<List<Note>> listGrowthNote() async {
+    final result = await (_appDatabase.select(_appDatabase.notes)
+          ..where((g) => g.childId.equals(childId))
+          ..where((g) => g.type.equals(GROWTH_NOTE_TYPE))
+          ..orderBy([(g) => OrderingTerm(expression: g.createdAt)]))
+        .get();
+    notes = result;
+    notifyListeners();
+    return result;
+  }
+
+  Future<void> addGrowthNote({required String note}) async {
+    await _appDatabase.into(_appDatabase.notes).insert(NotesCompanion(
+          note: Value(note),
+          type: const Value(GROWTH_NOTE_TYPE),
+          childId: Value(childId),
+        ));
+    await listGrowthNote();
   }
 }

@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_baby/configs/theme.dart';
-import 'package:my_baby/icons/my_flutter_app_icons.dart';
+import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/child_provider.dart';
 import 'package:my_baby/widgets/base_date_picker.dart';
 import 'package:my_baby/widgets/base_dialog.dart';
@@ -81,7 +81,7 @@ class _EditChildDialogState extends State<EditChildDialog> {
                 width: 120,
                 child: Center(
                   child: Icon(
-                    CustomIcon.camera,
+                    CustomIcons.camera,
                     color: AppTheme.grayShade.shade08,
                   ),
                 ),

@@ -100,7 +100,7 @@ class BaseButton extends StatelessWidget {
         return 32;
       case ButtonSize.medium:
       default:
-        return 40;
+        return 51;
     }
   }
 
@@ -108,8 +108,8 @@ class BaseButton extends StatelessWidget {
     if (type == ButtonType.secondary) {
       return Colors.transparent;
     }
-    if (disabled) return AppTheme.grayShade.shade05;
-    return _colorShade.light;
+    if (disabled) return AppTheme.colorShade.placeholder;
+    return AppTheme.colorShade.primary;
   }
 
   Color get _textColor {
@@ -118,19 +118,14 @@ class BaseButton extends StatelessWidget {
       return _colorShade.main;
     }
     if (disabled) return AppTheme.grayShade.shade04;
-    return _colorShade.main;
+    return Colors.white;
   }
 
   TextStyle _textStyle(BuildContext context) {
-    var style = size == ButtonSize.large
-        ? ThemeTextStyle.boldParagraph1(
-            context,
-            color: _textColor,
-          )
-        : ThemeTextStyle.boldParagraph2(
-            context,
-            color: _textColor,
-          );
+    var style = ThemeTextStyle.boldParagraph1(
+      context,
+      color: _textColor,
+    );
     if (fontWeight != null) {
       style = style.copyWith(fontWeight: fontWeight);
     }
@@ -195,7 +190,7 @@ class BaseButton extends StatelessWidget {
                 color: _textColor,
               ),
             Text(
-              text,
+              text.toUpperCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               softWrap: false,

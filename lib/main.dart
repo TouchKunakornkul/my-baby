@@ -6,6 +6,7 @@ import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/providers/child_provider.dart';
 import 'package:my_baby/providers/develop_provider.dart';
 import 'package:my_baby/providers/growth_provider.dart';
+import 'package:my_baby/providers/menu_provider.dart';
 import 'package:my_baby/service/locator.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider<ChildProvider>(create: (_) => ChildProvider()),
         ChangeNotifierProvider<GrowthProvider>(create: (_) => GrowthProvider()),
+        ChangeNotifierProvider<MenuProvider>(create: (_) => MenuProvider()),
         ChangeNotifierProvider<DevelopProvider>(
             create: (_) => DevelopProvider()),
       ],

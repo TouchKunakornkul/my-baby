@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:my_baby/icons/my_flutter_app_icons.dart';
+import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/develop_provider.dart';
 import 'package:my_baby/widgets/base_dialog.dart';
 import 'package:provider/provider.dart';
@@ -169,19 +169,19 @@ class DevelopSection extends StatelessWidget {
                   Row(
                     children: [
                       DevelopItem(
-                        icon: CustomIcon.edit,
+                        icon: CustomIcons.edit,
                         checkedAt: muscle?.createdAt,
                       ),
                       DevelopItem(
-                        icon: CustomIcon.edit,
+                        icon: CustomIcons.edit,
                         checkedAt: brain?.createdAt,
                       ),
                       DevelopItem(
-                        icon: CustomIcon.edit,
+                        icon: CustomIcons.edit,
                         checkedAt: people?.createdAt,
                       ),
                       DevelopItem(
-                        icon: CustomIcon.edit,
+                        icon: CustomIcons.edit,
                         checkedAt: emotion?.createdAt,
                       )
                     ],
