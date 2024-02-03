@@ -34,9 +34,9 @@ class BaseSelect extends StatelessWidget {
       child: Column(children: [
         Text(
           label,
-          style: ThemeTextStyle.boldParagraph4(
+          style: ThemeTextStyle.boldParagraph3(
             context,
-            color: AppTheme.grayShade.shade03,
+            color: AppTheme.colorShade.text,
           ),
         ),
         const SizedBox(

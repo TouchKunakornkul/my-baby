@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/child_provider.dart';
+import 'package:my_baby/providers/feeding_provider.dart';
 import 'package:my_baby/providers/menu_provider.dart';
 import 'package:my_baby/screens/home/widgets/growth/add_growth_dialog.dart';
 import 'package:my_baby/screens/home/widgets/home_content.dart';
@@ -29,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final child = context.read<ChildProvider>().child;
     if (child != null) {
       context.read<GrowthProvider>().setChild(child.id);
+      context.read<FeedingProvider>().setChild(child.id);
     }
     super.initState();
   }

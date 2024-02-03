@@ -1190,16 +1190,378 @@ class NotesCompanion extends UpdateCompanion<Note> {
   }
 }
 
+class $FeedingsTable extends Feedings with TableInfo<$FeedingsTable, Feeding> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FeedingsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _childIdMeta =
+      const VerificationMeta('childId');
+  @override
+  late final GeneratedColumn<int> childId = GeneratedColumn<int>(
+      'child_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES childs (id)'));
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<double> amount = GeneratedColumn<double>(
+      'amount', aliasedName, false,
+      type: DriftSqlType.double, requiredDuringInsert: true);
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+      'type', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _feedTimeMeta =
+      const VerificationMeta('feedTime');
+  @override
+  late final GeneratedColumn<DateTime> feedTime = GeneratedColumn<DateTime>(
+      'feed_time', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, childId, amount, type, feedTime, updatedAt, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'feedings';
+  @override
+  VerificationContext validateIntegrity(Insertable<Feeding> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('child_id')) {
+      context.handle(_childIdMeta,
+          childId.isAcceptableOrUnknown(data['child_id']!, _childIdMeta));
+    } else if (isInserting) {
+      context.missing(_childIdMeta);
+    }
+    if (data.containsKey('amount')) {
+      context.handle(_amountMeta,
+          amount.isAcceptableOrUnknown(data['amount']!, _amountMeta));
+    } else if (isInserting) {
+      context.missing(_amountMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+          _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('feed_time')) {
+      context.handle(_feedTimeMeta,
+          feedTime.isAcceptableOrUnknown(data['feed_time']!, _feedTimeMeta));
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Feeding map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Feeding(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      childId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}child_id'])!,
+      amount: attachedDatabase.typeMapping
+          .read(DriftSqlType.double, data['${effectivePrefix}amount'])!,
+      type: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}type'])!,
+      feedTime: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}feed_time'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $FeedingsTable createAlias(String alias) {
+    return $FeedingsTable(attachedDatabase, alias);
+  }
+}
+
+class Feeding extends DataClass implements Insertable<Feeding> {
+  final int id;
+  final int childId;
+  final double amount;
+  final String type;
+  final DateTime feedTime;
+  final DateTime updatedAt;
+  final DateTime createdAt;
+  const Feeding(
+      {required this.id,
+      required this.childId,
+      required this.amount,
+      required this.type,
+      required this.feedTime,
+      required this.updatedAt,
+      required this.createdAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['child_id'] = Variable<int>(childId);
+    map['amount'] = Variable<double>(amount);
+    map['type'] = Variable<String>(type);
+    map['feed_time'] = Variable<DateTime>(feedTime);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  FeedingsCompanion toCompanion(bool nullToAbsent) {
+    return FeedingsCompanion(
+      id: Value(id),
+      childId: Value(childId),
+      amount: Value(amount),
+      type: Value(type),
+      feedTime: Value(feedTime),
+      updatedAt: Value(updatedAt),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory Feeding.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Feeding(
+      id: serializer.fromJson<int>(json['id']),
+      childId: serializer.fromJson<int>(json['childId']),
+      amount: serializer.fromJson<double>(json['amount']),
+      type: serializer.fromJson<String>(json['type']),
+      feedTime: serializer.fromJson<DateTime>(json['feedTime']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'childId': serializer.toJson<int>(childId),
+      'amount': serializer.toJson<double>(amount),
+      'type': serializer.toJson<String>(type),
+      'feedTime': serializer.toJson<DateTime>(feedTime),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  Feeding copyWith(
+          {int? id,
+          int? childId,
+          double? amount,
+          String? type,
+          DateTime? feedTime,
+          DateTime? updatedAt,
+          DateTime? createdAt}) =>
+      Feeding(
+        id: id ?? this.id,
+        childId: childId ?? this.childId,
+        amount: amount ?? this.amount,
+        type: type ?? this.type,
+        feedTime: feedTime ?? this.feedTime,
+        updatedAt: updatedAt ?? this.updatedAt,
+        createdAt: createdAt ?? this.createdAt,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Feeding(')
+          ..write('id: $id, ')
+          ..write('childId: $childId, ')
+          ..write('amount: $amount, ')
+          ..write('type: $type, ')
+          ..write('feedTime: $feedTime, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(id, childId, amount, type, feedTime, updatedAt, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Feeding &&
+          other.id == this.id &&
+          other.childId == this.childId &&
+          other.amount == this.amount &&
+          other.type == this.type &&
+          other.feedTime == this.feedTime &&
+          other.updatedAt == this.updatedAt &&
+          other.createdAt == this.createdAt);
+}
+
+class FeedingsCompanion extends UpdateCompanion<Feeding> {
+  final Value<int> id;
+  final Value<int> childId;
+  final Value<double> amount;
+  final Value<String> type;
+  final Value<DateTime> feedTime;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime> createdAt;
+  const FeedingsCompanion({
+    this.id = const Value.absent(),
+    this.childId = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.type = const Value.absent(),
+    this.feedTime = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  FeedingsCompanion.insert({
+    this.id = const Value.absent(),
+    required int childId,
+    required double amount,
+    required String type,
+    this.feedTime = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  })  : childId = Value(childId),
+        amount = Value(amount),
+        type = Value(type);
+  static Insertable<Feeding> custom({
+    Expression<int>? id,
+    Expression<int>? childId,
+    Expression<double>? amount,
+    Expression<String>? type,
+    Expression<DateTime>? feedTime,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (childId != null) 'child_id': childId,
+      if (amount != null) 'amount': amount,
+      if (type != null) 'type': type,
+      if (feedTime != null) 'feed_time': feedTime,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  FeedingsCompanion copyWith(
+      {Value<int>? id,
+      Value<int>? childId,
+      Value<double>? amount,
+      Value<String>? type,
+      Value<DateTime>? feedTime,
+      Value<DateTime>? updatedAt,
+      Value<DateTime>? createdAt}) {
+    return FeedingsCompanion(
+      id: id ?? this.id,
+      childId: childId ?? this.childId,
+      amount: amount ?? this.amount,
+      type: type ?? this.type,
+      feedTime: feedTime ?? this.feedTime,
+      updatedAt: updatedAt ?? this.updatedAt,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (childId.present) {
+      map['child_id'] = Variable<int>(childId.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<double>(amount.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (feedTime.present) {
+      map['feed_time'] = Variable<DateTime>(feedTime.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FeedingsCompanion(')
+          ..write('id: $id, ')
+          ..write('childId: $childId, ')
+          ..write('amount: $amount, ')
+          ..write('type: $type, ')
+          ..write('feedTime: $feedTime, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   late final $ChildsTable childs = $ChildsTable(this);
   late final $GrowthsTable growths = $GrowthsTable(this);
   late final $DevelopsTable develops = $DevelopsTable(this);
   late final $NotesTable notes = $NotesTable(this);
+  late final $FeedingsTable feedings = $FeedingsTable(this);
+  late final FeedingsDao feedingsDao = FeedingsDao(this as AppDatabase);
+  late final NotesDao notesDao = NotesDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [childs, growths, develops, notes];
+      [childs, growths, develops, notes, feedings];
 }

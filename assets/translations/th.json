@@ -82,7 +82,22 @@
     "height": "Height"
   },
   "feeding": {
-    "title": "Feeding"
+    "title": "Feeding",
+    "subtitle": "Every 2 hour Next is 23:00",
+    "add_title": "Add Feeding",
+    "edit_title": "Edit Feeding",
+    "feed_time": "Feedtime",
+    "amount": "Amount",
+    "type_label": "Type",
+    "type": {
+      "breast": "Breast",
+      "formula": "Formula",
+      "bottle": "Bottle"
+    },
+    "daily": "Daily(oz)",
+    "ounce": "Ounce",
+    "average": "Average feed",
+    "oz_per_day": "{} Oz/day"
   },
   "milk_stock": {
     "title": "Milk Stock"

@@ -1,6 +1,9 @@
 import 'package:drift/drift.dart';
+import 'package:my_baby/daos/feeding_dao.dart';
+import 'package:my_baby/daos/note_dao.dart';
 import 'package:my_baby/models/child_model.dart';
 import 'package:my_baby/models/develop_model.dart';
+import 'package:my_baby/models/feeding_model.dart';
 import 'package:my_baby/models/growth_model.dart';
 import 'dart:io';
 import 'package:drift/native.dart';
@@ -10,12 +13,30 @@ import 'package:path/path.dart' as p;
 
 part 'database.g.dart';
 
-@DriftDatabase(tables: [Childs, Growths, Develops, Notes])
+// part 'feedings_dao.g.dart';
+
+// the _TodosDaoMixin will be created by drift. It contains all the necessary
+// fields for the tables. The <MyDatabase> type annotation is the database class
+// that should use this dao.
+// @DriftAccessor(tables: [Feedings])
+// class FeedingsDao extends DatabaseAccessor<AppDatabase>
+//     with _$FeedingsDaoMixin {
+//   // this constructor is required so that the main database can create an instance
+//   // of this object.
+//   FeedingsDao(AppDatabase db) : super(db);
+//   Future<List<Feeding>> listFeeding() {
+//     return select(feedings).get();
+//   }
+// }
+
+@DriftDatabase(
+    tables: [Childs, Growths, Develops, Notes, Feedings],
+    daos: [FeedingsDao, NotesDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
   Future<List<Growth>> listGrowth() {
     return select(growths).get();
   }
@@ -35,7 +56,10 @@ class AppDatabase extends _$AppDatabase {
           }));
         }
         if (from < 3) {
-          await m.createAll();
+          await m.create(notes);
+        }
+        if (from < 4) {
+          await m.create(feedings);
         }
       },
     );

@@ -32,7 +32,6 @@ class GrowthProvider extends ChangeNotifier {
     childId = id;
     await listGrowth();
     await listGrowthNote();
-    print(notes);
   }
 
   Future<List<Growth>> listGrowth() async {

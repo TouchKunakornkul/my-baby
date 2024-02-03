@@ -166,7 +166,6 @@ class _BaseSectionState extends State<BaseSection> {
                   height: AppTheme.spacing14,
                 ),
                 NoteSection(notes: widget.notes),
-
                 // spacing for floating button
                 const SizedBox(
                   height: 140,

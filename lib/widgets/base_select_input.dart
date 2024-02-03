@@ -60,12 +60,16 @@ class _BaseSelectInputState extends State<BaseSelectInput> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (!widget.innerLabel)
-          Text(widget.label,
-              style: ThemeTextStyle.paragraph2(context,
-                  color: AppTheme.grayShade.shade03)),
+          Text(
+            widget.label,
+            style: ThemeTextStyle.boldParagraph3(
+              context,
+              color: AppTheme.colorShade.text,
+            ),
+          ),
         if (!widget.innerLabel)
           const SizedBox(
-            height: AppTheme.spacing2,
+            height: AppTheme.spacing8,
           ),
         GestureDetector(
             behavior: HitTestBehavior.opaque,

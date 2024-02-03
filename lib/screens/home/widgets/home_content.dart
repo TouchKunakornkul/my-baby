@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_baby/providers/menu_provider.dart';
-import 'package:my_baby/screens/home/widgets/feeding_section.dart';
+import 'package:my_baby/screens/home/widgets/feeding/feeding_section.dart';
 import 'package:my_baby/screens/home/widgets/growth/growth_section.dart';
 import 'package:my_baby/screens/home/widgets/list_menu_bar.dart';
 import 'package:my_baby/screens/home/widgets/milk_stock_section.dart';
