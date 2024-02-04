@@ -8,6 +8,7 @@ import 'package:my_baby/providers/develop_provider.dart';
 import 'package:my_baby/providers/feeding_provider.dart';
 import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/providers/menu_provider.dart';
+import 'package:my_baby/providers/stock_provider.dart';
 import 'package:my_baby/service/locator.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,7 @@ void main() async {
         ChangeNotifierProvider<MenuProvider>(create: (_) => MenuProvider()),
         ChangeNotifierProvider<FeedingProvider>(
             create: (_) => FeedingProvider()),
+        ChangeNotifierProvider<StockProvider>(create: (_) => StockProvider()),
         ChangeNotifierProvider<DevelopProvider>(
             create: (_) => DevelopProvider()),
       ],

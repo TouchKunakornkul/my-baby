@@ -3,7 +3,7 @@ import 'package:my_baby/providers/menu_provider.dart';
 import 'package:my_baby/screens/home/widgets/feeding/feeding_section.dart';
 import 'package:my_baby/screens/home/widgets/growth/growth_section.dart';
 import 'package:my_baby/screens/home/widgets/list_menu_bar.dart';
-import 'package:my_baby/screens/home/widgets/milk_stock_section.dart';
+import 'package:my_baby/screens/home/widgets/stock/stock_section.dart';
 import 'package:provider/provider.dart';
 
 class HomeContent extends StatelessWidget {
@@ -33,7 +33,11 @@ class HomeContent extends StatelessWidget {
               controller: context.watch<MenuProvider>().pageController,
               onPageChanged: (value) =>
                   _onChangeMenuFromPageView(context, Menu.values[value]),
-              children: const [GrowthSection(), FeedingSection(), MilkStock()],
+              children: const [
+                GrowthSection(),
+                FeedingSection(),
+                StockSection()
+              ],
             ))
           ],
         ));

@@ -48,8 +48,9 @@ class _EditFeedingDialogState extends State<EditFeedingDialog> {
     final feedings = context.read<FeedingProvider>().feedings;
     final selectedFeeding =
         feedings.firstWhere((f) => f.id.toString() == _selectedItem);
-    _amountController.text = formatDouble(selectedFeeding.amount);
     setState(() {
+      _amountController.text = formatDouble(selectedFeeding.amount);
+      _type = stringToFeedingType(selectedFeeding.type);
       _selectedItem = value;
     });
   }

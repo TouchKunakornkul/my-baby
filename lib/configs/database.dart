@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 import 'package:my_baby/daos/feeding_dao.dart';
 import 'package:my_baby/daos/note_dao.dart';
+import 'package:my_baby/daos/stock_dao.dart';
 import 'package:my_baby/models/child_model.dart';
 import 'package:my_baby/models/develop_model.dart';
 import 'package:my_baby/models/feeding_model.dart';
@@ -8,6 +9,7 @@ import 'package:my_baby/models/growth_model.dart';
 import 'dart:io';
 import 'package:drift/native.dart';
 import 'package:my_baby/models/note_model.dart';
+import 'package:my_baby/models/stock_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
@@ -30,13 +32,13 @@ part 'database.g.dart';
 // }
 
 @DriftDatabase(
-    tables: [Childs, Growths, Develops, Notes, Feedings],
-    daos: [FeedingsDao, NotesDao])
+    tables: [Childs, Growths, Develops, Notes, Feedings, Stocks],
+    daos: [FeedingsDao, NotesDao, StocksDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
   Future<List<Growth>> listGrowth() {
     return select(growths).get();
   }
@@ -61,7 +63,6 @@ class AppDatabase extends _$AppDatabase {
         if (from < 4) {
           await m.create(feedings);
         }
-
         if (from < 5) {
           await customUpdate(
             "UPDATE feedings SET type = 'stock' WHERE type = 'bottle'",
@@ -71,6 +72,9 @@ class AppDatabase extends _$AppDatabase {
             "UPDATE feedings SET type = 'powder' WHERE type = 'formula'",
             updates: {feedings},
           );
+        }
+        if (from < 6) {
+          await m.create(stocks);
         }
       },
     );
