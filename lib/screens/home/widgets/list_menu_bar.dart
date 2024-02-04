@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
+import 'package:my_baby/providers/feeding_provider.dart';
 import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/providers/menu_provider.dart';
 import 'package:my_baby/utils/double_utils.dart';
@@ -18,6 +19,8 @@ class ListMenuBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final weight = context.watch<GrowthProvider>().weight;
+    final averageAmountPerDay =
+        context.watch<FeedingProvider>().averageAmountPerDay;
 
     final widgets = [
       SummaryItem(
@@ -32,7 +35,7 @@ class ListMenuBar extends StatelessWidget {
         icon: CustomIcons.bottle,
         onClick: onChangeMenu,
         menu: Menu.Feeding,
-        text: "4.4kg",
+        text: "${formatDouble(averageAmountPerDay)} ${"feeding.oz".tr()}",
       ),
       SummaryItem(
         selectedMenu: selectedMenu,

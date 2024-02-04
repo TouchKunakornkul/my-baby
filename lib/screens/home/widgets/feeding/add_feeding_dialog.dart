@@ -19,7 +19,7 @@ class AddFeedingDialog extends StatefulWidget {
 
 class _AddFeedingDialogState extends State<AddFeedingDialog> {
   final TextEditingController _amountController = TextEditingController();
-  FeedingType _type = FeedingType.bottle;
+  FeedingType _type = FeedingType.stock;
   DateTime _feedTime = DateTime.now();
 
   @override

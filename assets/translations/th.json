@@ -88,11 +88,12 @@
     "edit_title": "Edit Feeding",
     "feed_time": "Feedtime",
     "amount": "Amount",
+    "oz": "Oz.",
     "type_label": "Type",
     "type": {
       "breast": "Breast",
-      "formula": "Formula",
-      "bottle": "Bottle"
+      "stock": "Stock",
+      "powder": "Milk powder"
     },
     "daily": "Daily(oz)",
     "ounce": "Ounce",

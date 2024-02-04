@@ -72,7 +72,7 @@ class FeedingSection extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: AppTheme.spacing2),
                 child: Text(
                   DateFormat('HH:mm').format(feeding.feedTime),
-                  style: ThemeTextStyle.boldParagraph1(context,
+                  style: ThemeTextStyle.paragraph1(context,
                       color: AppTheme.colorShade.text),
                 ),
               ),

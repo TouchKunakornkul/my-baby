@@ -36,7 +36,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
   Future<List<Growth>> listGrowth() {
     return select(growths).get();
   }
@@ -60,6 +60,17 @@ class AppDatabase extends _$AppDatabase {
         }
         if (from < 4) {
           await m.create(feedings);
+        }
+
+        if (from < 5) {
+          await customUpdate(
+            "UPDATE feedings SET type = 'stock' WHERE type = 'bottle'",
+            updates: {feedings},
+          );
+          await customUpdate(
+            "UPDATE feedings SET type = 'powder' WHERE type = 'formula'",
+            updates: {feedings},
+          );
         }
       },
     );
