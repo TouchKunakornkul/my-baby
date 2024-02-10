@@ -78,9 +78,15 @@ class GrowthSection extends StatelessWidget {
       title: "growth.title".tr(),
       onAddNote: (note) => _onAddGrowthNote(context, note),
       notes: context.watch<GrowthProvider>().notes,
-      subtitle: growthRate != null
-          ? "growth.subtitle".tr(args: [growthRate.toStringAsFixed(0)])
-          : '-',
+      subtitle: Text(
+        growthRate != null
+            ? "growth.subtitle".tr(args: [growthRate.toStringAsFixed(0)])
+            : '-',
+        style: ThemeTextStyle.paragraph1(
+          context,
+          color: AppTheme.colorShade.secondary,
+        ),
+      ),
       onClickBook: () {
         BaseInformationBottomSheet.show(context, const GrowthInformation());
       },

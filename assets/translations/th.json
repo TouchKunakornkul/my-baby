@@ -1,13 +1,14 @@
 {
   "common": {
     "confirm": "ยืนยัน",
-    "cancel": "ยกเลิก",
+    "cancel": "Cancel",
     "back": "ย้อนกลับ",
     "close": "ปิด",
     "ok": "ตกลง",
     "yes": "ใช่",
     "no": "ไม่ใช่",
     "add": "Add",
+    "+add": "+Add",
     "edit": "Edit",
     "edit_data": "แก้ไขข้อมูล",
     "delete": "ลบ",
@@ -87,6 +88,8 @@
     "add_title": "Add Feeding",
     "edit_title": "Edit Feeding",
     "feed_time": "Feedtime",
+    "feeding_date": "Date",
+    "feeding_time": "Time",
     "amount": "Amount",
     "oz": "Oz.",
     "type_label": "Type",
@@ -100,8 +103,19 @@
     "average": "Average feed",
     "oz_per_day": "{} Oz/day"
   },
-  "milk_stock": {
-    "title": "Milk Stock"
+  "stock": {
+    "title": "Milk Stock",
+    "oz": "Oz",
+    "daily": "Daily(oz)",
+    "ounce": "Ounce",
+    "time": "Time",
+    "date": "Date",
+    "add_title": "Add Milk Stock",
+    "edit_title": "Edit Milk Stock",
+    "total_stock": "Total Stock",
+    "days": "Days",
+    "subtitle": "Already save for 1 day",
+    "amount": "Pumping Amount"
   },
   "note": {
     "title": "Note",

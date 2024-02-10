@@ -1,75 +1,66 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_baby/configs/theme.dart';
-import 'package:my_baby/providers/feeding_provider.dart';
-import 'package:my_baby/widgets/base_bottom_sheet.dart';
+import 'package:my_baby/providers/stock_provider.dart';
 import 'package:my_baby/widgets/base_date_picker.dart';
 import 'package:my_baby/widgets/base_dialog.dart';
-import 'package:my_baby/widgets/base_select_input.dart';
 import 'package:my_baby/widgets/base_text_input.dart';
 import 'package:my_baby/widgets/base_time_picker.dart';
 import 'package:provider/provider.dart';
 
-class AddFeedingDialog extends StatefulWidget {
-  const AddFeedingDialog({super.key});
+class AddStockDialog extends StatefulWidget {
+  const AddStockDialog({super.key});
 
   @override
-  State<AddFeedingDialog> createState() => _AddFeedingDialogState();
+  State<AddStockDialog> createState() => _AddStockDialogState();
 }
 
-class _AddFeedingDialogState extends State<AddFeedingDialog> {
+class _AddStockDialogState extends State<AddStockDialog> {
   final TextEditingController _amountController = TextEditingController();
-  FeedingType _type = FeedingType.stock;
-  DateTime _feedTime = DateTime.now();
+  DateTime _stockAt = DateTime.now();
 
   @override
   void initState() {
     super.initState();
   }
 
-  Future<void> _addFeeding() async {
+  Future<void> _addStock() async {
     final amount = double.tryParse(_amountController.text);
     if (amount != null) {
       await context
-          .read<FeedingProvider>()
-          .addFeeding(feedTime: _feedTime, amount: amount, type: _type);
+          .read<StockProvider>()
+          .addStock(createdAt: _stockAt, amount: amount);
     }
-  }
-
-  void _onChangeType(String value) {
-    setState(() {
-      _type = FeedingType.values.firstWhere((e) => e.name == value);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return BaseDialog(
-      title: 'feeding.add_title'.tr(),
+      title: 'stock.add_title'.tr(),
       content: Column(children: [
         const SizedBox(
           height: AppTheme.spacing20,
         ),
         BaseDatePicker(
-          label: "feeding.feeding_date".tr(),
-          value: _feedTime,
+          label: "stock.date".tr(),
+          value: _stockAt,
           onChange: (date) {
             setState(() {
-              _feedTime = date;
+              _stockAt = date;
             });
           },
         ),
         BaseTimePicker(
-          label: "feeding.feeding_time".tr(),
-          initialTime: _feedTime,
+          label: "stock.time".tr(),
+          initialTime: _stockAt,
           onChange: (time) {
             setState(() {
-              _feedTime = time;
+              _stockAt = time;
             });
           },
         ),
         BaseTextInput(
-          label: "feeding.amount".tr(),
+          label: "stock.amount".tr(),
           type: InputType.number,
           controller: _amountController,
           hintText: "feeding.ounce".tr(),
@@ -80,18 +71,9 @@ class _AddFeedingDialogState extends State<AddFeedingDialog> {
             return null;
           },
         ),
-        BaseSelectInput(
-          hint: "feeding.type_placeholder".tr(),
-          items: FeedingType.values
-              .map((e) => SelectItem(label: e.label, value: e.name))
-              .toList(),
-          initialValue: _type.name,
-          onChanged: _onChangeType,
-          label: "feeding.type_label".tr(),
-        ),
       ]),
       okText: "common.+add".tr(),
-      onOk: _addFeeding,
+      onOk: _addStock,
     );
   }
 }

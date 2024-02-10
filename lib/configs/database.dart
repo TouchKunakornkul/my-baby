@@ -9,6 +9,7 @@ import 'package:my_baby/models/growth_model.dart';
 import 'dart:io';
 import 'package:drift/native.dart';
 import 'package:my_baby/models/note_model.dart';
+import 'package:my_baby/models/poo_pee_model.dart';
 import 'package:my_baby/models/stock_model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
@@ -32,7 +33,7 @@ part 'database.g.dart';
 // }
 
 @DriftDatabase(
-    tables: [Childs, Growths, Develops, Notes, Feedings, Stocks],
+    tables: [Childs, Growths, Develops, Notes, Feedings, Stocks, PooPees],
     daos: [FeedingsDao, NotesDao, StocksDao])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());

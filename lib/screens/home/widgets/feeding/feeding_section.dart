@@ -67,14 +67,10 @@ class FeedingSection extends StatelessWidget {
           TableCell(
             verticalAlignment: TableCellVerticalAlignment.middle,
             child: Center(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: AppTheme.spacing2),
-                child: Text(
-                  DateFormat('HH:mm').format(feeding.feedTime),
-                  style: ThemeTextStyle.paragraph1(context,
-                      color: AppTheme.colorShade.text),
-                ),
+              child: Text(
+                DateFormat('HH:mm').format(feeding.feedTime),
+                style: ThemeTextStyle.paragraph1(context,
+                    color: AppTheme.colorShade.text),
               ),
             ),
           ),
@@ -88,6 +84,16 @@ class FeedingSection extends StatelessWidget {
               ),
             ),
           ),
+        ]));
+
+        widgets.add(const TableRow(children: [
+          SizedBox(
+            height: AppTheme.spacing20,
+          ),
+          SizedBox.shrink(),
+          SizedBox.shrink(),
+          SizedBox.shrink(),
+          SizedBox.shrink(),
         ]));
       }
     }
@@ -104,7 +110,11 @@ class FeedingSection extends StatelessWidget {
       notes: context.watch<FeedingProvider>().notes,
       icon: CustomIcons.growth,
       title: "feeding.title".tr(),
-      subtitle: "feeding.subtitle".tr(),
+      subtitle: Text(
+        "feeding.subtitle".tr(),
+        style:
+            ThemeTextStyle.paragraph1(context, color: AppTheme.colorShade.text),
+      ),
       onAddNote: (note) => _onAddFeedingNote(context, note),
       onClickBook: () {
         BaseInformationBottomSheet.show(context, const GrowthInformation());
@@ -113,7 +123,7 @@ class FeedingSection extends StatelessWidget {
         showDialog(
             context: context, builder: (context) => const AddFeedingDialog());
       },
-      editable: context.watch<GrowthProvider>().growths.isNotEmpty,
+      editable: context.watch<FeedingProvider>().feedings.isNotEmpty,
       onEdit: () {
         showDialog(
             context: context, builder: (context) => const EditFeedingDialog());

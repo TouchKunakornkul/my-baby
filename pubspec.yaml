@@ -47,6 +47,7 @@ dependencies:
   transparent_image: ^2.0.1
   image_picker: ^1.0.4
   age_calculator: ^1.0.0
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
@@ -80,6 +81,7 @@ flutter:
   assets:
     - assets/translations/
     - assets/images/
+    - assets/google_fonts/
 
   fonts:
     - family: CustomIcons

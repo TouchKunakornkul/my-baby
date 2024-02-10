@@ -5,6 +5,7 @@ import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/child_provider.dart';
 import 'package:my_baby/providers/feeding_provider.dart';
 import 'package:my_baby/providers/menu_provider.dart';
+import 'package:my_baby/providers/stock_provider.dart';
 import 'package:my_baby/screens/home/widgets/home_content.dart';
 import 'package:my_baby/utils/date_utils.dart';
 import 'package:my_baby/widgets/child_image.dart';
@@ -30,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (child != null) {
       context.read<GrowthProvider>().setChild(child.id);
       context.read<FeedingProvider>().setChild(child.id);
+      context.read<StockProvider>().setChild(child.id);
     }
     super.initState();
   }

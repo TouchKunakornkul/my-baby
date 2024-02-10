@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ColorShade {
   final Color dark;
@@ -17,6 +18,7 @@ class ColorShade {
 class Shade {
   final Color primary;
   final Color secondary;
+  final Color secondaryActive;
   final Color tertiary;
   final Color text;
   final Color placeholder;
@@ -29,6 +31,7 @@ class Shade {
   Shade({
     required this.primary,
     required this.secondary,
+    required this.secondaryActive,
     required this.tertiary,
     required this.text,
     required this.placeholder,
@@ -66,7 +69,8 @@ class GreyScaleShade {
 class AppTheme {
   static Shade colorShade = Shade(
     primary: const Color(0xff4E6AF6),
-    secondary: const Color(0xffDFA2A2),
+    secondary: const Color(0xffDE7D7D),
+    secondaryActive: const Color(0xffCA2B2B),
     tertiary: const Color(0xffFFE3E3),
     text: const Color(0xff372A2A),
     placeholder: const Color(0xffABA4A4),
@@ -262,11 +266,12 @@ class ThemeTextStyle {
 
     TextStyle style;
 
-    style = Theme.of(context).textTheme.bodyMedium!.copyWith(
-          fontSize: fontSize0,
-          height: height,
-          letterSpacing: letterSpacing,
-        );
+    style = GoogleFonts.poppins(
+        textStyle: Theme.of(context).textTheme.bodyMedium!.copyWith(
+              fontSize: fontSize0,
+              height: height,
+              letterSpacing: letterSpacing,
+            ));
 
     if (color != null) {
       style = style.copyWith(
@@ -329,7 +334,7 @@ class ThemeTextStyle {
       fontSize: fontSize,
       color: color,
     ).copyWith(
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.w700,
     );
   }
 

@@ -7,7 +7,4 @@ class Childs extends Table {
   TextColumn? get imageUrl => text().nullable()();
   DateTimeColumn? get updatedAt => dateTime().withDefault(currentDateAndTime)();
   DateTimeColumn? get createdAt => dateTime().withDefault(currentDateAndTime)();
-
-  @override
-  Set<Column> get primaryKey => {id};
 }

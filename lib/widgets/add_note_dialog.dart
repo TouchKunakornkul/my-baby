@@ -38,8 +38,8 @@ class _AddNoteDialogState extends State<AddNoteDialog> {
           },
         ),
       ]),
-      cancelText: "common.add".tr(),
-      onClose: () {
+      okText: "common.+add".tr(),
+      onOk: () {
         widget.addNote(_noteController.text);
       },
     );

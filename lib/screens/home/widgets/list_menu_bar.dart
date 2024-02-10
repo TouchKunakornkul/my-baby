@@ -5,8 +5,8 @@ import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/feeding_provider.dart';
 import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/providers/menu_provider.dart';
+import 'package:my_baby/providers/stock_provider.dart';
 import 'package:my_baby/utils/double_utils.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 
 const double ITEM_SIZE = 93;
@@ -21,6 +21,7 @@ class ListMenuBar extends StatelessWidget {
     final weight = context.watch<GrowthProvider>().weight;
     final averageAmountPerDay =
         context.watch<FeedingProvider>().averageAmountPerDay;
+    final daysSaved = context.watch<StockProvider>().daysSaved;
 
     final widgets = [
       SummaryItem(
@@ -28,7 +29,8 @@ class ListMenuBar extends StatelessWidget {
         menu: Menu.Growth,
         selectedMenu: selectedMenu,
         onClick: onChangeMenu,
-        text: (weight != null ? formatDouble(weight) : '-') + "growth.kg".tr(),
+        text:
+            "${weight != null ? formatDouble(weight) : '-'} ${"growth.kg".tr()}",
       ),
       SummaryItem(
         selectedMenu: selectedMenu,
@@ -42,7 +44,7 @@ class ListMenuBar extends StatelessWidget {
         icon: CustomIcons.milk,
         onClick: onChangeMenu,
         menu: Menu.MilkStock,
-        text: "4.4kg",
+        text: "$daysSaved ${"stock.days".tr()}",
       ),
       // const SummaryItem(
       //   icon: CustomIcon.growth,
@@ -114,8 +116,8 @@ class SummaryItem extends StatelessWidget {
         height: ITEM_SIZE,
         decoration: BoxDecoration(
             color: isSelected
-                ? AppTheme.colorShade.secondary
-                : AppTheme.colorShade.tertiary,
+                ? AppTheme.colorShade.secondaryActive
+                : AppTheme.colorShade.secondary,
             borderRadius: BorderRadius.circular(AppTheme.borderRadius8)),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -124,14 +126,17 @@ class SummaryItem extends StatelessWidget {
               Icon(
                 icon,
                 size: 24,
-                color:
-                    isSelected ? Colors.white : AppTheme.colorShade.secondary,
+                color: Colors.white,
+              ),
+              const SizedBox(
+                height: AppTheme.spacing2,
               ),
               Text(
                 text,
-                style: ThemeTextStyle.boldParagraph2(context,
-                    color:
-                        isSelected ? Colors.white : AppTheme.colorShade.text),
+                style: ThemeTextStyle.boldParagraph2(
+                  context,
+                  color: Colors.white,
+                ),
               ),
             ]),
       ),

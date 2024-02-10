@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_baby/configs/router_config.dart';
@@ -16,14 +17,21 @@ void main() async {
   setupLocator();
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  LicenseRegistry.addLicense(() async* {
+    final license = await rootBundle.loadString('/assets/google_fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(['google_fonts'], license);
+  });
+
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider<ChildProvider>(create: (_) => ChildProvider()),
         ChangeNotifierProvider<GrowthProvider>(create: (_) => GrowthProvider()),
         ChangeNotifierProvider<MenuProvider>(create: (_) => MenuProvider()),
-        ChangeNotifierProvider<FeedingProvider>(
-            create: (_) => FeedingProvider()),
         ChangeNotifierProvider<StockProvider>(create: (_) => StockProvider()),
+        ChangeNotifierProxyProvider<StockProvider, FeedingProvider>(
+            create: (context) => FeedingProvider(),
+            update: (context, stockProvider, feedingProvider) =>
+                feedingProvider!..update(stockProvider)),
         ChangeNotifierProvider<DevelopProvider>(
             create: (_) => DevelopProvider()),
       ],

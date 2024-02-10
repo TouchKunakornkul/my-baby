@@ -37,7 +37,10 @@ class GrowthProvider extends ChangeNotifier {
   Future<List<Growth>> listGrowth() async {
     final result = await (_appDatabase.select(_appDatabase.growths)
           ..where((g) => g.childId.equals(childId))
-          ..orderBy([(g) => OrderingTerm(expression: g.createdAt)]))
+          ..orderBy([
+            (g) =>
+                OrderingTerm(expression: g.createdAt, mode: OrderingMode.desc)
+          ]))
         .get();
     growths = result;
     notifyListeners();

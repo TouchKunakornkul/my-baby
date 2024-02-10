@@ -74,8 +74,8 @@ class _AddGrowthDialogState extends State<AddGrowthDialog> {
           },
         ),
       ]),
-      cancelText: "common.add".tr(),
-      onClose: _addGrowth,
+      okText: "common.+add".tr(),
+      onOk: _addGrowth,
     );
   }
 }

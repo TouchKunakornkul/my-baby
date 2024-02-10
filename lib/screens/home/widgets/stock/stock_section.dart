@@ -7,8 +7,9 @@ import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/providers/stock_provider.dart';
 import 'package:my_baby/screens/home/widgets/feeding/add_feeding_dialog.dart';
 import 'package:my_baby/screens/home/widgets/feeding/edit_feeding_dialog.dart';
-import 'package:my_baby/screens/home/widgets/growth/edit_growth_dialog.dart';
 import 'package:my_baby/screens/home/widgets/growth/growth_infomation.dart';
+import 'package:my_baby/screens/home/widgets/stock/add_stock_dialog.dart';
+import 'package:my_baby/screens/home/widgets/stock/edit_stock_dialog.dart';
 import 'package:my_baby/utils/double_utils.dart';
 import 'package:my_baby/widgets/base_information_bottom_sheet.dart';
 import 'package:my_baby/widgets/base_section.dart';
@@ -92,22 +93,26 @@ class StockSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseSection(
-      notes: context.watch<FeedingProvider>().notes,
+      notes: context.watch<StockProvider>().notes,
       icon: CustomIcons.growth,
-      title: "feeding.title".tr(),
-      subtitle: "feeding.subtitle".tr(),
+      title: "stock.title".tr(),
+      subtitle: Text(
+        "stock.subtitle".tr(),
+        style:
+            ThemeTextStyle.paragraph1(context, color: AppTheme.colorShade.text),
+      ),
       onAddNote: (note) => _onAddStockNote(context, note),
       onClickBook: () {
         BaseInformationBottomSheet.show(context, const GrowthInformation());
       },
       onAdd: () {
         showDialog(
-            context: context, builder: (context) => const AddFeedingDialog());
+            context: context, builder: (context) => const AddStockDialog());
       },
-      editable: context.watch<GrowthProvider>().growths.isNotEmpty,
+      editable: context.watch<StockProvider>().showedStocks.isNotEmpty,
       onEdit: () {
         showDialog(
-            context: context, builder: (context) => const EditFeedingDialog());
+            context: context, builder: (context) => const EditStockDialog());
       },
       header: Column(
         children: [
@@ -122,7 +127,7 @@ class StockSection extends StatelessWidget {
             ),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text(
-                "feeding.average".tr(),
+                "stock.total_stock".tr(),
                 style: ThemeTextStyle.paragraph1(context,
                     color: AppTheme.colorShade.text),
               ),
@@ -130,10 +135,10 @@ class StockSection extends StatelessWidget {
                 width: AppTheme.spacing16,
               ),
               Text(
-                "feeding.oz_per_day".tr(args: [
-                  formatDouble(
-                      context.watch<FeedingProvider>().averageAmountPerDay)
-                ]),
+                "${formatDouble(context.watch<StockProvider>().availableStock)} ${"stock.oz".tr(args: [
+                      formatDouble(
+                          context.watch<StockProvider>().availableStock)
+                    ])}",
                 style: ThemeTextStyle.boldParagraph1(context,
                     color: AppTheme.colorShade.text),
               ),
@@ -142,10 +147,10 @@ class StockSection extends StatelessWidget {
           const SizedBox(height: AppTheme.spacing20),
           Table(
             columnWidths: const {
-              0: FractionColumnWidth(0.40), // 20%
-              1: FractionColumnWidth(0.20), // 20%
-              2: FractionColumnWidth(0.20), // 20%
-              3: FractionColumnWidth(0.20), // 20%
+              0: FractionColumnWidth(0.25),
+              1: FractionColumnWidth(0.25),
+              2: FractionColumnWidth(0.25),
+              3: FractionColumnWidth(0.25),
             },
             children: [
               TableRow(children: [
@@ -154,7 +159,7 @@ class StockSection extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: AppTheme.spacing12),
                     child: Text(
-                      "feeding.daily".tr(),
+                      "stock.daily".tr(),
                       style: ThemeTextStyle.boldParagraph3(
                         context,
                         color: AppTheme.colorShade.placeholder,
@@ -166,7 +171,7 @@ class StockSection extends StatelessWidget {
                     child: Padding(
                   padding: const EdgeInsets.only(bottom: AppTheme.spacing12),
                   child: Text(
-                    "feeding.feed_time".tr(),
+                    "stock.time".tr(),
                     style: ThemeTextStyle.boldParagraph3(
                       context,
                       color: AppTheme.colorShade.placeholder,
@@ -191,10 +196,10 @@ class StockSection extends StatelessWidget {
       ),
       content: Table(
         columnWidths: const {
-          0: FractionColumnWidth(0.4), // 40%
-          1: FractionColumnWidth(0.2), // 20%
-          2: FractionColumnWidth(0.2), // 20%
-          3: FractionColumnWidth(0.2), // 20%
+          0: FractionColumnWidth(0.25),
+          1: FractionColumnWidth(0.25),
+          2: FractionColumnWidth(0.25),
+          3: FractionColumnWidth(0.25),
         },
         children: _generateDataRow(context),
       ),

@@ -112,8 +112,8 @@ class _EditChildDialogState extends State<EditChildDialog> {
           },
         )
       ]),
-      cancelText: "common.save".tr(),
-      onClose: _updateChild,
+      okText: "common.save".tr(),
+      onOk: _updateChild,
     );
   }
 }

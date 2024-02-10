@@ -13,7 +13,7 @@ const double CONTENT_HEIGHT = 472;
 class BaseSection extends StatefulWidget {
   final IconData icon;
   final String title;
-  final String subtitle;
+  final Widget subtitle;
   final VoidCallback onClickBook;
   final VoidCallback onAdd;
   final VoidCallback onEdit;
@@ -87,11 +87,7 @@ class _BaseSectionState extends State<BaseSection> {
                                   style: ThemeTextStyle.headline2(context,
                                       color: AppTheme.colorShade.text),
                                 ),
-                                Text(
-                                  widget.subtitle,
-                                  style: ThemeTextStyle.paragraph1(context,
-                                      color: AppTheme.colorShade.secondary),
-                                ),
+                                widget.subtitle,
                               ],
                             )
                           ],

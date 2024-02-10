@@ -8,6 +8,7 @@ import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/daos/feeding_dao.dart';
 import 'package:my_baby/daos/note_dao.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
+import 'package:my_baby/providers/stock_provider.dart';
 import 'package:my_baby/service/locator.dart';
 import 'package:collection/collection.dart';
 
@@ -75,6 +76,8 @@ extension FeedingTypeExtension on FeedingType {
 }
 
 class FeedingProvider extends ChangeNotifier {
+  late StockProvider _stockProvider;
+
   final FeedingsDao _feedingDao = locator<FeedingsDao>();
   final NotesDao _notesDao = locator<NotesDao>();
   List<Feeding> _feedings = [];
@@ -84,6 +87,10 @@ class FeedingProvider extends ChangeNotifier {
 
   List<Feeding> get feedings => _feedings;
   List<Note> get feedingNotes => notes;
+
+  void update(StockProvider stockProvider) {
+    _stockProvider = stockProvider;
+  }
 
   Future<void> setChild(int id) async {
     childId = id;
@@ -134,11 +141,19 @@ class FeedingProvider extends ChangeNotifier {
       type: Value(type.name),
       childId: Value(childId),
     ));
+    final availableStock = _stockProvider.availableStock;
+    if (type == FeedingType.stock && availableStock > 0) {
+      await _stockProvider.addStock(
+        createdAt: feedTime,
+        amount: -(amount > availableStock ? availableStock : amount),
+      );
+    }
     fetchFeedings();
   }
 
   Future<void> updateFeeding(Feeding feeding) async {
-    await _feedingDao.updateFeeding(feeding);
+    await _feedingDao
+        .updateFeeding(feeding.copyWith(updatedAt: DateTime.now()));
     fetchFeedings();
   }
 

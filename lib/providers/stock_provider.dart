@@ -16,8 +16,19 @@ class StockProvider extends ChangeNotifier {
 
   late int childId;
 
-  List<Stock> get stocks => _stocks;
+  List<Stock> get showedStocks =>
+      _stocks.where((element) => element.amount > 0).toList();
   List<Note> get stockNotes => notes;
+
+  double get availableStock {
+    return _stocks.fold(0, (previousValue, element) {
+      return previousValue + element.amount;
+    });
+  }
+
+  int get daysSaved {
+    return availableStock ~/ 30; // mock
+  }
 
   Future<void> setChild(int id) async {
     childId = id;
@@ -26,7 +37,7 @@ class StockProvider extends ChangeNotifier {
   }
 
   Map<DateTime, List<Stock>> get stocksByDay {
-    return groupBy(_stocks, (Stock stock) {
+    return groupBy(showedStocks, (Stock stock) {
       return DateTime(
         stock.createdAt.year,
         stock.createdAt.month,
@@ -35,15 +46,10 @@ class StockProvider extends ChangeNotifier {
     });
   }
 
-  set stocks(List<Stock> stocks) {
-    _stocks = stocks;
-    notifyListeners();
-  }
-
   Future<List<Stock>> fetchStocks() async {
-    stocks = await _stocksDao.listStock(childId);
+    _stocks = await _stocksDao.listStock(childId);
     notifyListeners();
-    return stocks;
+    return showedStocks;
   }
 
   Future<void> addStock({
@@ -59,7 +65,7 @@ class StockProvider extends ChangeNotifier {
   }
 
   Future<void> updateStock(Stock stock) async {
-    await _stocksDao.updateStock(stock);
+    await _stocksDao.updateStock(stock.copyWith(updatedAt: DateTime.now()));
     fetchStocks();
   }
 

@@ -105,8 +105,8 @@ class _EditGrowthDialogState extends State<EditGrowthDialog> {
           },
         ),
       ]),
-      cancelText: "common.save".tr(),
-      onClose: _editGrowth,
+      okText: "common.save".tr(),
+      onOk: _editGrowth,
     );
   }
 }

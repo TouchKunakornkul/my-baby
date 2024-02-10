@@ -107,12 +107,9 @@ class _EditFeedingDialogState extends State<EditFeedingDialog> {
           onChanged: _onChangeType,
           label: "feeding.type_label".tr(),
         ),
-        const SizedBox(
-          height: AppTheme.spacing24,
-        ),
       ]),
-      cancelText: "common.save".tr(),
-      onClose: _editFeeding,
+      okText: "common.save".tr(),
+      onOk: _editFeeding,
     );
   }
 }
