@@ -1,7 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/models/note_model.dart';
-import 'package:provider/provider.dart';
 
 part 'note_dao.g.dart';
 

@@ -51,4 +51,6 @@ class CustomIcons {
       IconData(0xe8a4, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData close =
       IconData(0xe8a5, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData poo =
+      IconData(0xe8a7, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

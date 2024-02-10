@@ -3,6 +3,7 @@ import 'package:my_baby/providers/menu_provider.dart';
 import 'package:my_baby/screens/home/widgets/feeding/feeding_section.dart';
 import 'package:my_baby/screens/home/widgets/growth/growth_section.dart';
 import 'package:my_baby/screens/home/widgets/list_menu_bar.dart';
+import 'package:my_baby/screens/home/widgets/poo_pee/poo_pee_section.dart';
 import 'package:my_baby/screens/home/widgets/stock/stock_section.dart';
 import 'package:provider/provider.dart';
 
@@ -36,7 +37,8 @@ class HomeContent extends StatelessWidget {
               children: const [
                 GrowthSection(),
                 FeedingSection(),
-                StockSection()
+                StockSection(),
+                PooPeeSection(),
               ],
             ))
           ],

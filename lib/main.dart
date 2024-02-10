@@ -9,6 +9,7 @@ import 'package:my_baby/providers/develop_provider.dart';
 import 'package:my_baby/providers/feeding_provider.dart';
 import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/providers/menu_provider.dart';
+import 'package:my_baby/providers/poo_pee_provider.dart';
 import 'package:my_baby/providers/stock_provider.dart';
 import 'package:my_baby/service/locator.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +33,7 @@ void main() async {
             create: (context) => FeedingProvider(),
             update: (context, stockProvider, feedingProvider) =>
                 feedingProvider!..update(stockProvider)),
+        ChangeNotifierProvider<PooPeeProvider>(create: (_) => PooPeeProvider()),
         ChangeNotifierProvider<DevelopProvider>(
             create: (_) => DevelopProvider()),
       ],

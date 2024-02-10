@@ -117,6 +117,21 @@
     "subtitle": "Already save for 1 day",
     "amount": "Pumping Amount"
   },
+  "poo_pee": {
+    "title": "Poo/Pee",
+    "add_title": "Add Poo/Pee",
+    "edit_title": "Edit Poo/Pee",
+    "date": "Date",
+    "time": "Time",
+    "type_label": "Type",
+    "type": {
+      "both": "Both",
+      "poo": "Poo",
+      "pee": "Pee"
+    },
+    "average": "Avg",
+    "today": "Today"
+  },
   "note": {
     "title": "Note",
     "add_title": "Add Note",

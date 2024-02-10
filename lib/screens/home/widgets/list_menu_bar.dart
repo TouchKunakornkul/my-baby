@@ -5,6 +5,7 @@ import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/feeding_provider.dart';
 import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/providers/menu_provider.dart';
+import 'package:my_baby/providers/poo_pee_provider.dart';
 import 'package:my_baby/providers/stock_provider.dart';
 import 'package:my_baby/utils/double_utils.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ class ListMenuBar extends StatelessWidget {
     final averageAmountPerDay =
         context.watch<FeedingProvider>().averageAmountPerDay;
     final daysSaved = context.watch<StockProvider>().daysSaved;
+    final averagePoosPerDay = context.watch<PooPeeProvider>().averagePoosPerDay;
 
     final widgets = [
       SummaryItem(
@@ -46,22 +48,13 @@ class ListMenuBar extends StatelessWidget {
         menu: Menu.MilkStock,
         text: "$daysSaved ${"stock.days".tr()}",
       ),
-      // const SummaryItem(
-      //   icon: CustomIcon.growth,
-      //   text: "4.4kg",
-      // ),
-      // const SummaryItem(
-      //   icon: CustomIcon.growth,
-      //   text: "4.4kg",
-      // ),
-      // const SummaryItem(
-      //   icon: CustomIcon.growth,
-      //   text: "4.4kg",
-      // ),
-      // const SummaryItem(
-      //   icon: CustomIcon.growth,
-      //   text: "4.4kg",
-      // ),
+      SummaryItem(
+        selectedMenu: selectedMenu,
+        icon: CustomIcons.poo,
+        text: "${formatDouble(averagePoosPerDay)} ${"poo_pee.average".tr()}",
+        onClick: onChangeMenu,
+        menu: Menu.PooPee,
+      ),
     ];
     return Container(
       height: ITEM_SIZE + (2 * AppTheme.spacing4),

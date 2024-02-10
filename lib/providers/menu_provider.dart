@@ -4,6 +4,7 @@ enum Menu {
   Growth,
   Feeding,
   MilkStock,
+  PooPee,
 }
 
 class MenuProvider extends ChangeNotifier {
