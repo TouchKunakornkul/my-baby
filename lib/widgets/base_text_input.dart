@@ -133,6 +133,11 @@ class _BaseTextInputState extends State<BaseTextInput> {
             fillColor: widget.enabled != null && widget.enabled == false
                 ? AppTheme.grayShade.shade07
                 : Colors.transparent,
+            disabledBorder: widget.showBorder
+                ? OutlineInputBorder(
+                    borderSide:
+                        BorderSide(color: AppTheme.grayShade.shade05, width: 1))
+                : null,
             enabledBorder: widget.showBorder
                 ? OutlineInputBorder(
                     borderSide:

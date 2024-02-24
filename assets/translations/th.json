@@ -70,7 +70,9 @@
     "number_only": "กรอกเป็นตัวเลขเท่านั้น",
     "not_more_than": "กรอกค่าได้ไม่เกิน {}"
   },
-  "home_screen": {},
+  "home_screen": {
+    "add_my_baby": "Add my baby"
+  },
   "growth": {
     "add_title": "Add Growth",
     "edit_title": "Edit Growth",

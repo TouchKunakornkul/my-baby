@@ -271,6 +271,7 @@ class ThemeTextStyle {
               fontSize: fontSize0,
               height: height,
               letterSpacing: letterSpacing,
+              leadingDistribution: TextLeadingDistribution.even,
             ));
 
     if (color != null) {

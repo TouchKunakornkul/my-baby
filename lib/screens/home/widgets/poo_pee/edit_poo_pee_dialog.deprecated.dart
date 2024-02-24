@@ -1,20 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/models/poo_pee_model.dart';
 import 'package:my_baby/providers/poo_pee_provider.dart';
 import 'package:my_baby/widgets/base_bottom_sheet.dart';
 import 'package:my_baby/widgets/base_dialog.dart';
 import 'package:my_baby/widgets/base_select_input.dart';
-import 'package:my_baby/widgets/base_text_input.dart';
 import 'package:provider/provider.dart';
 
 class EditPooPeeDialog extends StatefulWidget {
-  final PooPee pooPee;
   const EditPooPeeDialog({
     super.key,
-    required this.pooPee,
   });
 
   @override
@@ -22,22 +18,34 @@ class EditPooPeeDialog extends StatefulWidget {
 }
 
 class _EditPooPeeDialogState extends State<EditPooPeeDialog> {
-  final TextEditingController _dateController = TextEditingController();
   late PooPeeType _type;
+  late String _selectedItem;
 
   @override
   void initState() {
-    final pooPee = widget.pooPee;
-    _dateController.text =
-        DateFormat('d MMM yyyy HH:mm').format(pooPee.createdAt);
-    _type = stringToPooPeeType(pooPee.type);
+    final pooPees = context.read<PooPeeProvider>().pooPees;
+    _selectedItem = pooPees[0].id.toString();
+    _type = stringToPooPeeType(pooPees[0].type);
     super.initState();
   }
 
   Future<void> _editPooPee() async {
+    final pooPees = context.read<PooPeeProvider>().pooPees;
+    final updatedPooPee =
+        pooPees.firstWhere((f) => f.id.toString() == _selectedItem);
     await context
         .read<PooPeeProvider>()
-        .updatePooPee(widget.pooPee.copyWith(type: _type.name));
+        .updatePooPee(updatedPooPee.copyWith(type: _type.name));
+  }
+
+  _onChangeDate(String value) {
+    final pooPees = context.read<PooPeeProvider>().pooPees;
+    final selectedPooPee =
+        pooPees.firstWhere((f) => f.id.toString() == _selectedItem);
+    setState(() {
+      _type = stringToPooPeeType(selectedPooPee.type);
+      _selectedItem = value;
+    });
   }
 
   void _onChangeType(String value) {
@@ -61,10 +69,15 @@ class _EditPooPeeDialogState extends State<EditPooPeeDialog> {
         const SizedBox(
           height: AppTheme.spacing20,
         ),
-        BaseTextInput(
-          enabled: false,
-          controller: _dateController,
-          label: "poo_pee.created_at".tr(),
+        BaseSelectInput(
+          hint: "poo_pee.date".tr(),
+          items: feedTimeList,
+          initialValue: _selectedItem,
+          onChanged: _onChangeDate,
+          label: "poo_pee.date".tr(),
+        ),
+        const SizedBox(
+          height: AppTheme.spacing36,
         ),
         BaseSelectInput(
           hint: "poo_pee.type_placeholder".tr(),

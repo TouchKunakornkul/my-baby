@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/child_provider.dart';
@@ -26,6 +29,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool isImageExist = false;
   @override
   void initState() {
     final child = context.read<ChildProvider>().child;
@@ -44,7 +48,12 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       useSafeArea: true,
       isScrollControlled: true,
-      shape: const ContinuousRectangleBorder(),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
+        ),
+      ),
       builder: (BuildContext context) {
         return const SafeArea(
           child: FractionallySizedBox(
@@ -55,6 +64,18 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
     context.read<MenuProvider>().selectMenuFromPageView(null);
+  }
+
+  void _onEditChild() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const EditChildDialog();
+        });
+  }
+
+  void _onSetting() {
+    context.go('/setting');
   }
 
   @override
@@ -78,11 +99,36 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: Stack(
                   children: [
-                    ChildImage(
-                      imageUrl: child?.imageUrl,
-                      width: MediaQuery.of(context).size.width,
-                      height: IMAGE_HEIGHT,
-                    ),
+                    child != null
+                        ? ChildImage(
+                            imageUrl: child.imageUrl,
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                          )
+                        : SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                            child: GestureDetector(
+                              onTap: _onEditChild,
+                              behavior: HitTestBehavior.opaque,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(CustomIcons.largeAdd,
+                                      size: 76,
+                                      color: AppTheme.colorShade.primary),
+                                  const SizedBox(
+                                    height: AppTheme.spacing16,
+                                  ),
+                                  Text(
+                                    "home_screen.add_my_baby".tr(),
+                                    style: ThemeTextStyle.paragraph2(context,
+                                        color: AppTheme.colorShade.placeholder),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                     SizedBox(
                       child: Column(children: [
                         Container(
@@ -114,45 +160,59 @@ class _HomeScreenState extends State<HomeScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          child?.name ?? '-',
-                                          overflow: TextOverflow.ellipsis,
-                                          style:
-                                              ThemeTextStyle.headline1(context),
-                                        ),
-                                        if (child?.birthDate != null)
-                                          Wrap(
+                                  child != null
+                                      ? Expanded(
+                                          child: Row(
                                             children: [
-                                              Text(DateFormat('d MMM yyyy')
-                                                  .format(child!.birthDate)),
-                                              const SizedBox(
-                                                width: AppTheme.spacing4,
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    child.name ?? '-',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: ThemeTextStyle
+                                                        .headline1(context),
+                                                  ),
+                                                  Wrap(
+                                                    children: [
+                                                      Text(DateFormat(
+                                                              'd MMM yyyy')
+                                                          .format(
+                                                              child.birthDate)),
+                                                      const SizedBox(
+                                                        width:
+                                                            AppTheme.spacing4,
+                                                      ),
+                                                      Text(
+                                                          "(${getAgeString(child.birthDate)})"),
+                                                    ],
+                                                  )
+                                                ],
                                               ),
-                                              Text(
-                                                  "(${getAgeString(child.birthDate)})"),
+                                              Container(
+                                                padding: const EdgeInsets.only(
+                                                    left: AppTheme.spacing12),
+                                                child: InkWell(
+                                                  onTap: _onEditChild,
+                                                  child: Ink(
+                                                      child: const Icon(
+                                                          CustomIcons.edit)),
+                                                ),
+                                              ),
                                             ],
-                                          )
-                                      ],
-                                    ),
-                                  ),
+                                          ),
+                                        )
+                                      : const SizedBox.shrink(),
                                   Container(
                                     padding: const EdgeInsets.only(
                                         left: AppTheme.spacing12),
                                     child: InkWell(
-                                      onTap: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return const EditChildDialog();
-                                            });
-                                      },
+                                      onTap: _onSetting,
                                       child: Ink(
-                                          child: const Icon(CustomIcons.edit)),
+                                          child:
+                                              const Icon(CustomIcons.setting)),
                                     ),
                                   ),
                                 ],

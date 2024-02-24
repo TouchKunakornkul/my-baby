@@ -16,7 +16,7 @@ class BaseSection extends StatefulWidget {
   final Widget subtitle;
   final VoidCallback onClickBook;
   final VoidCallback onAdd;
-  final VoidCallback onEdit;
+  final VoidCallback? onEdit;
   final bool editable;
   final Widget content;
   final Widget header;
@@ -30,7 +30,7 @@ class BaseSection extends StatefulWidget {
     required this.onClickBook,
     required this.content,
     required this.onAdd,
-    required this.onEdit,
+    this.onEdit,
     this.editable = true,
     required this.header,
     required this.onAddNote,
@@ -101,16 +101,18 @@ class _BaseSectionState extends State<BaseSection> {
                                 size: 24,
                               ),
                             ),
-                            const SizedBox(
-                              width: AppTheme.spacing20,
-                            ),
-                            InkWell(
-                              onTap: widget.onEdit,
-                              child: const Icon(
-                                CustomIcons.edit,
-                                size: 24,
+                            if (widget.onEdit != null) ...[
+                              const SizedBox(
+                                width: AppTheme.spacing20,
                               ),
-                            ),
+                              InkWell(
+                                onTap: widget.onEdit,
+                                child: const Icon(
+                                  CustomIcons.edit,
+                                  size: 24,
+                                ),
+                              ),
+                            ]
                           ],
                         )
                       ],

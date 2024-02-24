@@ -65,7 +65,7 @@ class BaseBottomSheet {
                       searchHint: searchHint,
                       items: items,
                       title: title,
-                      ignoreAutoPopWhenClickChild: true,
+                      ignoreAutoPopWhenClickChild: false,
                       onSubmit: (str) {
                         onSubmit(str);
                       },
@@ -233,22 +233,23 @@ class _ListViewArrowState extends State<ListViewArrow> {
                 color: AppTheme.grayShade.shade02,
               ),
             ),
-            InkWell(
-              onTap: () {
-                widget.onSubmit(_selectedItem ?? '');
-                Navigator.of(context).pop();
-              },
-              child: Ink(
-                padding: const EdgeInsets.all(AppTheme.spacing10),
-                child: Text(
-                  "common.done".tr(),
-                  style: ThemeTextStyle.boldParagraph2(
-                    context,
-                    color: AppTheme.primaryShade.main,
+            if (widget.requiredSubmit)
+              InkWell(
+                onTap: () {
+                  widget.onSubmit(_selectedItem ?? '');
+                  Navigator.of(context).pop();
+                },
+                child: Ink(
+                  padding: const EdgeInsets.all(AppTheme.spacing10),
+                  child: Text(
+                    "common.done".tr(),
+                    style: ThemeTextStyle.boldParagraph2(
+                      context,
+                      color: AppTheme.primaryShade.main,
+                    ),
                   ),
                 ),
-              ),
-            )
+              )
           ],
         ),
         const SizedBox(

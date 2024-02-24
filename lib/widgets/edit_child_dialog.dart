@@ -67,10 +67,10 @@ class _EditChildDialogState extends State<EditChildDialog> {
                   final newPath = "${directory.path}/${image?.name ?? ''}";
                   final newFile = File(newPath);
                   if (image != null) {
-                    final byte = await image.readAsBytes();
-                    newFile.writeAsBytes(byte);
+                    final bytes = await image.readAsBytes();
+                    await newFile.writeAsBytes(bytes);
                     setState(() {
-                      _imageUrl = newPath;
+                      _imageUrl = newFile.path;
                     });
                   }
                 }

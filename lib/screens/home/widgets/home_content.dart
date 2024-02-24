@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_baby/configs/theme.dart';
+import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/menu_provider.dart';
 import 'package:my_baby/screens/home/widgets/feeding/feeding_section.dart';
 import 'package:my_baby/screens/home/widgets/growth/growth_section.dart';
@@ -23,9 +25,28 @@ class HomeContent extends StatelessWidget {
     final selectedMenu = context.watch<MenuProvider>().selectedMenu;
     if (selectedMenu == null) return const SizedBox.shrink();
     return Container(
-        color: Colors.white,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(12),
+            topRight: Radius.circular(12),
+          ),
+          color: Colors.white,
+        ),
         child: Column(
           children: [
+            InkWell(
+              onTap: Navigator.of(context).pop,
+              child: SizedBox(
+                height: 30,
+                child: Center(
+                  child: Icon(
+                    CustomIcons.chevronDown,
+                    size: 10,
+                    color: AppTheme.colorShade.placeholder,
+                  ),
+                ),
+              ),
+            ),
             ListMenuBar(
                 selectedMenu: selectedMenu,
                 onChangeMenu: (menu) => _onChangeMenu(context, menu)),

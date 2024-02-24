@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/growth_provider.dart';
@@ -14,11 +15,18 @@ import 'package:provider/provider.dart';
 class GrowthSection extends StatelessWidget {
   const GrowthSection({super.key});
 
+  void _onEdit(BuildContext context, Growth growth) {
+    showDialog(
+        context: context,
+        builder: (context) => EditGrowthDialog(growth: growth));
+  }
+
   List<TableRow> _generateDataRow(BuildContext context) {
     final growths = context.watch<GrowthProvider>().growths;
     return growths
         .asMap()
-        .map((i, e) => MapEntry(
+        .map(
+          (i, e) => MapEntry(
             i,
             TableRow(children: [
               Text(
@@ -28,11 +36,33 @@ class GrowthSection extends StatelessWidget {
                   color: AppTheme.colorShade.placeholder,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: AppTheme.spacing12),
+              TableRowInkWell(
+                onTap: () => _onEdit(context, e),
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: AppTheme.spacing12),
+                  child: Center(
+                    child: Text(
+                      formatDouble(e.weight) + "growth.kg".tr(),
+                      style: i == 0
+                          ? ThemeTextStyle.boldParagraph1(
+                              context,
+                              color: AppTheme.colorShade.text,
+                            )
+                          : ThemeTextStyle.paragraph1(
+                              context,
+                              color: AppTheme.colorShade.text,
+                            ),
+                    ),
+                  ),
+                ),
+              ),
+              TableRowInkWell(
+                onTap: () => _onEdit(context, e),
                 child: Center(
                   child: Text(
-                    formatDouble(e.weight) + "growth.kg".tr(),
+                    e.height != null
+                        ? formatDouble(e.height!) + "growth.cm".tr()
+                        : "-",
                     style: i == 0
                         ? ThemeTextStyle.boldParagraph1(
                             context,
@@ -45,23 +75,9 @@ class GrowthSection extends StatelessWidget {
                   ),
                 ),
               ),
-              Center(
-                child: Text(
-                  e.height != null
-                      ? formatDouble(e.height!) + "growth.cm".tr()
-                      : "-",
-                  style: i == 0
-                      ? ThemeTextStyle.boldParagraph1(
-                          context,
-                          color: AppTheme.colorShade.text,
-                        )
-                      : ThemeTextStyle.paragraph1(
-                          context,
-                          color: AppTheme.colorShade.text,
-                        ),
-                ),
-              ),
-            ])))
+            ]),
+          ),
+        )
         .values
         .toList();
   }
@@ -95,10 +111,10 @@ class GrowthSection extends StatelessWidget {
             context: context, builder: (context) => const AddGrowthDialog());
       },
       editable: context.watch<GrowthProvider>().growths.isNotEmpty,
-      onEdit: () {
-        showDialog(
-            context: context, builder: (context) => const EditGrowthDialog());
-      },
+      // onEdit: () {
+      //   showDialog(
+      //       context: context, builder: (context) => const EditGrowthDialog());
+      // },
       header: Table(columnWidths: const {
         0: FractionColumnWidth(0.4), // 40%
         1: FractionColumnWidth(0.3), // 30%

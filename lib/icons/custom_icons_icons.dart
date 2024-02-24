@@ -11,7 +11,7 @@
 ///      fonts:
 ///       - asset: fonts/CustomIcons.ttf
 ///
-///
+/// 
 ///
 import 'package:flutter/widgets.dart';
 
@@ -21,36 +21,22 @@ class CustomIcons {
   static const _kFontFam = 'CustomIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData right =
-      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData camera =
-      IconData(0xe894, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData growth =
-      IconData(0xe897, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData book =
-      IconData(0xe899, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData left =
-      IconData(0xe89a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData chevronDown =
-      IconData(0xe89c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData edit =
-      IconData(0xe89d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData noteAdd =
-      IconData(0xe89e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData add =
-      IconData(0xe89f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData bottle =
-      IconData(0xe8a0, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData milk =
-      IconData(0xe8a1, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData clock =
-      IconData(0xe8a2, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData spoon =
-      IconData(0xe8a3, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData feeding =
-      IconData(0xe8a4, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData close =
-      IconData(0xe8a5, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData poo =
-      IconData(0xe8a7, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData right = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData camera = IconData(0xe894, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData growth = IconData(0xe897, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData book = IconData(0xe899, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData left = IconData(0xe89a, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData chevronDown = IconData(0xe89c, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData edit = IconData(0xe89d, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData noteAdd = IconData(0xe89e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData add = IconData(0xe89f, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData bottle = IconData(0xe8a0, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData milk = IconData(0xe8a1, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData clock = IconData(0xe8a2, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData spoon = IconData(0xe8a3, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData feeding = IconData(0xe8a4, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData close = IconData(0xe8a5, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData poo = IconData(0xe8a7, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData setting = IconData(0xe8a8, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData largeAdd = IconData(0xe8a9, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

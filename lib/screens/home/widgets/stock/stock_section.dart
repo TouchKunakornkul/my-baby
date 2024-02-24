@@ -1,12 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
-import 'package:my_baby/providers/feeding_provider.dart';
-import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/providers/stock_provider.dart';
-import 'package:my_baby/screens/home/widgets/feeding/add_feeding_dialog.dart';
-import 'package:my_baby/screens/home/widgets/feeding/edit_feeding_dialog.dart';
 import 'package:my_baby/screens/home/widgets/growth/growth_infomation.dart';
 import 'package:my_baby/screens/home/widgets/stock/add_stock_dialog.dart';
 import 'package:my_baby/screens/home/widgets/stock/edit_stock_dialog.dart';
@@ -17,6 +14,11 @@ import 'package:provider/provider.dart';
 
 class StockSection extends StatelessWidget {
   const StockSection({super.key});
+
+  void _onEdit(BuildContext context, Stock stock) {
+    showDialog(
+        context: context, builder: (context) => EditStockDialog(stock: stock));
+  }
 
   List<TableRow> _generateDataRow(BuildContext context) {
     final stocksByDay = context.watch<StockProvider>().stocksByDay;
@@ -58,25 +60,31 @@ class StockSection extends StatelessWidget {
                 ]),
           TableCell(
             verticalAlignment: TableCellVerticalAlignment.middle,
-            child: Center(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: AppTheme.spacing2),
-                child: Text(
-                  DateFormat('HH:mm').format(stock.createdAt),
-                  style: ThemeTextStyle.paragraph1(context,
-                      color: AppTheme.colorShade.text),
+            child: InkWell(
+              onTap: () => _onEdit(context, stock),
+              child: Center(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: AppTheme.spacing2),
+                  child: Text(
+                    DateFormat('HH:mm').format(stock.createdAt),
+                    style: ThemeTextStyle.paragraph1(context,
+                        color: AppTheme.colorShade.text),
+                  ),
                 ),
               ),
             ),
           ),
           TableCell(
             verticalAlignment: TableCellVerticalAlignment.middle,
-            child: Center(
-              child: Text(
-                formatDouble(stock.amount),
-                style: ThemeTextStyle.boldParagraph1(context,
-                    color: AppTheme.colorShade.text),
+            child: InkWell(
+              onTap: () => _onEdit(context, stock),
+              child: Center(
+                child: Text(
+                  formatDouble(stock.amount),
+                  style: ThemeTextStyle.boldParagraph1(context,
+                      color: AppTheme.colorShade.text),
+                ),
               ),
             ),
           ),
@@ -110,10 +118,10 @@ class StockSection extends StatelessWidget {
             context: context, builder: (context) => const AddStockDialog());
       },
       editable: context.watch<StockProvider>().showedStocks.isNotEmpty,
-      onEdit: () {
-        showDialog(
-            context: context, builder: (context) => const EditStockDialog());
-      },
+      // onEdit: () {
+      //   showDialog(
+      //       context: context, builder: (context) => const EditStockDialog());
+      // },
       header: Column(
         children: [
           Container(

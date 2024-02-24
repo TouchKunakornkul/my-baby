@@ -53,7 +53,7 @@ class BaseDialog extends StatelessWidget {
                               child: Text(
                                 cancelText ?? 'common.cancel'.tr(),
                                 textAlign: TextAlign.start,
-                                style: ThemeTextStyle.paragraph3(context,
+                                style: ThemeTextStyle.paragraph1(context,
                                     color: AppTheme.colorShade.secondary),
                               ),
                             ),
@@ -76,7 +76,7 @@ class BaseDialog extends StatelessWidget {
                                     child: Text(
                                       okText ?? 'common.submit'.tr(),
                                       textAlign: TextAlign.end,
-                                      style: ThemeTextStyle.paragraph3(context,
+                                      style: ThemeTextStyle.paragraph1(context,
                                           color: AppTheme.colorShade.primary),
                                     ),
                                   )

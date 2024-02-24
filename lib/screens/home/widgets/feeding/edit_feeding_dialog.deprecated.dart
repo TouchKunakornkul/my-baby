@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/providers/feeding_provider.dart';
 import 'package:my_baby/utils/double_utils.dart';
@@ -11,10 +10,8 @@ import 'package:my_baby/widgets/base_text_input.dart';
 import 'package:provider/provider.dart';
 
 class EditFeedingDialog extends StatefulWidget {
-  final Feeding feeding;
   const EditFeedingDialog({
     super.key,
-    required this.feeding,
   });
 
   @override
@@ -23,25 +20,39 @@ class EditFeedingDialog extends StatefulWidget {
 
 class _EditFeedingDialogState extends State<EditFeedingDialog> {
   final TextEditingController _amountController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
   late FeedingType _type;
+  late String _selectedItem;
 
   @override
   void initState() {
-    final feeding = widget.feeding;
-    _dateController.text =
-        DateFormat('d MMM yyyy HH:mm').format(feeding.feedTime);
-    _amountController.text = formatDouble(feeding.amount);
-    _type = stringToFeedingType(feeding.type);
+    final feedings = context.read<FeedingProvider>().feedings;
+    _selectedItem = feedings[0].id.toString();
+
+    _amountController.text = formatDouble(feedings[0].amount);
+    _type = stringToFeedingType(feedings[0].type);
     super.initState();
   }
 
   Future<void> _editFeeding() async {
     final amount = double.tryParse(_amountController.text);
     if (amount != null) {
+      final feedings = context.read<FeedingProvider>().feedings;
+      final updatedFeeding =
+          feedings.firstWhere((f) => f.id.toString() == _selectedItem);
       await context.read<FeedingProvider>().updateFeeding(
-          widget.feeding.copyWith(amount: amount, type: _type.name));
+          updatedFeeding.copyWith(amount: amount, type: _type.name));
     }
+  }
+
+  _onChangeDate(String value) {
+    final feedings = context.read<FeedingProvider>().feedings;
+    final selectedFeeding =
+        feedings.firstWhere((f) => f.id.toString() == _selectedItem);
+    setState(() {
+      _amountController.text = formatDouble(selectedFeeding.amount);
+      _type = stringToFeedingType(selectedFeeding.type);
+      _selectedItem = value;
+    });
   }
 
   void _onChangeType(String value) {
@@ -52,16 +63,28 @@ class _EditFeedingDialogState extends State<EditFeedingDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final feedTimeList = context
+        .watch<FeedingProvider>()
+        .feedings
+        .map((e) => SelectItem(
+            label: DateFormat('d MMM yyyy HH:mm').format(e.feedTime),
+            value: e.id.toString()))
+        .toList();
     return BaseDialog(
       title: 'feeding.edit_title'.tr(),
       content: Column(children: [
         const SizedBox(
           height: AppTheme.spacing20,
         ),
-        BaseTextInput(
-          enabled: false,
-          controller: _dateController,
+        BaseSelectInput(
+          hint: "feeding.feed_time".tr(),
+          items: feedTimeList,
+          initialValue: _selectedItem,
+          onChanged: _onChangeDate,
           label: "feeding.feed_time".tr(),
+        ),
+        const SizedBox(
+          height: AppTheme.spacing36,
         ),
         BaseTextInput(
           label: "feeding.amount".tr(),

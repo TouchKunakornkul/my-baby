@@ -1,18 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/utils/double_utils.dart';
+import 'package:my_baby/widgets/base_bottom_sheet.dart';
 import 'package:my_baby/widgets/base_dialog.dart';
+import 'package:my_baby/widgets/base_select_input.dart';
 import 'package:my_baby/widgets/base_text_input.dart';
 import 'package:provider/provider.dart';
 
 class EditGrowthDialog extends StatefulWidget {
-  final Growth growth;
   const EditGrowthDialog({
     super.key,
-    required this.growth,
   });
 
   @override
@@ -22,16 +21,16 @@ class EditGrowthDialog extends StatefulWidget {
 class _EditGrowthDialogState extends State<EditGrowthDialog> {
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
-  final TextEditingController _dateController = TextEditingController();
+  late String _selectedItem;
 
   @override
   void initState() {
-    final growth = widget.growth;
-    _weightController.text = formatDouble(growth.weight);
+    final growths = context.read<GrowthProvider>().growths;
+    _selectedItem = growths[0].id.toString();
+
+    _weightController.text = formatDouble(growths[0].weight);
     _heightController.text =
-        growth.height != null ? formatDouble(growth.height!) : "";
-    _dateController.text =
-        DateFormat('d MMM yyyy HH:mm').format(growth.createdAt);
+        growths[0].height != null ? formatDouble(growths[0].height!) : "";
     super.initState();
   }
 
@@ -39,22 +38,50 @@ class _EditGrowthDialogState extends State<EditGrowthDialog> {
     final weight = double.tryParse(_weightController.text);
     final height = double.tryParse(_heightController.text);
     if (weight != null) {
-      await context.read<GrowthProvider>().edit(widget.growth, weight, height);
+      final growths = context.read<GrowthProvider>().growths;
+      final updatedGrowth =
+          growths.firstWhere((g) => g.id.toString() == _selectedItem);
+      await context.read<GrowthProvider>().edit(updatedGrowth, weight, height);
     }
+  }
+
+  _onChangeDate(String value) {
+    final growths = context.read<GrowthProvider>().growths;
+    final selectedGrowth =
+        growths.firstWhere((g) => g.id.toString() == _selectedItem);
+    _weightController.text = formatDouble(selectedGrowth.weight);
+    _heightController.text = selectedGrowth.height != null
+        ? formatDouble(selectedGrowth.height!)
+        : "";
+    setState(() {
+      _selectedItem = value;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final growthList = context
+        .watch<GrowthProvider>()
+        .growths
+        .map((e) => SelectItem(
+            label: DateFormat('d MMM yyyy HH:mm').format(e.createdAt),
+            value: e.id.toString()))
+        .toList();
     return BaseDialog(
       title: 'growth.edit_title'.tr(),
       content: Column(children: [
         const SizedBox(
           height: AppTheme.spacing20,
         ),
-        BaseTextInput(
-          enabled: false,
-          controller: _dateController,
+        BaseSelectInput(
+          hint: "growth.created_at".tr(),
+          items: growthList,
+          initialValue: _selectedItem,
+          onChanged: _onChangeDate,
           label: "growth.created_at".tr(),
+        ),
+        const SizedBox(
+          height: AppTheme.spacing36,
         ),
         BaseTextInput(
           label: "growth.weight".tr(),

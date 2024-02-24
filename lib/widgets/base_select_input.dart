@@ -83,6 +83,7 @@ class _BaseSelectInputState extends State<BaseSelectInput> {
                   items: widget.items,
                   searchable: widget.searchable,
                   searchHint: widget.searchHint,
+                  requiredSubmit: false,
                 );
               }
             },

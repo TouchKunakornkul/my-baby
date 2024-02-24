@@ -1,12 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/feeding_provider.dart';
-import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/screens/home/widgets/feeding/add_feeding_dialog.dart';
 import 'package:my_baby/screens/home/widgets/feeding/edit_feeding_dialog.dart';
-import 'package:my_baby/screens/home/widgets/growth/edit_growth_dialog.dart';
 import 'package:my_baby/screens/home/widgets/growth/growth_infomation.dart';
 import 'package:my_baby/utils/double_utils.dart';
 import 'package:my_baby/widgets/base_information_bottom_sheet.dart';
@@ -15,6 +14,12 @@ import 'package:provider/provider.dart';
 
 class FeedingSection extends StatelessWidget {
   const FeedingSection({super.key});
+
+  void _onEdit(BuildContext context, Feeding feeding) {
+    showDialog(
+        context: context,
+        builder: (context) => EditFeedingDialog(feeding: feeding));
+  }
 
   List<TableRow> _generateDataRow(BuildContext context) {
     final feedingsByDay = context.watch<FeedingProvider>().feedingsByDay;
@@ -57,30 +62,39 @@ class FeedingSection extends StatelessWidget {
                 ]),
           TableCell(
             verticalAlignment: TableCellVerticalAlignment.middle,
-            child: Center(
-              child: Icon(
-                feedingType.icon,
-                size: feedingType.iconSize,
+            child: InkWell(
+              onTap: () => _onEdit(context, feeding),
+              child: Center(
+                child: Icon(
+                  feedingType.icon,
+                  size: feedingType.iconSize,
+                ),
               ),
             ),
           ),
           TableCell(
             verticalAlignment: TableCellVerticalAlignment.middle,
-            child: Center(
-              child: Text(
-                DateFormat('HH:mm').format(feeding.feedTime),
-                style: ThemeTextStyle.paragraph1(context,
-                    color: AppTheme.colorShade.text),
+            child: InkWell(
+              onTap: () => _onEdit(context, feeding),
+              child: Center(
+                child: Text(
+                  DateFormat('HH:mm').format(feeding.feedTime),
+                  style: ThemeTextStyle.paragraph1(context,
+                      color: AppTheme.colorShade.text),
+                ),
               ),
             ),
           ),
           TableCell(
             verticalAlignment: TableCellVerticalAlignment.middle,
-            child: Center(
-              child: Text(
-                formatDouble(feeding.amount),
-                style: ThemeTextStyle.boldParagraph1(context,
-                    color: AppTheme.colorShade.text),
+            child: InkWell(
+              onTap: () => _onEdit(context, feeding),
+              child: Center(
+                child: Text(
+                  formatDouble(feeding.amount),
+                  style: ThemeTextStyle.boldParagraph1(context,
+                      color: AppTheme.colorShade.text),
+                ),
               ),
             ),
           ),
@@ -124,10 +138,10 @@ class FeedingSection extends StatelessWidget {
             context: context, builder: (context) => const AddFeedingDialog());
       },
       editable: context.watch<FeedingProvider>().feedings.isNotEmpty,
-      onEdit: () {
-        showDialog(
-            context: context, builder: (context) => const EditFeedingDialog());
-      },
+      // onEdit: () {
+      //   showDialog(
+      //       context: context, builder: (context) => const EditFeedingDialog());
+      // },
       header: Column(
         children: [
           Container(

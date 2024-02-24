@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/models/poo_pee_model.dart';
@@ -13,6 +14,12 @@ import 'package:provider/provider.dart';
 
 class PooPeeSection extends StatelessWidget {
   const PooPeeSection({super.key});
+
+  void _onEdit(BuildContext context, PooPee pooPee) {
+    showDialog(
+        context: context,
+        builder: (context) => EditPooPeeDialog(pooPee: pooPee));
+  }
 
   List<TableRow> _generateDataRow(BuildContext context) {
     final pooPeesByDay = context.watch<PooPeeProvider>().pooPeesByDay;
@@ -35,25 +42,31 @@ class PooPeeSection extends StatelessWidget {
               : const SizedBox.shrink(),
           TableCell(
             verticalAlignment: TableCellVerticalAlignment.middle,
-            child: Center(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: AppTheme.spacing2),
-                child: Text(
-                  DateFormat('HH:mm').format(pooPee.createdAt),
-                  style: ThemeTextStyle.paragraph1(context,
-                      color: AppTheme.colorShade.text),
+            child: InkWell(
+              onTap: () => _onEdit(context, pooPee),
+              child: Center(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: AppTheme.spacing2),
+                  child: Text(
+                    DateFormat('HH:mm').format(pooPee.createdAt),
+                    style: ThemeTextStyle.paragraph1(context,
+                        color: AppTheme.colorShade.text),
+                  ),
                 ),
               ),
             ),
           ),
           TableCell(
             verticalAlignment: TableCellVerticalAlignment.middle,
-            child: Center(
-              child: Text(
-                stringToPooPeeType(pooPee.type).label,
-                style: ThemeTextStyle.boldParagraph1(context,
-                    color: AppTheme.colorShade.text),
+            child: InkWell(
+              onTap: () => _onEdit(context, pooPee),
+              child: Center(
+                child: Text(
+                  stringToPooPeeType(pooPee.type).label,
+                  style: ThemeTextStyle.boldParagraph1(context,
+                      color: AppTheme.colorShade.text),
+                ),
               ),
             ),
           ),
@@ -85,10 +98,10 @@ class PooPeeSection extends StatelessWidget {
             context: context, builder: (context) => const AddPooPeeDialog());
       },
       editable: context.watch<PooPeeProvider>().pooPees.isNotEmpty,
-      onEdit: () {
-        showDialog(
-            context: context, builder: (context) => const EditPooPeeDialog());
-      },
+      // onEdit: () {
+      //   showDialog(
+      //       context: context, builder: (context) => const EditPooPeeDialog());
+      // },
       header: Column(
         children: [
           Container(
