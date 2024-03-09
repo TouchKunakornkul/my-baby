@@ -3,6 +3,7 @@ import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/constants/share_preferences_constants.dart';
 import 'package:my_baby/service/locator.dart';
 import 'package:my_baby/service/notification_service.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppProvider with ChangeNotifier {
@@ -10,9 +11,11 @@ class AppProvider with ChangeNotifier {
   final AppDatabase _appDatabase = locator<AppDatabase>();
   final NotificationService _notificationService =
       locator<NotificationService>();
+  final PackageInfo packageInfo;
 
   AppProvider({
     required this.notificationEnabled,
+    required this.packageInfo,
   });
 
   Future<void> setNotification(bool isOn) async {

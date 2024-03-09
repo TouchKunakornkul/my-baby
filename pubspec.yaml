@@ -49,6 +49,8 @@ dependencies:
   age_calculator: ^1.0.0
   google_fonts: ^6.1.0
   flutter_local_notifications: ^16.3.2
+  in_app_review: ^2.0.8
+  package_info_plus: ^4.2.0
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"

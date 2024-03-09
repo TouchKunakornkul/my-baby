@@ -1,15 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
-import 'package:my_baby/providers/feeding_provider.dart';
-import 'package:my_baby/widgets/add_note_dialog.dart';
-import 'package:my_baby/widgets/base_button.dart';
-import 'package:my_baby/widgets/base_dialog.dart';
+import 'package:my_baby/widgets/add_edit_note_dialog.dart';
 import 'package:my_baby/widgets/note_section.dart';
-import 'package:provider/provider.dart';
 
 const double CONTENT_HEIGHT = 472;
 
@@ -24,6 +18,8 @@ class BaseSection extends StatefulWidget {
   final Widget content;
   final Widget header;
   final Function(String) onAddNote;
+  final Function(Note) onDeleteNote;
+  final Function(Note) onEditNote;
   final List<Note> notes;
   final VoidCallback? onSetRoutine;
   const BaseSection({
@@ -40,6 +36,8 @@ class BaseSection extends StatefulWidget {
     required this.onAddNote,
     this.onSetRoutine,
     this.notes = const [],
+    required this.onDeleteNote,
+    required this.onEditNote,
   });
 
   @override
@@ -180,7 +178,11 @@ class _BaseSectionState extends State<BaseSection> {
                 const SizedBox(
                   height: AppTheme.spacing14,
                 ),
-                NoteSection(notes: widget.notes),
+                NoteSection(
+                  notes: widget.notes,
+                  deleteNote: widget.onDeleteNote,
+                  editNote: widget.onEditNote,
+                ),
                 // spacing for floating button
                 const SizedBox(
                   height: 140,
@@ -204,8 +206,8 @@ class _BaseSectionState extends State<BaseSection> {
                           showDialog(
                               context: context,
                               builder: (ctx) {
-                                return AddNoteDialog(
-                                  addNote: widget.onAddNote,
+                                return AddEditNoteDialog(
+                                  addEditNote: widget.onAddNote,
                                 );
                               });
                         },

@@ -3,12 +3,14 @@ import 'dart:ffi';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:my_baby/configs/database.dart';
+import 'package:my_baby/daos/note_dao.dart';
 import 'package:my_baby/service/locator.dart';
 
 const GROWTH_NOTE_TYPE = 'growth';
 
 class GrowthProvider extends ChangeNotifier {
   final AppDatabase _appDatabase = locator<AppDatabase>();
+  final NotesDao _notesDao = locator<NotesDao>();
   List<Growth> growths = [];
   late int childId;
   List<Note> notes = [];
@@ -90,6 +92,16 @@ class GrowthProvider extends ChangeNotifier {
           type: const Value(GROWTH_NOTE_TYPE),
           childId: Value(childId),
         ));
+    await listGrowthNote();
+  }
+
+  Future<void> deleteGrowthNote(Note note) async {
+    await _notesDao.deleteNote(note);
+    await listGrowthNote();
+  }
+
+  Future<void> updateGrowthNote(Note note) async {
+    await _notesDao.updateNote(note);
     await listGrowthNote();
   }
 }

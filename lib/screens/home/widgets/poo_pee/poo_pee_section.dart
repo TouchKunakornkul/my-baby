@@ -80,6 +80,14 @@ class PooPeeSection extends StatelessWidget {
     context.read<PooPeeProvider>().addPooPeeNote(note);
   }
 
+  void _onEditPooPeeNote(BuildContext context, Note note) {
+    context.read<PooPeeProvider>().updatePooPeeNote(note);
+  }
+
+  void _onDeletePooPeeNote(BuildContext context, Note note) {
+    context.read<PooPeeProvider>().deletePooPeeNote(note);
+  }
+
   @override
   Widget build(BuildContext context) {
     final pooCount = context.watch<PooPeeProvider>().pooCount;
@@ -90,6 +98,8 @@ class PooPeeSection extends StatelessWidget {
       title: "poo_pee.title".tr(),
       subtitle: const SizedBox.shrink(),
       onAddNote: (note) => _onAddPooPeeNote(context, note),
+      onEditNote: (note) => _onEditPooPeeNote(context, note),
+      onDeleteNote: (note) => _onDeletePooPeeNote(context, note),
       onClickBook: () {
         BaseInformationBottomSheet.show(context, const GrowthInformation());
       },

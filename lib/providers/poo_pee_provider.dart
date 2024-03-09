@@ -102,4 +102,14 @@ class PooPeeProvider extends ChangeNotifier {
     );
     fetchPooPeeNotes();
   }
+
+  Future<void> deletePooPeeNote(Note note) async {
+    await _notesDao.deleteNote(note);
+    fetchPooPeeNotes();
+  }
+
+  Future<void> updatePooPeeNote(Note note) async {
+    await _notesDao.updateNote(note);
+    fetchPooPeeNotes();
+  }
 }

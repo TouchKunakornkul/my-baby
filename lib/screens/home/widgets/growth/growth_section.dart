@@ -86,6 +86,14 @@ class GrowthSection extends StatelessWidget {
     context.read<GrowthProvider>().addGrowthNote(note: note);
   }
 
+  void _onEditGrowthNote(BuildContext context, Note note) {
+    context.read<GrowthProvider>().updateGrowthNote(note);
+  }
+
+  void _onDeleteGrowthNote(BuildContext context, Note note) {
+    context.read<GrowthProvider>().deleteGrowthNote(note);
+  }
+
   @override
   Widget build(BuildContext context) {
     final growthRate = context.watch<GrowthProvider>().growthRate;
@@ -93,6 +101,8 @@ class GrowthSection extends StatelessWidget {
       icon: CustomIcons.growth,
       title: "growth.title".tr(),
       onAddNote: (note) => _onAddGrowthNote(context, note),
+      onEditNote: (note) => _onEditGrowthNote(context, note),
+      onDeleteNote: (note) => _onDeleteGrowthNote(context, note),
       notes: context.watch<GrowthProvider>().notes,
       subtitle: Text(
         growthRate != null

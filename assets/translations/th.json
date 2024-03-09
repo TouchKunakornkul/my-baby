@@ -143,6 +143,8 @@
   "note": {
     "title": "Note",
     "add_title": "Add Note",
+    "edit_title": "Edit Note",
+    "delete_note": "Delete Note",
     "note_placeholder": "Note",
     "note": "Note"
   },

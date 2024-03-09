@@ -15,6 +15,7 @@ import 'package:my_baby/providers/poo_pee_provider.dart';
 import 'package:my_baby/providers/stock_provider.dart';
 import 'package:my_baby/service/locator.dart';
 import 'package:my_baby/service/notification_service.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -36,11 +37,14 @@ void main() async {
   final NotificationService notificationService =
       locator<NotificationService>();
   notificationService.initialize();
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
   runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider<AppProvider>(
-            create: (_) =>
-                AppProvider(notificationEnabled: notificationEnabled)),
+            create: (_) => AppProvider(
+                notificationEnabled: notificationEnabled,
+                packageInfo: packageInfo)),
         ChangeNotifierProvider<ChildProvider>(create: (_) => ChildProvider()),
         ChangeNotifierProvider<GrowthProvider>(create: (_) => GrowthProvider()),
         ChangeNotifierProvider<MenuProvider>(create: (_) => MenuProvider()),

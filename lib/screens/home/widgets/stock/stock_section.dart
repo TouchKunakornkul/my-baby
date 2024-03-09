@@ -98,6 +98,14 @@ class StockSection extends StatelessWidget {
     context.read<StockProvider>().addStockNote(note);
   }
 
+  void _onEditStockNote(BuildContext context, Note note) {
+    context.read<StockProvider>().updateStockNote(note);
+  }
+
+  void _onDeleteStockNote(BuildContext context, Note note) {
+    context.read<StockProvider>().deleteStockNote(note);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseSection(
@@ -110,6 +118,8 @@ class StockSection extends StatelessWidget {
             ThemeTextStyle.paragraph1(context, color: AppTheme.colorShade.text),
       ),
       onAddNote: (note) => _onAddStockNote(context, note),
+      onEditNote: (note) => _onEditStockNote(context, note),
+      onDeleteNote: (note) => _onDeleteStockNote(context, note),
       onClickBook: () {
         BaseInformationBottomSheet.show(context, const GrowthInformation());
       },

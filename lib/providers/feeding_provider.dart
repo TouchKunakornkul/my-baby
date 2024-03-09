@@ -212,6 +212,16 @@ class FeedingProvider extends ChangeNotifier {
     fetchFeedingNotes();
   }
 
+  Future<void> deleteFeedingNote(Note note) async {
+    await _notesDao.deleteNote(note);
+    fetchFeedingNotes();
+  }
+
+  Future<void> updateFeedingNote(Note note) async {
+    await _notesDao.updateNote(note);
+    fetchFeedingNotes();
+  }
+
   Future<void> setNotification(DateTime start, int hour) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(SharedPreferencesConstants.feedingHourDuration, hour);

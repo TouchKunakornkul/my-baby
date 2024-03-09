@@ -18,6 +18,10 @@ class NotesDao extends DatabaseAccessor<AppDatabase> with _$NotesDaoMixin {
     return result;
   }
 
+  Future<void> deleteNote(Note note) async {
+    await delete(db.notes).delete(note);
+  }
+
   Future<void> createNote(
       {required int childId,
       required String type,
@@ -27,5 +31,9 @@ class NotesDao extends DatabaseAccessor<AppDatabase> with _$NotesDaoMixin {
       type: Value(type),
       childId: Value(childId),
     ));
+  }
+
+  Future<bool> updateNote(Note note) async {
+    return update(db.notes).replace(note);
   }
 }

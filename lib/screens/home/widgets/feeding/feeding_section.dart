@@ -119,6 +119,14 @@ class FeedingSection extends StatelessWidget {
     context.read<FeedingProvider>().addFeedingNote(note);
   }
 
+  void _onEditFeedingNote(BuildContext context, Note note) {
+    context.read<FeedingProvider>().updateFeedingNote(note);
+  }
+
+  void _onDeleteFeedingNote(BuildContext context, Note note) {
+    context.read<FeedingProvider>().deleteFeedingNote(note);
+  }
+
   @override
   Widget build(BuildContext context) {
     final nextFeedingTime = context.watch<FeedingProvider>().nextFeedingTime;
@@ -143,6 +151,8 @@ class FeedingSection extends StatelessWidget {
             ])
           : const SizedBox.shrink(),
       onAddNote: (note) => _onAddFeedingNote(context, note),
+      onEditNote: (note) => _onEditFeedingNote(context, note),
+      onDeleteNote: (note) => _onDeleteFeedingNote(context, note),
       onSetRoutine: () {
         showDialog(
             context: context,

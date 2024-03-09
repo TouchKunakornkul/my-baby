@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/app_provider.dart';
@@ -93,6 +94,7 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           SafeArea(
@@ -204,6 +206,95 @@ class SettingScreen extends StatelessWidget {
                       ),
                       const SizedBox(
                         height: AppTheme.spacing36,
+                      ),
+                      _Section(
+                        title: "setting.about_us".tr(),
+                        children: [
+                          InkWell(
+                            onTap: () => context.go('/support'),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "setting.about_us".tr(),
+                                  style: ThemeTextStyle.paragraph1(
+                                    context,
+                                    color: AppTheme.colorShade.text,
+                                  ),
+                                ),
+                                Icon(
+                                  CustomIcons.chevronRight,
+                                  size: 20,
+                                  color: AppTheme.colorShade.placeholder,
+                                ),
+                              ],
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () async {
+                              final InAppReview inAppReview =
+                                  InAppReview.instance;
+                              await inAppReview.openStoreListing(
+                                appStoreId: "6474651275",
+                              );
+
+                              if (await inAppReview.isAvailable()) {
+                                inAppReview.requestReview();
+                              }
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "setting.feedback_us".tr(),
+                                  style: ThemeTextStyle.paragraph1(
+                                    context,
+                                    color: AppTheme.colorShade.text,
+                                  ),
+                                ),
+                                Icon(
+                                  CustomIcons.chevronRight,
+                                  size: 20,
+                                  color: AppTheme.colorShade.placeholder,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("setting.contact_us".tr(),
+                                  style: ThemeTextStyle.paragraph1(
+                                    context,
+                                    color: AppTheme.colorShade.text,
+                                  )),
+                              Text(
+                                "setting.contact_email".tr(),
+                                style: ThemeTextStyle.paragraph1(
+                                  context,
+                                  color: AppTheme.colorShade.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: AppTheme.spacing36,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "setting.app_version".tr(args: [
+                              context.read<AppProvider>().packageInfo.version
+                            ]),
+                            style: ThemeTextStyle.paragraph3(
+                              context,
+                              color: AppTheme.colorShade.placeholder,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

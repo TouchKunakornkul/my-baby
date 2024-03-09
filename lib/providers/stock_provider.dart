@@ -94,4 +94,14 @@ class StockProvider extends ChangeNotifier {
     );
     fetchStockNotes();
   }
+
+  Future<void> deleteStockNote(Note note) async {
+    await _notesDao.deleteNote(note);
+    await fetchStockNotes();
+  }
+
+  Future<void> updateStockNote(Note note) async {
+    await _notesDao.updateNote(note);
+    await fetchStockNotes();
+  }
 }
