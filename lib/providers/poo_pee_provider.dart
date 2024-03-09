@@ -18,6 +18,12 @@ class PooPeeProvider extends ChangeNotifier {
   List<PooPee> get pooPees => _pooPees;
   List<Note> get notes => _notes;
 
+  void reset() {
+    _pooPees = [];
+    _notes = [];
+    notifyListeners();
+  }
+
   int get pooCount => _pooPees
       .where((element) =>
           stringToPooPeeType(element.type) == PooPeeType.poo ||

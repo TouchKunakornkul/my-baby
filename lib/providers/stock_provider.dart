@@ -30,6 +30,12 @@ class StockProvider extends ChangeNotifier {
     return availableStock ~/ 30; // mock
   }
 
+  void reset() {
+    _stocks = [];
+    notes = [];
+    notifyListeners();
+  }
+
   Future<void> setChild(int id) async {
     childId = id;
     await fetchStocks();

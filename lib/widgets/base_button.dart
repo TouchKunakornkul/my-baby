@@ -4,6 +4,7 @@ import 'package:my_baby/configs/theme.dart';
 enum ButtonType {
   primary,
   secondary,
+  error,
 }
 
 enum ButtonBorder {
@@ -108,6 +109,9 @@ class BaseButton extends StatelessWidget {
     if (type == ButtonType.secondary) {
       return Colors.transparent;
     }
+    if (type == ButtonType.error) {
+      return AppTheme.colorShade.error;
+    }
     if (disabled) return AppTheme.colorShade.placeholder;
     return AppTheme.colorShade.primary;
   }
@@ -135,7 +139,7 @@ class BaseButton extends StatelessWidget {
   double get _borderRadius {
     if (borderRadius != null) return borderRadius!;
     return buttonBorder == ButtonBorder.square
-        ? AppTheme.borderRadius4
+        ? AppTheme.borderRadius12
         : AppTheme.borderRadius50;
   }
 
@@ -190,7 +194,7 @@ class BaseButton extends StatelessWidget {
                 color: _textColor,
               ),
             Text(
-              text.toUpperCase(),
+              text,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               softWrap: false,

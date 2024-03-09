@@ -22,6 +22,7 @@ class CustomIcons {
   static const String? _kFontPkg = null;
 
   static const IconData right = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData chevronRight = IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData camera = IconData(0xe894, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData growth = IconData(0xe897, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData book = IconData(0xe899, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -36,7 +37,7 @@ class CustomIcons {
   static const IconData spoon = IconData(0xe8a3, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData feeding = IconData(0xe8a4, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData close = IconData(0xe8a5, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData poo = IconData(0xe8a7, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData setting = IconData(0xe8a8, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData largeAdd = IconData(0xe8a9, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData poo = IconData(0xe8aa, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<MenuProvider>().selectMenuFromPageView(null);
   }
 
-  void _onEditChild() {
+  void _onEditChild(BuildContext context) {
     showDialog(
         context: context,
         builder: (context) {
@@ -99,6 +99,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: Stack(
                   children: [
+                    Image.asset(
+                      "assets/images/bg.png", // TRY THIS: Change this to
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      fit: BoxFit.cover,
+                    ),
                     child != null
                         ? ChildImage(
                             imageUrl: child.imageUrl,
@@ -109,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height,
                             child: GestureDetector(
-                              onTap: _onEditChild,
+                              onTap: () => _onEditChild(context),
                               behavior: HitTestBehavior.opaque,
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -152,13 +158,28 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Image.asset(
-                                "assets/images/logo.png",
-                                height: LOGO_HEIGHT,
-                              ),
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Image.asset(
+                                    "assets/images/logo.png",
+                                    height: LOGO_HEIGHT,
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.only(
+                                        left: AppTheme.spacing12),
+                                    child: InkWell(
+                                      onTap: _onSetting,
+                                      child: Ink(
+                                          child:
+                                              const Icon(CustomIcons.setting)),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   child != null
                                       ? Expanded(
@@ -195,7 +216,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 padding: const EdgeInsets.only(
                                                     left: AppTheme.spacing12),
                                                 child: InkWell(
-                                                  onTap: _onEditChild,
+                                                  onTap: () =>
+                                                      _onEditChild(context),
                                                   child: Ink(
                                                       child: const Icon(
                                                           CustomIcons.edit)),
@@ -205,16 +227,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         )
                                       : const SizedBox.shrink(),
-                                  Container(
-                                    padding: const EdgeInsets.only(
-                                        left: AppTheme.spacing12),
-                                    child: InkWell(
-                                      onTap: _onSetting,
-                                      child: Ink(
-                                          child:
-                                              const Icon(CustomIcons.setting)),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ],

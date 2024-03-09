@@ -38,10 +38,10 @@ class _EditFeedingDialogState extends State<EditFeedingDialog> {
 
   Future<void> _editFeeding() async {
     final amount = double.tryParse(_amountController.text);
-    if (amount != null) {
-      await context.read<FeedingProvider>().updateFeeding(
-          widget.feeding.copyWith(amount: amount, type: _type.name));
-    }
+    // if (amount != null) {
+    await context.read<FeedingProvider>().updateFeeding(
+        widget.feeding.copyWith(amount: amount ?? 0, type: _type.name));
+    // }
   }
 
   void _onChangeType(String value) {

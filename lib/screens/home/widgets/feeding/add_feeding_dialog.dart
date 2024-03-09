@@ -29,11 +29,9 @@ class _AddFeedingDialogState extends State<AddFeedingDialog> {
 
   Future<void> _addFeeding() async {
     final amount = double.tryParse(_amountController.text);
-    if (amount != null) {
-      await context
-          .read<FeedingProvider>()
-          .addFeeding(feedTime: _feedTime, amount: amount, type: _type);
-    }
+    await context
+        .read<FeedingProvider>()
+        .addFeeding(feedTime: _feedTime, amount: amount ?? 0, type: _type);
   }
 
   void _onChangeType(String value) {
@@ -63,6 +61,7 @@ class _AddFeedingDialogState extends State<AddFeedingDialog> {
           label: "feeding.feeding_time".tr(),
           initialTime: _feedTime,
           onChange: (time) {
+            print(time);
             setState(() {
               _feedTime = time;
             });

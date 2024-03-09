@@ -40,7 +40,7 @@
     "hi": "สวัสดี {}",
     "logout": "ออกจากระบบ",
     "refresh": "รีเฟรช",
-    "next": "ถัดไป",
+    "next": "Next",
     "done": "เสร็จสิ้น",
     "no_data": "ไม่พบข้อมูล",
     "update_data": "อัปเดตข้อมูล",
@@ -86,7 +86,7 @@
   },
   "feeding": {
     "title": "Feeding",
-    "subtitle": "Every 2 hour Next is 23:00",
+    "subtitle": "Every {} hour Next is ",
     "add_title": "Add Feeding",
     "edit_title": "Edit Feeding",
     "feed_time": "Feedtime",
@@ -103,7 +103,13 @@
     "daily": "Daily(oz)",
     "ounce": "Ounce",
     "average": "Average feed",
-    "oz_per_day": "{} Oz/day"
+    "oz_per_day": "{} Oz/day",
+    "routine": {
+      "title": "Routine",
+      "routine": "Routine",
+      "start_at": "Start at",
+      "every_hours": "Every {} hour"
+    }
   },
   "stock": {
     "title": "Milk Stock",
@@ -144,5 +150,27 @@
     "title": "Edit Information",
     "display_name": "Display Name",
     "date_of_birth": "Date of Birth"
+  },
+  "onboarding": {
+    "title": "\"Help Parents,\nRaise Strong Babies\""
+  },
+  "support": {
+    "title": "Supported by"
+  },
+  "setting": {
+    "title": "Setting",
+    "alert_and_display": "Alert and Display",
+    "notification": "Notification",
+    "data": "Data",
+    "reset_all_data": "Reset all data",
+    "reset_data": "Reset Data",
+    "reset_data_title": "Reset all data ?",
+    "reset_data_description": "This process cannot be undone",
+    "about_us": "About us",
+    "feedback_us": "Feedback us",
+    "contact_us": "Contact us",
+    "contact_email": "mybabyapp@gmail.com",
+    "logout": "Logout",
+    "app_version": "App version {}"
   }
 }

@@ -6,6 +6,7 @@ import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/feeding_provider.dart';
 import 'package:my_baby/screens/home/widgets/feeding/add_feeding_dialog.dart';
 import 'package:my_baby/screens/home/widgets/feeding/edit_feeding_dialog.dart';
+import 'package:my_baby/screens/home/widgets/feeding/feeding_routine_dialog.dart';
 import 'package:my_baby/screens/home/widgets/growth/growth_infomation.dart';
 import 'package:my_baby/utils/double_utils.dart';
 import 'package:my_baby/widgets/base_information_bottom_sheet.dart';
@@ -120,16 +121,33 @@ class FeedingSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final nextFeedingTime = context.watch<FeedingProvider>().nextFeedingTime;
     return BaseSection(
       notes: context.watch<FeedingProvider>().notes,
       icon: CustomIcons.growth,
       title: "feeding.title".tr(),
-      subtitle: Text(
-        "feeding.subtitle".tr(),
-        style:
-            ThemeTextStyle.paragraph1(context, color: AppTheme.colorShade.text),
-      ),
+      subtitle: nextFeedingTime != null
+          ? Wrap(children: [
+              Text(
+                "feeding.subtitle".tr(args: [
+                  context.watch<FeedingProvider>().hourDuration.toString()
+                ]),
+                style: ThemeTextStyle.paragraph1(context,
+                    color: AppTheme.colorShade.text),
+              ),
+              Text(
+                DateFormat('HH:mm').format(nextFeedingTime),
+                style: ThemeTextStyle.boldParagraph1(context,
+                    color: AppTheme.colorShade.primary),
+              ),
+            ])
+          : const SizedBox.shrink(),
       onAddNote: (note) => _onAddFeedingNote(context, note),
+      onSetRoutine: () {
+        showDialog(
+            context: context,
+            builder: (context) => const FeedingRoutineDialog());
+      },
       onClickBook: () {
         BaseInformationBottomSheet.show(context, const GrowthInformation());
       },

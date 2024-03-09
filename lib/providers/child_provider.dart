@@ -26,4 +26,9 @@ class ChildProvider extends ChangeNotifier {
             imageUrl: Value(imageUrl)));
     getChild();
   }
+
+  Future<void> deleteChild() async {
+    await _appDatabase.delete(_appDatabase.childs).go();
+    getChild();
+  }
 }

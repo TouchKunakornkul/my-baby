@@ -1,12 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
+import 'package:my_baby/providers/feeding_provider.dart';
 import 'package:my_baby/widgets/add_note_dialog.dart';
 import 'package:my_baby/widgets/base_button.dart';
 import 'package:my_baby/widgets/base_dialog.dart';
 import 'package:my_baby/widgets/note_section.dart';
+import 'package:provider/provider.dart';
 
 const double CONTENT_HEIGHT = 472;
 
@@ -22,6 +25,7 @@ class BaseSection extends StatefulWidget {
   final Widget header;
   final Function(String) onAddNote;
   final List<Note> notes;
+  final VoidCallback? onSetRoutine;
   const BaseSection({
     super.key,
     required this.icon,
@@ -34,6 +38,7 @@ class BaseSection extends StatefulWidget {
     this.editable = true,
     required this.header,
     required this.onAddNote,
+    this.onSetRoutine,
     this.notes = const [],
   });
 
@@ -101,6 +106,18 @@ class _BaseSectionState extends State<BaseSection> {
                                 size: 24,
                               ),
                             ),
+                            if (widget.onSetRoutine != null) ...[
+                              const SizedBox(
+                                width: AppTheme.spacing20,
+                              ),
+                              InkWell(
+                                onTap: widget.onSetRoutine,
+                                child: const Icon(
+                                  CustomIcons.clock,
+                                  size: 24,
+                                ),
+                              ),
+                            ],
                             if (widget.onEdit != null) ...[
                               const SizedBox(
                                 width: AppTheme.spacing20,

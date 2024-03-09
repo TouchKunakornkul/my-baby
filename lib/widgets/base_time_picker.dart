@@ -46,6 +46,9 @@ class _BaseTimePickerState extends State<BaseTimePicker> {
           pickedTime.hour,
           pickedTime.minute,
         );
+        if (widget.onChange != null) {
+          widget.onChange!(_selectedTime);
+        }
         _controller.text = DateFormat("HH:mm").format(_selectedTime);
       });
     }

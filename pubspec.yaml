@@ -48,6 +48,7 @@ dependencies:
   image_picker: ^1.0.4
   age_calculator: ^1.0.0
   google_fonts: ^6.1.0
+  flutter_local_notifications: ^16.3.2
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"

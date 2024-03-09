@@ -1,9 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:my_baby/constants/share_preferences_constants.dart';
 import 'package:my_baby/providers/child_provider.dart';
-import 'package:my_baby/widgets/edit_child_dialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,15 +26,16 @@ class _SplashScreenState extends State<SplashScreen>
     _setupAnimation();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await Future.delayed(const Duration(seconds: 2));
-      final child = await context.read<ChildProvider>().getChild();
-      if (child == null) {
-        await showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (context) => const EditChildDialog());
-        await context.read<ChildProvider>().getChild();
+      await context.read<ChildProvider>().getChild();
+      final prefs = await SharedPreferences.getInstance();
+      final onboarded =
+          prefs.getBool(SharedPreferencesConstants.onboarded) ?? false;
+      print(onboarded);
+      if (!onboarded) {
+        context.go('/onboarding');
+      } else {
+        context.go('/home');
       }
-      context.go('/home');
     });
   }
 

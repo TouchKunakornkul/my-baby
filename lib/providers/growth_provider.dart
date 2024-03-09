@@ -28,6 +28,12 @@ class GrowthProvider extends ChangeNotifier {
         (day > 0 ? day : 1);
   }
 
+  void reset() {
+    growths = [];
+    notes = [];
+    notifyListeners();
+  }
+
   Future<void> setChild(int id) async {
     childId = id;
     await listGrowth();
