@@ -89,6 +89,9 @@ class FeedingProvider extends ChangeNotifier {
   DateTime? startTime;
   int? hourDuration;
 
+  List<Feeding> get feedingWithoutBreast =>
+      _feedings.where((element) => element.type != 'breast').toList();
+
   late int childId;
 
   FeedingProvider({
@@ -145,7 +148,8 @@ class FeedingProvider extends ChangeNotifier {
 
   double get averageAmountPerDay {
     if (_feedings.isEmpty) return 0;
-    final totalAmount = _feedings.map((e) => e.amount).reduce((a, b) => a + b);
+    final totalAmount =
+        feedingWithoutBreast.map((e) => e.amount).reduce((a, b) => a + b);
     final days = _feedings
         .map((e) => e.feedTime)
         .map((e) => DateTime(e.year, e.month, e.day))

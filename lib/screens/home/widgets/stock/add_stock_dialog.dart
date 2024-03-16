@@ -1,11 +1,13 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_baby/configs/theme.dart';
+import 'package:my_baby/providers/child_provider.dart';
 import 'package:my_baby/providers/stock_provider.dart';
 import 'package:my_baby/widgets/base_date_picker.dart';
 import 'package:my_baby/widgets/base_dialog.dart';
 import 'package:my_baby/widgets/base_text_input.dart';
 import 'package:my_baby/widgets/base_time_picker.dart';
+import 'package:my_baby/widgets/dimmer_image.dart';
 import 'package:provider/provider.dart';
 
 class AddStockDialog extends StatefulWidget {
@@ -30,6 +32,14 @@ class _AddStockDialogState extends State<AddStockDialog> {
       await context
           .read<StockProvider>()
           .addStock(createdAt: _stockAt, amount: amount);
+      showDialog(
+          context: context,
+          builder: (ctx) => DimmedImageOverlay(
+                imagePath: 'assets/images/stock-greeting.png',
+                text: "stock.greeting".tr(
+                  args: [ctx.watch<ChildProvider>().child?.name ?? "-", "10"],
+                ),
+              ));
     }
   }
 

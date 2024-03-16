@@ -1,10 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_baby/configs/theme.dart';
+import 'package:my_baby/providers/child_provider.dart';
 import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/widgets/base_date_picker.dart';
 import 'package:my_baby/widgets/base_dialog.dart';
 import 'package:my_baby/widgets/base_text_input.dart';
+import 'package:my_baby/widgets/dimmer_image.dart';
 import 'package:provider/provider.dart';
 
 class AddGrowthDialog extends StatefulWidget {
@@ -32,6 +34,13 @@ class _AddGrowthDialogState extends State<AddGrowthDialog> {
       await context
           .read<GrowthProvider>()
           .addGrowth(weight: weight, height: height, createdAt: _createdAt);
+      showDialog(
+          context: context,
+          builder: (ctx) => DimmedImageOverlay(
+                imagePath: 'assets/images/growth-greeting.png',
+                text: "growth.greeting"
+                    .tr(args: [ctx.watch<ChildProvider>().child?.name ?? "-"]),
+              ));
     }
   }
 
