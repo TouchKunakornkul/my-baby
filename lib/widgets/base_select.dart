@@ -30,7 +30,7 @@ class BaseSelect extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectedItem = items.firstWhere((i) => i.value == value);
     final selectedIndex = items.indexWhere((i) => i.value == value);
-    return Container(
+    return SizedBox(
       child: Column(children: [
         Text(
           label,

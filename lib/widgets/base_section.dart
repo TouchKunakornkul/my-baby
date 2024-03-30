@@ -17,6 +17,7 @@ class BaseSection extends StatefulWidget {
   final bool editable;
   final Widget content;
   final Widget header;
+  final bool hasDivider;
   final Function(String) onAddNote;
   final Function(Note) onDeleteNote;
   final Function(Note) onEditNote;
@@ -36,6 +37,7 @@ class BaseSection extends StatefulWidget {
     required this.onAddNote,
     this.onSetRoutine,
     this.notes = const [],
+    this.hasDivider = true,
     required this.onDeleteNote,
     required this.onEditNote,
   });
@@ -136,10 +138,11 @@ class _BaseSectionState extends State<BaseSection> {
                       height: AppTheme.spacing20,
                     ),
                     widget.header,
-                    Divider(
-                      color: AppTheme.colorShade.placeholder,
-                      height: 1,
-                    ),
+                    if (widget.hasDivider)
+                      Divider(
+                        color: AppTheme.colorShade.placeholder,
+                        height: 1,
+                      ),
                     const SizedBox(
                       height: AppTheme.spacing16,
                     ),
@@ -181,6 +184,7 @@ class _BaseSectionState extends State<BaseSection> {
                 NoteSection(
                   notes: widget.notes,
                   deleteNote: widget.onDeleteNote,
+                  onAddNote: widget.onAddNote,
                   editNote: widget.onEditNote,
                 ),
                 // spacing for floating button
@@ -196,30 +200,30 @@ class _BaseSectionState extends State<BaseSection> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(
-                    width: 57,
-                    height: 57,
-                    child: FittedBox(
-                      child: FloatingActionButton(
-                        // change to add note
-                        onPressed: () {
-                          showDialog(
-                              context: context,
-                              builder: (ctx) {
-                                return AddEditNoteDialog(
-                                  addEditNote: widget.onAddNote,
-                                );
-                              });
-                        },
-                        backgroundColor: AppTheme.colorShade.label,
-                        shape: const CircleBorder(),
-                        child: const Icon(CustomIcons.noteAdd),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
+                  // SizedBox(
+                  //   width: 57,
+                  //   height: 57,
+                  //   child: FittedBox(
+                  //     child: FloatingActionButton(
+                  //       // change to add note
+                  //       onPressed: () {
+                  //         showDialog(
+                  //             context: context,
+                  //             builder: (ctx) {
+                  //               return AddEditNoteDialog(
+                  //                 addEditNote: widget.onAddNote,
+                  //               );
+                  //             });
+                  //       },
+                  //       backgroundColor: AppTheme.colorShade.label,
+                  //       shape: const CircleBorder(),
+                  //       child: const Icon(CustomIcons.noteAdd),
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
                   SizedBox(
                     width: 68,
                     height: 68,

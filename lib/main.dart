@@ -13,6 +13,7 @@ import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/providers/menu_provider.dart';
 import 'package:my_baby/providers/poo_pee_provider.dart';
 import 'package:my_baby/providers/stock_provider.dart';
+import 'package:my_baby/providers/checklist_provider.dart';
 import 'package:my_baby/service/locator.dart';
 import 'package:my_baby/service/notification_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -49,6 +50,8 @@ void main() async {
         ChangeNotifierProvider<GrowthProvider>(create: (_) => GrowthProvider()),
         ChangeNotifierProvider<MenuProvider>(create: (_) => MenuProvider()),
         ChangeNotifierProvider<StockProvider>(create: (_) => StockProvider()),
+        ChangeNotifierProvider<ChecklistProvider>(
+            create: (_) => ChecklistProvider()),
         ChangeNotifierProxyProvider<StockProvider, FeedingProvider>(
             create: (context) => FeedingProvider(
                   hourDuration: feedingHourDuration,

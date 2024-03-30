@@ -7,7 +7,6 @@ import 'package:my_baby/widgets/base_dialog.dart';
 import 'package:my_baby/widgets/base_select_input.dart';
 import 'package:my_baby/widgets/base_time_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 final ROUTINES = [1, 2, 3, 4, 6];
 

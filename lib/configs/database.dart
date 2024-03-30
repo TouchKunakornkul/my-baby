@@ -1,8 +1,10 @@
 import 'package:drift/drift.dart';
+import 'package:my_baby/daos/checklist_dao.dart';
 import 'package:my_baby/daos/feeding_dao.dart';
 import 'package:my_baby/daos/note_dao.dart';
 import 'package:my_baby/daos/poo_pee_dao.dart';
 import 'package:my_baby/daos/stock_dao.dart';
+import 'package:my_baby/models/checklist_model.dart';
 import 'package:my_baby/models/child_model.dart';
 import 'package:my_baby/models/develop_model.dart';
 import 'package:my_baby/models/feeding_model.dart';
@@ -33,14 +35,27 @@ part 'database.g.dart';
 //   }
 // }
 
-@DriftDatabase(
-    tables: [Childs, Growths, Develops, Notes, Feedings, Stocks, PooPees],
-    daos: [FeedingsDao, NotesDao, StocksDao, PooPeesDao])
+@DriftDatabase(tables: [
+  Childs,
+  Growths,
+  Develops,
+  Notes,
+  Feedings,
+  Stocks,
+  PooPees,
+  Checklists,
+], daos: [
+  FeedingsDao,
+  NotesDao,
+  StocksDao,
+  PooPeesDao,
+  ChecklistsDao,
+])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 7;
+  int get schemaVersion => 8;
   Future<List<Growth>> listGrowth() {
     return select(growths).get();
   }
@@ -80,6 +95,9 @@ class AppDatabase extends _$AppDatabase {
         }
         if (from < 7) {
           await m.create(pooPees);
+        }
+        if (from < 8) {
+          await m.create(checklists);
         }
       },
     );

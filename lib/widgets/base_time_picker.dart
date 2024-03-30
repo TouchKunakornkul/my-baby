@@ -33,9 +33,7 @@ class _BaseTimePickerState extends State<BaseTimePicker> {
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime: _selectedTime != null
-          ? TimeOfDay.fromDateTime(_selectedTime)
-          : TimeOfDay.now(),
+      initialTime: TimeOfDay.fromDateTime(_selectedTime),
     );
     if (pickedTime != null && pickedTime != _selectedTime) {
       setState(() {

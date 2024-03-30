@@ -6,27 +6,20 @@ import 'package:my_baby/icons/custom_icons_icons.dart';
 import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/screens/home/widgets/growth/add_growth_dialog.dart';
 import 'package:my_baby/screens/home/widgets/growth/edit_growth_dialog.dart';
-import 'package:my_baby/screens/home/widgets/growth/growth_chart.dart';
 import 'package:my_baby/screens/home/widgets/growth/growth_infomation.dart';
 import 'package:my_baby/utils/double_utils.dart';
 import 'package:my_baby/widgets/base_information_bottom_sheet.dart';
 import 'package:my_baby/widgets/base_section.dart';
 import 'package:provider/provider.dart';
 
-enum View {
-  chart,
-  table,
-}
-
-class GrowthSection extends StatefulWidget {
+class GrowthSection extends StatelessWidget {
   const GrowthSection({super.key});
 
-  @override
-  State<GrowthSection> createState() => _GrowthSectionState();
-}
-
-class _GrowthSectionState extends State<GrowthSection> {
-  View _view = View.chart;
+  void _onEdit(BuildContext context, Growth growth) {
+    showDialog(
+        context: context,
+        builder: (context) => EditGrowthDialog(growth: growth));
+  }
 
   List<TableRow> _generateDataRow(BuildContext context) {
     final growths = context.watch<GrowthProvider>().growths;
@@ -89,13 +82,6 @@ class _GrowthSectionState extends State<GrowthSection> {
         .toList();
   }
 
-  void _onEdit(BuildContext context, Growth growth) {
-    showDialog(
-        context: context,
-        builder: (context) => EditGrowthDialog(growth: growth));
-  }
-
-  // List<TableRow> _generateDataRow(BuildContext context) {
   void _onAddGrowthNote(BuildContext context, String note) {
     context.read<GrowthProvider>().addGrowthNote(note: note);
   }
@@ -110,7 +96,7 @@ class _GrowthSectionState extends State<GrowthSection> {
 
   @override
   Widget build(BuildContext context) {
-    final lastGrowthWeight = context.watch<GrowthProvider>().lastGrowthWeight;
+    final growthRate = context.watch<GrowthProvider>().growthRate;
     return BaseSection(
       icon: CustomIcons.growth,
       title: "growth.title".tr(),
@@ -119,10 +105,12 @@ class _GrowthSectionState extends State<GrowthSection> {
       onDeleteNote: (note) => _onDeleteGrowthNote(context, note),
       notes: context.watch<GrowthProvider>().notes,
       subtitle: Text(
-        "${lastGrowthWeight != null ? formatDouble(lastGrowthWeight) : "-"} ${"growth.kg".tr()}",
-        style: ThemeTextStyle.headline2(
+        growthRate != null
+            ? "growth.subtitle".tr(args: [growthRate.toStringAsFixed(0)])
+            : '-',
+        style: ThemeTextStyle.paragraph1(
           context,
-          color: AppTheme.colorShade.green,
+          color: AppTheme.colorShade.secondary,
         ),
       ),
       onClickBook: () {
@@ -137,38 +125,42 @@ class _GrowthSectionState extends State<GrowthSection> {
       //   showDialog(
       //       context: context, builder: (context) => const EditGrowthDialog());
       // },
-      header: const SizedBox.shrink(),
-      content: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          InkWell(
-            onTap: () => setState(() {
-              _view = _view == View.chart ? View.table : View.chart;
-            }),
+      header: Table(columnWidths: const {
+        0: FractionColumnWidth(0.4), // 40%
+        1: FractionColumnWidth(0.3), // 30%
+        2: FractionColumnWidth(0.3), // 30%
+      }, children: [
+        TableRow(children: [
+          const SizedBox.shrink(),
+          Center(
+              child: Padding(
+            padding: const EdgeInsets.only(bottom: AppTheme.spacing12),
             child: Text(
-              _view == View.chart
-                  ? "growth.view_table".tr()
-                  : "growth.view_chart".tr(),
-              style: ThemeTextStyle.paragraph1(
+              "growth.weight".tr(),
+              style: ThemeTextStyle.boldParagraph3(
                 context,
-                color: AppTheme.colorShade.primary,
+                color: AppTheme.colorShade.placeholder,
+              ),
+            ),
+          )),
+          Center(
+            child: Text(
+              "growth.height".tr(),
+              style: ThemeTextStyle.boldParagraph3(
+                context,
+                color: AppTheme.colorShade.placeholder,
               ),
             ),
           ),
-          if (_view == View.chart)
-            GrowthChart(
-              growths: context.watch<GrowthProvider>().growths,
-            ),
-          if (_view == View.table)
-            Table(
-              columnWidths: const {
-                0: FractionColumnWidth(0.4), // 40%
-                1: FractionColumnWidth(0.3), // 30%
-                2: FractionColumnWidth(0.3), // 30%
-              },
-              children: _generateDataRow(context),
-            ),
-        ],
+        ]),
+      ]),
+      content: Table(
+        columnWidths: const {
+          0: FractionColumnWidth(0.4), // 40%
+          1: FractionColumnWidth(0.3), // 30%
+          2: FractionColumnWidth(0.3), // 30%
+        },
+        children: _generateDataRow(context),
       ),
     );
   }

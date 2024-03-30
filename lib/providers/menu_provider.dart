@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 enum Menu {
+  MyBaby,
   Growth,
   Feeding,
   MilkStock,

@@ -5,9 +5,11 @@ import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/providers/feeding_provider.dart';
 import 'package:my_baby/utils/double_utils.dart';
 import 'package:my_baby/widgets/base_bottom_sheet.dart';
+import 'package:my_baby/widgets/base_date_picker.dart';
 import 'package:my_baby/widgets/base_dialog.dart';
 import 'package:my_baby/widgets/base_select_input.dart';
 import 'package:my_baby/widgets/base_text_input.dart';
+import 'package:my_baby/widgets/base_time_picker.dart';
 import 'package:provider/provider.dart';
 
 class EditFeedingDialog extends StatefulWidget {
@@ -25,6 +27,7 @@ class _EditFeedingDialogState extends State<EditFeedingDialog> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
   late FeedingType _type;
+  DateTime _feedTime = DateTime.now();
 
   @override
   void initState() {
@@ -33,14 +36,15 @@ class _EditFeedingDialogState extends State<EditFeedingDialog> {
         DateFormat('d MMM yyyy HH:mm').format(feeding.feedTime);
     _amountController.text = formatDouble(feeding.amount);
     _type = stringToFeedingType(feeding.type);
+    _feedTime = feeding.feedTime;
     super.initState();
   }
 
   Future<void> _editFeeding() async {
     final amount = double.tryParse(_amountController.text);
     // if (amount != null) {
-    await context.read<FeedingProvider>().updateFeeding(
-        widget.feeding.copyWith(amount: amount ?? 0, type: _type.name));
+    await context.read<FeedingProvider>().updateFeeding(widget.feeding
+        .copyWith(amount: amount ?? 0, type: _type.name, feedTime: _feedTime));
     // }
   }
 
@@ -58,10 +62,23 @@ class _EditFeedingDialogState extends State<EditFeedingDialog> {
         const SizedBox(
           height: AppTheme.spacing20,
         ),
-        BaseTextInput(
-          enabled: false,
-          controller: _dateController,
-          label: "feeding.feed_time".tr(),
+        BaseDatePicker(
+          label: "feeding.feeding_date".tr(),
+          value: _feedTime,
+          onChange: (date) {
+            setState(() {
+              _feedTime = date;
+            });
+          },
+        ),
+        BaseTimePicker(
+          label: "feeding.feeding_time".tr(),
+          initialTime: _feedTime,
+          onChange: (time) {
+            setState(() {
+              _feedTime = time;
+            });
+          },
         ),
         BaseTextInput(
           label: "feeding.amount".tr(),

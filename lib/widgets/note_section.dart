@@ -8,12 +8,14 @@ class NoteSection extends StatelessWidget {
   final List<Note> notes;
   final Function(Note) deleteNote;
   final Function(Note) editNote;
+  final Function(String) onAddNote;
 
   const NoteSection({
     super.key,
     required this.notes,
     required this.deleteNote,
     required this.editNote,
+    required this.onAddNote,
   });
 
   _editNote(Note note, String noteString) {
@@ -31,12 +33,35 @@ class NoteSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "note.title".tr(),
-            style: ThemeTextStyle.boldParagraph1(
-              context,
-              color: AppTheme.colorShade.text,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "note.title".tr(),
+                style: ThemeTextStyle.boldParagraph1(
+                  context,
+                  color: AppTheme.colorShade.text,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (ctx) {
+                        return AddEditNoteDialog(
+                          addEditNote: onAddNote,
+                        );
+                      });
+                },
+                child: Text(
+                  "common.+add".tr(),
+                  style: ThemeTextStyle.paragraph1(
+                    context,
+                    color: AppTheme.colorShade.primary,
+                  ),
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: AppTheme.spacing6,

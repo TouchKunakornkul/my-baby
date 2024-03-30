@@ -147,6 +147,7 @@ class BaseBottomSheet {
   // }
 }
 
+@immutable
 class ListViewArrow extends StatefulWidget {
   final List<SelectItem> items;
   final Function(String) onSubmit;

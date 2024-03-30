@@ -7,6 +7,15 @@ class ChildProvider extends ChangeNotifier {
   final AppDatabase _appDatabase = locator<AppDatabase>();
   Child? child;
 
+  int get ageInMonths {
+    if (child == null) {
+      return 0;
+    }
+    final now = DateTime.now();
+    final diff = now.difference(child!.birthDate).inDays;
+    return (diff / 30).floor();
+  }
+
   Future<Child?> getChild() async {
     child = await _appDatabase.select(_appDatabase.childs).getSingleOrNull();
     notifyListeners();

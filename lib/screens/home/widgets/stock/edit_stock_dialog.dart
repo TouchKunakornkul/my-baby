@@ -4,8 +4,10 @@ import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/providers/stock_provider.dart';
 import 'package:my_baby/utils/double_utils.dart';
+import 'package:my_baby/widgets/base_date_picker.dart';
 import 'package:my_baby/widgets/base_dialog.dart';
 import 'package:my_baby/widgets/base_text_input.dart';
+import 'package:my_baby/widgets/base_time_picker.dart';
 import 'package:provider/provider.dart';
 
 class EditStockDialog extends StatefulWidget {
@@ -22,6 +24,7 @@ class EditStockDialog extends StatefulWidget {
 class _EditStockDialogState extends State<EditStockDialog> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
+  DateTime _stockAt = DateTime.now();
 
   @override
   void initState() {
@@ -30,15 +33,15 @@ class _EditStockDialogState extends State<EditStockDialog> {
         DateFormat('d MMM yyyy HH:mm').format(stock.createdAt);
 
     _amountController.text = formatDouble(stock.amount);
+    _stockAt = stock.createdAt;
     super.initState();
   }
 
   Future<void> _editStock() async {
     final amount = double.tryParse(_amountController.text);
     if (amount != null) {
-      await context
-          .read<StockProvider>()
-          .updateStock(widget.stock.copyWith(amount: amount));
+      await context.read<StockProvider>().updateStock(
+          widget.stock.copyWith(amount: amount, createdAt: _stockAt));
     }
   }
 
@@ -50,10 +53,23 @@ class _EditStockDialogState extends State<EditStockDialog> {
         const SizedBox(
           height: AppTheme.spacing20,
         ),
-        BaseTextInput(
-          enabled: false,
-          controller: _dateController,
-          label: "stock.created_at".tr(),
+        BaseDatePicker(
+          label: "stock.date".tr(),
+          value: _stockAt,
+          onChange: (date) {
+            setState(() {
+              _stockAt = date;
+            });
+          },
+        ),
+        BaseTimePicker(
+          label: "stock.time".tr(),
+          initialTime: _stockAt,
+          onChange: (time) {
+            setState(() {
+              _stockAt = time;
+            });
+          },
         ),
         BaseTextInput(
           label: "stock.amount".tr(),

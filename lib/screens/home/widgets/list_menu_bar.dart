@@ -1,16 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
-import 'package:my_baby/providers/feeding_provider.dart';
-import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/providers/menu_provider.dart';
-import 'package:my_baby/providers/poo_pee_provider.dart';
-import 'package:my_baby/providers/stock_provider.dart';
-import 'package:my_baby/utils/double_utils.dart';
-import 'package:provider/provider.dart';
 
-const double ITEM_SIZE = 93;
+const double ITEM_SIZE = 52;
 
 class ListMenuBar extends StatelessWidget {
   final Function(Menu) onChangeMenu;
@@ -19,39 +12,34 @@ class ListMenuBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final weight = context.watch<GrowthProvider>().weight;
-    final averageAmountPerDay =
-        context.watch<FeedingProvider>().averageAmountPerDay;
-    final daysSaved = context.watch<StockProvider>().daysSaved;
-    final averagePoosPerDay = context.watch<PooPeeProvider>().averagePoosPerDay;
-
     final widgets = [
+      SummaryItem(
+        icon: CustomIcons.baby,
+        menu: Menu.MyBaby,
+        selectedMenu: selectedMenu,
+        onClick: onChangeMenu,
+      ),
       SummaryItem(
         icon: CustomIcons.growth,
         menu: Menu.Growth,
         selectedMenu: selectedMenu,
         onClick: onChangeMenu,
-        text:
-            "${weight != null ? formatDouble(weight) : '-'} ${"growth.kg".tr()}",
       ),
       SummaryItem(
         selectedMenu: selectedMenu,
         icon: CustomIcons.bottle,
         onClick: onChangeMenu,
         menu: Menu.Feeding,
-        text: "${formatDouble(averageAmountPerDay)} ${"feeding.oz".tr()}",
       ),
       SummaryItem(
         selectedMenu: selectedMenu,
         icon: CustomIcons.milk,
         onClick: onChangeMenu,
         menu: Menu.MilkStock,
-        text: "$daysSaved ${"stock.days".tr()}",
       ),
       SummaryItem(
         selectedMenu: selectedMenu,
         icon: CustomIcons.poo,
-        text: "${formatDouble(averagePoosPerDay)} ${"poo_pee.average".tr()}",
         onClick: onChangeMenu,
         menu: Menu.PooPee,
       ),
@@ -59,25 +47,31 @@ class ListMenuBar extends StatelessWidget {
     return Container(
       height: ITEM_SIZE + (2 * AppTheme.spacing4),
       padding: const EdgeInsets.symmetric(vertical: AppTheme.spacing4),
-      child: ListView.separated(
-        // This next line does the trick.
-        scrollDirection: Axis.horizontal,
-        itemCount: widgets.length,
-        itemBuilder: (context, index) {
-          EdgeInsets? padding;
-          if (index == widgets.length - 1) {
-            padding = const EdgeInsets.only(right: AppTheme.spacing4);
-          }
-          if (index == 0) {
-            padding = const EdgeInsets.only(left: AppTheme.spacing4);
-          }
-          return Container(padding: padding, child: widgets[index]);
-        },
-        separatorBuilder: (context, index) {
-          return const SizedBox(
-            width: AppTheme.spacing4,
-          );
-        },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ListView.separated(
+            // This next line does the trick.
+            scrollDirection: Axis.horizontal,
+            itemCount: widgets.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              EdgeInsets? padding;
+              if (index == widgets.length - 1) {
+                padding = const EdgeInsets.only(right: AppTheme.spacing4);
+              }
+              if (index == 0) {
+                padding = const EdgeInsets.only(left: AppTheme.spacing4);
+              }
+              return Container(padding: padding, child: widgets[index]);
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(
+                width: AppTheme.spacing14,
+              );
+            },
+          ),
+        ],
       ),
     );
   }
@@ -85,14 +79,12 @@ class ListMenuBar extends StatelessWidget {
 
 class SummaryItem extends StatelessWidget {
   final IconData icon;
-  final String text;
   final Menu menu;
   final Menu? selectedMenu;
   final Function(Menu) onClick;
   const SummaryItem(
       {super.key,
       required this.icon,
-      required this.text,
       required this.menu,
       required this.onClick,
       required this.selectedMenu});
@@ -108,28 +100,21 @@ class SummaryItem extends StatelessWidget {
         width: ITEM_SIZE,
         height: ITEM_SIZE,
         decoration: BoxDecoration(
-            color: isSelected
-                ? AppTheme.colorShade.secondaryActive
-                : AppTheme.colorShade.secondary,
-            borderRadius: BorderRadius.circular(AppTheme.borderRadius8)),
+          shape: BoxShape.circle,
+          color: isSelected
+              ? AppTheme.colorShade.secondaryActive
+              : AppTheme.grayShade.shade05,
+        ),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Icon(
                 icon,
-                size: 24,
-                color: Colors.white,
-              ),
-              const SizedBox(
-                height: AppTheme.spacing2,
-              ),
-              Text(
-                text,
-                style: ThemeTextStyle.boldParagraph2(
-                  context,
-                  color: Colors.white,
-                ),
+                size: 22,
+                color: isSelected
+                    ? Colors.white
+                    : AppTheme.colorShade.secondaryActive,
               ),
             ]),
       ),

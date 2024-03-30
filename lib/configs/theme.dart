@@ -28,9 +28,11 @@ class Shade {
   final Color success;
   final Color border;
   final Color label;
+  final Color green;
   Shade({
     required this.primary,
     required this.secondary,
+    required this.green,
     required this.secondaryActive,
     required this.tertiary,
     required this.text,
@@ -70,6 +72,7 @@ class AppTheme {
   static Shade colorShade = Shade(
     primary: const Color(0xff4E6AF6),
     secondary: const Color(0xffDE7D7D),
+    green: const Color(0xff26B15E),
     secondaryActive: const Color(0xffCA2B2B),
     tertiary: const Color(0xffFFE3E3),
     text: const Color(0xff372A2A),

@@ -41,7 +41,9 @@ class _EditGrowthDialogState extends State<EditGrowthDialog> {
       final growths = context.read<GrowthProvider>().growths;
       final updatedGrowth =
           growths.firstWhere((g) => g.id.toString() == _selectedItem);
-      await context.read<GrowthProvider>().edit(updatedGrowth, weight, height);
+      await context
+          .read<GrowthProvider>()
+          .edit(updatedGrowth, weight, height, updatedGrowth.createdAt);
     }
   }
 

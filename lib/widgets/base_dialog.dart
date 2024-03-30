@@ -1,8 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:my_baby/configs/theme.dart';
-import 'package:my_baby/icons/custom_icons_icons.dart';
-import 'package:my_baby/widgets/base_button.dart';
 
 class BaseDialog extends StatelessWidget {
   final String title;

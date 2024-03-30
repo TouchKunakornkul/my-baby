@@ -1,7 +1,7 @@
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/icons/custom_icons_icons.dart';
@@ -15,6 +15,7 @@ import 'package:my_baby/utils/date_utils.dart';
 import 'package:my_baby/widgets/child_image.dart';
 import 'package:my_baby/widgets/edit_child_dialog.dart';
 import 'package:my_baby/providers/growth_provider.dart';
+import 'package:my_baby/providers/checklist_provider.dart';
 import 'package:my_baby/screens/home/widgets/list_menu_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -38,6 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context.read<FeedingProvider>().setChild(child.id);
       context.read<StockProvider>().setChild(child.id);
       context.read<PooPeeProvider>().setChild(child.id);
+      context.read<ChecklistProvider>().setChild(child.id);
     }
     super.initState();
   }
@@ -75,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onSetting() {
-    context.go('/setting');
+    context.push('/setting');
   }
 
   @override
@@ -185,43 +187,49 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ? Expanded(
                                           child: Row(
                                             children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    child.name ?? '-',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: ThemeTextStyle
-                                                        .headline1(context),
-                                                  ),
-                                                  Wrap(
-                                                    children: [
-                                                      Text(DateFormat(
-                                                              'd MMM yyyy')
-                                                          .format(
-                                                              child.birthDate)),
-                                                      const SizedBox(
-                                                        width:
-                                                            AppTheme.spacing4,
-                                                      ),
-                                                      Text(
-                                                          "(${getAgeString(child.birthDate)})"),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                              Container(
-                                                padding: const EdgeInsets.only(
-                                                    left: AppTheme.spacing12),
-                                                child: InkWell(
-                                                  onTap: () =>
-                                                      _onEditChild(context),
-                                                  child: Ink(
-                                                      child: const Icon(
-                                                          CustomIcons.edit)),
+                                              InkWell(
+                                                onTap: () =>
+                                                    _onEditChild(context),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      child.name,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: ThemeTextStyle
+                                                          .headline1(context),
+                                                    ),
+                                                    Wrap(
+                                                      children: [
+                                                        Text(DateFormat(
+                                                                'd MMM yyyy')
+                                                            .format(child
+                                                                .birthDate)),
+                                                        const SizedBox(
+                                                          width:
+                                                              AppTheme.spacing4,
+                                                        ),
+                                                        Text(
+                                                            "(${getAgeString(child.birthDate)})"),
+                                                      ],
+                                                    )
+                                                  ],
                                                 ),
+                                              ),
+                                              GestureDetector(
+                                                onTap: () =>
+                                                    _onEditChild(context),
+                                                behavior:
+                                                    HitTestBehavior.opaque,
+                                                child: Container(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: AppTheme
+                                                                .spacing12),
+                                                    child: const Icon(
+                                                        CustomIcons.edit)),
                                               ),
                                             ],
                                           ),
@@ -235,18 +243,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       ]),
                     ),
                     Positioned(
-                      bottom: 0,
+                      bottom: AppTheme.spacing32,
                       width: MediaQuery.of(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: AppTheme.spacing4),
-                        child: ListMenuBar(
-                          onChangeMenu: _onClickMenu,
-                          selectedMenu:
-                              context.watch<MenuProvider>().selectedMenu,
-                        ),
+                      child: ListMenuBar(
+                        onChangeMenu: _onClickMenu,
+                        selectedMenu:
+                            context.watch<MenuProvider>().selectedMenu,
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

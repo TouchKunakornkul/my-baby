@@ -112,11 +112,27 @@ class StockSection extends StatelessWidget {
       notes: context.watch<StockProvider>().notes,
       icon: CustomIcons.growth,
       title: "stock.title".tr(),
-      subtitle: Text(
-        "stock.subtitle".tr(),
-        style:
-            ThemeTextStyle.paragraph1(context, color: AppTheme.colorShade.text),
-      ),
+      subtitle:
+          // Text(
+          //   "stock.subtitle".tr(),
+          //   style:
+          //       ThemeTextStyle.paragraph1(context, color: AppTheme.colorShade.text),
+          // ),
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Text(
+          "stock.total_stock".tr(),
+          style: ThemeTextStyle.paragraph3(context,
+              color: AppTheme.colorShade.text),
+        ),
+        const SizedBox(
+          width: AppTheme.spacing8,
+        ),
+        Text(
+          "${formatDouble(context.watch<StockProvider>().availableStock)} ${"stock.oz".tr()}",
+          style: ThemeTextStyle.headline2(context,
+              color: AppTheme.colorShade.green),
+        ),
+      ]),
       onAddNote: (note) => _onAddStockNote(context, note),
       onEditNote: (note) => _onEditStockNote(context, note),
       onDeleteNote: (note) => _onDeleteStockNote(context, note),
@@ -134,35 +150,6 @@ class StockSection extends StatelessWidget {
       // },
       header: Column(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppTheme.spacing8),
-              color: AppTheme.colorShade.tertiary,
-            ),
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppTheme.spacing16,
-              vertical: AppTheme.spacing8,
-            ),
-            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text(
-                "stock.total_stock".tr(),
-                style: ThemeTextStyle.paragraph1(context,
-                    color: AppTheme.colorShade.text),
-              ),
-              const SizedBox(
-                width: AppTheme.spacing16,
-              ),
-              Text(
-                "${formatDouble(context.watch<StockProvider>().availableStock)} ${"stock.oz".tr(args: [
-                      formatDouble(
-                          context.watch<StockProvider>().availableStock)
-                    ])}",
-                style: ThemeTextStyle.boldParagraph1(context,
-                    color: AppTheme.colorShade.text),
-              ),
-            ]),
-          ),
-          const SizedBox(height: AppTheme.spacing20),
           Table(
             columnWidths: const {
               0: FractionColumnWidth(0.25),

@@ -4,6 +4,7 @@ import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/configs/theme.dart';
 import 'package:my_baby/providers/growth_provider.dart';
 import 'package:my_baby/utils/double_utils.dart';
+import 'package:my_baby/widgets/base_date_picker.dart';
 import 'package:my_baby/widgets/base_dialog.dart';
 import 'package:my_baby/widgets/base_text_input.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,7 @@ class _EditGrowthDialogState extends State<EditGrowthDialog> {
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _heightController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
+  DateTime _createdAt = DateTime.now();
 
   @override
   void initState() {
@@ -32,6 +34,7 @@ class _EditGrowthDialogState extends State<EditGrowthDialog> {
         growth.height != null ? formatDouble(growth.height!) : "";
     _dateController.text =
         DateFormat('d MMM yyyy HH:mm').format(growth.createdAt);
+    _createdAt = growth.createdAt;
     super.initState();
   }
 
@@ -39,7 +42,9 @@ class _EditGrowthDialogState extends State<EditGrowthDialog> {
     final weight = double.tryParse(_weightController.text);
     final height = double.tryParse(_heightController.text);
     if (weight != null) {
-      await context.read<GrowthProvider>().edit(widget.growth, weight, height);
+      await context
+          .read<GrowthProvider>()
+          .edit(widget.growth, weight, height, _createdAt);
     }
   }
 
@@ -51,10 +56,14 @@ class _EditGrowthDialogState extends State<EditGrowthDialog> {
         const SizedBox(
           height: AppTheme.spacing20,
         ),
-        BaseTextInput(
-          enabled: false,
-          controller: _dateController,
+        BaseDatePicker(
           label: "growth.created_at".tr(),
+          value: _createdAt,
+          onChange: (date) {
+            setState(() {
+              _createdAt = date;
+            });
+          },
         ),
         BaseTextInput(
           label: "growth.weight".tr(),

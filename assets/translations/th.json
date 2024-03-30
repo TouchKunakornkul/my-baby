@@ -83,7 +83,9 @@
     "kg": "kg",
     "cm": "cm",
     "weight": "Weight",
-    "height": "Height"
+    "height": "Height",
+    "view_table": "View Table",
+    "view_chart": "View Chart"
   },
   "feeding": {
     "title": "Feeding",
@@ -93,9 +95,10 @@
     "feed_time": "Feedtime",
     "feeding_date": "Date",
     "feeding_time": "Time",
+    "total_feed": "Total Feed",
     "greeting": "{}, get well-fed!\nKeep going!",
     "amount": "Amount",
-    "oz": "Oz.",
+    "oz": "Oz",
     "today": "Today",
     "yesterday": "Yesterday",
     "type_label": "Type",
@@ -128,7 +131,9 @@
     "total_stock": "Total Stock",
     "days": "Days",
     "subtitle": "Already save for 1 day",
-    "amount": "Pumping Amount"
+    "amount": "Pumping Amount",
+    "stock_total": "Total",
+    "created_at": "Date"
   },
   "poo_pee": {
     "title": "Poo/Pee",
@@ -179,5 +184,9 @@
     "contact_email": "mybabyapp@gmail.com",
     "logout": "Logout",
     "app_version": "App version {}"
+  },
+  "my_baby": {
+    "title": "My Baby",
+    "month": "Month"
   }
 }

@@ -2,7 +2,6 @@ import 'dart:ffi';
 
 import 'package:drift/drift.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_baby/configs/database.dart';
 import 'package:my_baby/constants/share_preferences_constants.dart';
@@ -101,6 +100,11 @@ class FeedingProvider extends ChangeNotifier {
 
   List<Feeding> get feedings => _feedings;
   List<Note> get feedingNotes => notes;
+
+  double get totalFeed => _feedings
+      .where((element) => element.type != 'breast')
+      .map((e) => e.amount)
+      .reduce((a, b) => a + b);
 
   DateTime? get nextFeedingTime {
     if (startTime == null || hourDuration == null) {

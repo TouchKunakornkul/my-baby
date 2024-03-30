@@ -1,5 +1,4 @@
-import 'dart:ffi';
-
+import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:my_baby/configs/database.dart';
@@ -28,6 +27,13 @@ class GrowthProvider extends ChangeNotifier {
         100 /
         previous.weight /
         (day > 0 ? day : 1);
+  }
+
+  double? get lastGrowthWeight {
+    return growths
+        .sorted((a, b) => a.createdAt.compareTo(b.createdAt))
+        .lastOrNull
+        ?.weight;
   }
 
   void reset() {
@@ -68,10 +74,10 @@ class GrowthProvider extends ChangeNotifier {
     await listGrowth();
   }
 
-  Future<void> edit(Growth growth, double? weight, double? height) async {
-    await _appDatabase
-        .update(_appDatabase.growths)
-        .replace(growth.copyWith(weight: weight, height: Value(height)));
+  Future<void> edit(
+      Growth growth, double? weight, double? height, DateTime createdAt) async {
+    await _appDatabase.update(_appDatabase.growths).replace(growth.copyWith(
+        weight: weight, height: Value(height), createdAt: createdAt));
     await listGrowth();
   }
 

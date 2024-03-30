@@ -35,22 +35,40 @@ class FeedingSection extends StatelessWidget {
         notes: context.watch<FeedingProvider>().notes,
         icon: CustomIcons.growth,
         title: "feeding.title".tr(),
-        subtitle: nextFeedingTime != null
-            ? Wrap(children: [
-                Text(
-                  "feeding.subtitle".tr(args: [
-                    context.watch<FeedingProvider>().hourDuration.toString()
-                  ]),
-                  style: ThemeTextStyle.paragraph1(context,
-                      color: AppTheme.colorShade.text),
-                ),
-                Text(
-                  DateFormat('HH:mm').format(nextFeedingTime),
-                  style: ThemeTextStyle.boldParagraph1(context,
-                      color: AppTheme.colorShade.primary),
-                ),
-              ])
-            : const SizedBox.shrink(),
+        subtitle:
+            // nextFeedingTime != null
+            //     ? Wrap(children: [
+            //         Text(
+            //           "feeding.subtitle".tr(args: [
+            //             context.watch<FeedingProvider>().hourDuration.toString()
+            //           ]),
+            //           style: ThemeTextStyle.paragraph1(context,
+            //               color: AppTheme.colorShade.text),
+            //         ),
+            //         Text(
+            //           DateFormat('HH:mm').format(nextFeedingTime),
+            //           style: ThemeTextStyle.boldParagraph1(context,
+            //               color: AppTheme.colorShade.primary),
+            //         ),
+            //       ])
+            //     : const SizedBox.shrink(),
+            Row(
+          children: [
+            Text(
+              "feeding.total_feed".tr(),
+              style: ThemeTextStyle.paragraph3(context,
+                  color: AppTheme.colorShade.text),
+            ),
+            const SizedBox(
+              width: AppTheme.spacing8,
+            ),
+            Text(
+              "${formatDouble(context.watch<FeedingProvider>().totalFeed)} ${"feeding.oz".tr()}",
+              style: ThemeTextStyle.headline2(context,
+                  color: AppTheme.colorShade.green),
+            ),
+          ],
+        ),
         onAddNote: (note) => _onAddFeedingNote(context, note),
         onEditNote: (note) => _onEditFeedingNote(context, note),
         onDeleteNote: (note) => _onDeleteFeedingNote(context, note),
@@ -71,39 +89,41 @@ class FeedingSection extends StatelessWidget {
         //   showDialog(
         //       context: context, builder: (context) => const EditFeedingDialog());
         // },
-        header: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(AppTheme.spacing8),
-                color: AppTheme.colorShade.tertiary,
-              ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppTheme.spacing16,
-                vertical: AppTheme.spacing8,
-              ),
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(
-                  "feeding.average".tr(),
-                  style: ThemeTextStyle.paragraph1(context,
-                      color: AppTheme.colorShade.text),
-                ),
-                const SizedBox(
-                  width: AppTheme.spacing16,
-                ),
-                Text(
-                  "feeding.oz_per_day".tr(args: [
-                    formatDouble(
-                        context.watch<FeedingProvider>().averageAmountPerDay)
-                  ]),
-                  style: ThemeTextStyle.boldParagraph1(context,
-                      color: AppTheme.colorShade.text),
-                ),
-              ]),
-            ),
-          ],
-        ),
+        header: const SizedBox.shrink(),
+        // Column(
+        //   children: [
+        //     Container(
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(AppTheme.spacing8),
+        //         color: AppTheme.colorShade.tertiary,
+        //       ),
+        //       padding: const EdgeInsets.symmetric(
+        //         horizontal: AppTheme.spacing16,
+        //         vertical: AppTheme.spacing8,
+        //       ),
+        //       child:
+        //           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        //         Text(
+        //           "feeding.average".tr(),
+        //           style: ThemeTextStyle.paragraph1(context,
+        //               color: AppTheme.colorShade.text),
+        //         ),
+        //         const SizedBox(
+        //           width: AppTheme.spacing16,
+        //         ),
+        //         Text(
+        //           "feeding.oz_per_day".tr(args: [
+        //             formatDouble(
+        //                 context.watch<FeedingProvider>().averageAmountPerDay)
+        //           ]),
+        //           style: ThemeTextStyle.boldParagraph1(context,
+        //               color: AppTheme.colorShade.text),
+        //         ),
+        //       ]),
+        //     ),
+        //   ],
+        // ),
+        hasDivider: false,
         content: ListView.builder(
             shrinkWrap: true,
             physics: const ClampingScrollPhysics(),

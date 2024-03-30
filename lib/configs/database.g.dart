@@ -2125,6 +2125,309 @@ class PooPeesCompanion extends UpdateCompanion<PooPee> {
   }
 }
 
+class $ChecklistsTable extends Checklists
+    with TableInfo<$ChecklistsTable, Checklist> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ChecklistsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _keyMeta = const VerificationMeta('key');
+  @override
+  late final GeneratedColumn<String> key = GeneratedColumn<String>(
+      'key', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _childIdMeta =
+      const VerificationMeta('childId');
+  @override
+  late final GeneratedColumn<int> childId = GeneratedColumn<int>(
+      'child_id', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES childs (id)'));
+  static const VerificationMeta _isCheckedMeta =
+      const VerificationMeta('isChecked');
+  @override
+  late final GeneratedColumn<bool> isChecked = GeneratedColumn<bool>(
+      'is_checked', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_checked" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [key, childId, isChecked, createdAt, updatedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'checklists';
+  @override
+  VerificationContext validateIntegrity(Insertable<Checklist> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('key')) {
+      context.handle(
+          _keyMeta, key.isAcceptableOrUnknown(data['key']!, _keyMeta));
+    } else if (isInserting) {
+      context.missing(_keyMeta);
+    }
+    if (data.containsKey('child_id')) {
+      context.handle(_childIdMeta,
+          childId.isAcceptableOrUnknown(data['child_id']!, _childIdMeta));
+    } else if (isInserting) {
+      context.missing(_childIdMeta);
+    }
+    if (data.containsKey('is_checked')) {
+      context.handle(_isCheckedMeta,
+          isChecked.isAcceptableOrUnknown(data['is_checked']!, _isCheckedMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {key, childId};
+  @override
+  Checklist map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Checklist(
+      key: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}key'])!,
+      childId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}child_id'])!,
+      isChecked: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_checked'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
+    );
+  }
+
+  @override
+  $ChecklistsTable createAlias(String alias) {
+    return $ChecklistsTable(attachedDatabase, alias);
+  }
+}
+
+class Checklist extends DataClass implements Insertable<Checklist> {
+  final String key;
+  final int childId;
+  final bool isChecked;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  const Checklist(
+      {required this.key,
+      required this.childId,
+      required this.isChecked,
+      required this.createdAt,
+      required this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['key'] = Variable<String>(key);
+    map['child_id'] = Variable<int>(childId);
+    map['is_checked'] = Variable<bool>(isChecked);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    return map;
+  }
+
+  ChecklistsCompanion toCompanion(bool nullToAbsent) {
+    return ChecklistsCompanion(
+      key: Value(key),
+      childId: Value(childId),
+      isChecked: Value(isChecked),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+    );
+  }
+
+  factory Checklist.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Checklist(
+      key: serializer.fromJson<String>(json['key']),
+      childId: serializer.fromJson<int>(json['childId']),
+      isChecked: serializer.fromJson<bool>(json['isChecked']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'key': serializer.toJson<String>(key),
+      'childId': serializer.toJson<int>(childId),
+      'isChecked': serializer.toJson<bool>(isChecked),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+    };
+  }
+
+  Checklist copyWith(
+          {String? key,
+          int? childId,
+          bool? isChecked,
+          DateTime? createdAt,
+          DateTime? updatedAt}) =>
+      Checklist(
+        key: key ?? this.key,
+        childId: childId ?? this.childId,
+        isChecked: isChecked ?? this.isChecked,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Checklist(')
+          ..write('key: $key, ')
+          ..write('childId: $childId, ')
+          ..write('isChecked: $isChecked, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(key, childId, isChecked, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Checklist &&
+          other.key == this.key &&
+          other.childId == this.childId &&
+          other.isChecked == this.isChecked &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class ChecklistsCompanion extends UpdateCompanion<Checklist> {
+  final Value<String> key;
+  final Value<int> childId;
+  final Value<bool> isChecked;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<int> rowid;
+  const ChecklistsCompanion({
+    this.key = const Value.absent(),
+    this.childId = const Value.absent(),
+    this.isChecked = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ChecklistsCompanion.insert({
+    required String key,
+    required int childId,
+    this.isChecked = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : key = Value(key),
+        childId = Value(childId);
+  static Insertable<Checklist> custom({
+    Expression<String>? key,
+    Expression<int>? childId,
+    Expression<bool>? isChecked,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (key != null) 'key': key,
+      if (childId != null) 'child_id': childId,
+      if (isChecked != null) 'is_checked': isChecked,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ChecklistsCompanion copyWith(
+      {Value<String>? key,
+      Value<int>? childId,
+      Value<bool>? isChecked,
+      Value<DateTime>? createdAt,
+      Value<DateTime>? updatedAt,
+      Value<int>? rowid}) {
+    return ChecklistsCompanion(
+      key: key ?? this.key,
+      childId: childId ?? this.childId,
+      isChecked: isChecked ?? this.isChecked,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (key.present) {
+      map['key'] = Variable<String>(key.value);
+    }
+    if (childId.present) {
+      map['child_id'] = Variable<int>(childId.value);
+    }
+    if (isChecked.present) {
+      map['is_checked'] = Variable<bool>(isChecked.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ChecklistsCompanion(')
+          ..write('key: $key, ')
+          ..write('childId: $childId, ')
+          ..write('isChecked: $isChecked, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   late final $ChildsTable childs = $ChildsTable(this);
@@ -2134,14 +2437,16 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $FeedingsTable feedings = $FeedingsTable(this);
   late final $StocksTable stocks = $StocksTable(this);
   late final $PooPeesTable pooPees = $PooPeesTable(this);
+  late final $ChecklistsTable checklists = $ChecklistsTable(this);
   late final FeedingsDao feedingsDao = FeedingsDao(this as AppDatabase);
   late final NotesDao notesDao = NotesDao(this as AppDatabase);
   late final StocksDao stocksDao = StocksDao(this as AppDatabase);
   late final PooPeesDao pooPeesDao = PooPeesDao(this as AppDatabase);
+  late final ChecklistsDao checklistsDao = ChecklistsDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [childs, growths, develops, notes, feedings, stocks, pooPees];
+      [childs, growths, develops, notes, feedings, stocks, pooPees, checklists];
 }

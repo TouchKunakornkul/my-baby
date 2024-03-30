@@ -1,18 +1,26 @@
 import 'package:drift/drift.dart';
 import 'package:flutter/widgets.dart';
 import 'package:my_baby/configs/database.dart';
+import 'package:my_baby/constants/share_preferences_constants.dart';
 import 'package:my_baby/daos/stock_dao.dart';
 import 'package:my_baby/daos/note_dao.dart';
 import 'package:my_baby/service/locator.dart';
 import 'package:collection/collection.dart';
+import 'package:my_baby/service/notification_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const STOCK_NOTE_TYPE = 'stock';
 
 class StockProvider extends ChangeNotifier {
+  final NotificationService _notificationService =
+      locator<NotificationService>();
   final StocksDao _stocksDao = locator<StocksDao>();
   final NotesDao _notesDao = locator<NotesDao>();
   List<Stock> _stocks = [];
   List<Note> notes = [];
+
+  DateTime? startTime;
+  int? hourDuration;
 
   late int childId;
 
@@ -103,5 +111,17 @@ class StockProvider extends ChangeNotifier {
   Future<void> updateStockNote(Note note) async {
     await _notesDao.updateNote(note);
     await fetchStockNotes();
+  }
+
+  Future<void> setNotification(DateTime start, int hour) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(SharedPreferencesConstants.stockHourDuration, hour);
+    await prefs.setString(
+        SharedPreferencesConstants.stockStartTime, start.toIso8601String());
+    await _notificationService.setRoutine(start, hour);
+
+    startTime = start;
+    hourDuration = hour;
+    notifyListeners();
   }
 }

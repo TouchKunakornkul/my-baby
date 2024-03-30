@@ -56,6 +56,7 @@ class _AddEditNoteDialogState extends State<AddEditNoteDialog> {
         ),
         if (widget.onDelete != null)
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               InkWell(
                 onTap: () {
@@ -64,7 +65,7 @@ class _AddEditNoteDialogState extends State<AddEditNoteDialog> {
                 },
                 child: Text(
                   "note.delete_note".tr(),
-                  style: ThemeTextStyle.paragraph3(context,
+                  style: ThemeTextStyle.paragraph1(context,
                       color: AppTheme.colorShade.error),
                 ),
               ),

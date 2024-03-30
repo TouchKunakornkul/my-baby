@@ -70,7 +70,6 @@ class _AddFeedingDialogState extends State<AddFeedingDialog> {
           label: "feeding.feeding_time".tr(),
           initialTime: _feedTime,
           onChange: (time) {
-            print(time);
             setState(() {
               _feedTime = time;
             });

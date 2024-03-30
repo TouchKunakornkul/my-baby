@@ -11,7 +11,7 @@ import 'package:my_baby/utils/date_utils.dart';
 import 'package:my_baby/widgets/child_image.dart';
 import 'package:my_baby/widgets/edit_child_dialog.dart';
 import 'package:my_baby/providers/growth_provider.dart';
-import 'package:my_baby/screens/home/widgets/list_menu_bar.dart';
+import 'package:my_baby/screens/home/widgets/list_menu_bar.deprecated.dart';
 import 'package:provider/provider.dart';
 
 const double IMAGE_HEIGHT = 770;

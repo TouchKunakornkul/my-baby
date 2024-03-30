@@ -1,9 +1,4 @@
-import 'dart:io';
-import 'dart:ui';
-
-import 'package:drift/drift.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tzData;
 import 'package:timezone/timezone.dart' as tz;
 
@@ -21,7 +16,6 @@ class NotificationService {
         const AndroidInitializationSettings('ic_launcher');
     tzData.initializeTimeZones();
 
-    print(tz.local);
     var initializationSettingsIOS = DarwinInitializationSettings(
         onDidReceiveLocalNotification: (id, title, body, payload) {
       print("onDidReceiveLocalNotification called.");

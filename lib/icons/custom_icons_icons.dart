@@ -22,6 +22,7 @@ class CustomIcons {
   static const String? _kFontPkg = null;
 
   static const IconData right = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData baby = IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData chevronRight = IconData(0xe80e, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData camera = IconData(0xe894, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData growth = IconData(0xe897, fontFamily: _kFontFam, fontPackage: _kFontPkg);
